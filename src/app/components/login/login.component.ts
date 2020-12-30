@@ -1,6 +1,7 @@
 import { login } from './../../reducers/actions';
 import { AuthService } from './../../services/authService';
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { Store } from '@ngrx/store';
@@ -13,14 +14,20 @@ import { FlashMessagesService } from 'angular2-flash-messages';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-  email: string;
-  password: string;
+  form: FormGroup;
+
   constructor(
     private router: Router,
     private store: Store,
     private flashMessage: FlashMessagesService,
-    private authService: AuthService
-  ) {}
+    private authService: AuthService,
+    private fb: FormBuilder
+  ) {
+    this.form = fb.group({
+      email: ['jonny@gmail.com', [Validators.required]],
+      password: ['123456', [Validators.required]],
+    });
+  }
 
   ngOnInit() {
     this.authService.getAuth().subscribe((auth) => {
@@ -31,20 +38,21 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
+    const val = this.form.value;
     this.authService
-      .login(this.email, this.password)
+      .login(val.email, val.password)
       .then((res) => {
-        // this.flashMessage.show('You are now logged in', {
-        //   cssClass: 'alert-success',
-        //   timeout: 3000,
-        // });
+        this.flashMessage.show('You are now logged in', {
+          cssClass: 'alert-success',
+          timeout: 3000,
+        });
         this.router.navigate(['/']);
       })
       .catch((err) => {
-        // this.flashMessage.show(err.message, {
-        //   cssClass: 'alert-danger',
-        //   timeout: 4000,
-        // });
+        this.flashMessage.show(err.message, {
+          cssClass: 'alert-danger',
+          timeout: 4000,
+        });
       });
   }
 }

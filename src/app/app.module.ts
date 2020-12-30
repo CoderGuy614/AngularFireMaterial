@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { FlashMessagesModule } from 'angular2-flash-messages';
 
@@ -23,11 +24,12 @@ import { LoginComponent } from './components/login/login.component';
     BrowserModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
-    FlashMessagesModule.forRoot(),
+    ReactiveFormsModule,
     FormsModule,
     BrowserAnimationsModule,
     StoreModule.forRoot({ user: userReducer }),
     StoreDevtoolsModule.instrument({ maxAge: 25 }),
+    FlashMessagesModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -8,14 +8,14 @@
           </span>
           Login
         </h1>
-        <form (submit)="onSubmit()">
+        <form [formGroup]="form" (submit)="onSubmit()">
           <div class="form-group">
             <label for="email">Email</label>
             <input
               class="form-control"
               type="email"
+              formControlName="email"
               name="email"
-              [(ngModel)]="email"
               required
             />
           </div>
@@ -24,8 +24,8 @@
             <input
               type="password"
               name="password"
+              formControlName="password"
               class="form-control"
-              [(ngModel)]="password"
               required
             />
           </div>
