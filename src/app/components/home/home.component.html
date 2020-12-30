@@ -1,0 +1,20 @@
+<div class="container mt-3">
+  <h2>Users</h2>
+
+  <div class="card card-body" *ngIf="users?.length > 0; else noUsers">
+    <ul class="list-group" *ngFor="let user of users">
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col">{{ user.firstName }} {{ user.lastName }}</div>
+          <div class="col">{{ user.email }}</div>
+          <div class="col">{{ user.password }}</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<ng-template #noUsers>
+  <hr />
+  <h5>There are no users in the system</h5>
+</ng-template>
