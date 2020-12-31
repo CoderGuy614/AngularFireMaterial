@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { tap, map } from 'rxjs/operators';
+import { tap, map, first, take } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import {
   AngularFirestore,
@@ -26,7 +26,6 @@ export class ProfileService {
         map((actions) =>
           actions.map((a) => {
             const data = a.payload.doc.data() as Profile;
-            // data.id = a.payload.doc.id;
             return data;
           })
         )
@@ -35,7 +34,31 @@ export class ProfileService {
     return this.profiles;
   }
 
+  getProfileId(email) {
+    return this.afs
+      .collection('profiles', (ref) => ref.where('email', '==', email))
+      .get()
+      .pipe(map((x) => x.docs[0].id));
+  }
+
+  // getProfile(email: string): Observable<Profile> {
+  //   this.profile = this.afs.collection('profiles', ref => ref.where('email', '==', email).limit(1)).snapshotChanges().pipe(
+  //     map((actions) => {
+  //       if (actions.payload.exists === false) {
+  //         return null;
+  //       } else {
+  //         const data = action.payload.data() as Client;
+  //         data.id = action.payload.id;
+  //         return data;
+  //       }
+  //     })
+  //   );
+  //   return this.client;
+  // }
+
   // getProfile(email: string): Observable<Profile> {
   //   this.afs.collection('profiles', (ref) => ref.where('email', '==', email));
   // }
 }
+
+// Try getting the Profile ID First, then fetching the profile by it's ID
