@@ -29,7 +29,11 @@ export class HomeComponent implements OnInit {
       if (auth) {
         this.profileService
           .getProfileId(auth.email)
-          .subscribe((id) => console.log(id));
+          .subscribe((id) =>
+            this.profileService
+              .getProfile(id)
+              .subscribe((x) => (this.profile = x))
+          );
       }
     });
   }

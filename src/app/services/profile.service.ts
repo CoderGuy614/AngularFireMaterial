@@ -18,47 +18,36 @@ export class ProfileService {
   profile: Observable<any>;
   constructor(private afs: AngularFirestore) {}
 
-  getProfiles(email): Observable<Profile[]> {
-    this.profiles = this.afs
-      .collection('profiles', (ref) => ref.where('email', '==', email))
-      .snapshotChanges()
-      .pipe(
-        map((actions) =>
-          actions.map((a) => {
-            const data = a.payload.doc.data() as Profile;
-            return data;
-          })
-        )
-      );
+  // getProfiles(email): Observable<Profile[]> {
+  //   this.profiles = this.afs
+  //     .collection('profiles', (ref) => ref.where('email', '==', email))
+  //     .snapshotChanges()
+  //     .pipe(
+  //       map((actions) =>
+  //         actions.map((a) => {
+  //           const data = a.payload.doc.data() as Profile;
+  //           return data;
+  //         })
+  //       )
+  //     );
 
-    return this.profiles;
-  }
+  //   return this.profiles;
+  // }
 
-  getProfileId(email) {
+  getProfileId(email: string): Observable<string> {
     return this.afs
       .collection('profiles', (ref) => ref.where('email', '==', email))
       .get()
-      .pipe(map((x) => x.docs[0].id));
+      .pipe(map((x) => (x.docs.length > 0 ? x.docs[0].id : null)));
   }
 
-  // getProfile(email: string): Observable<Profile> {
-  //   this.profile = this.afs.collection('profiles', ref => ref.where('email', '==', email).limit(1)).snapshotChanges().pipe(
-  //     map((actions) => {
-  //       if (actions.payload.exists === false) {
-  //         return null;
-  //       } else {
-  //         const data = action.payload.data() as Client;
-  //         data.id = action.payload.id;
-  //         return data;
-  //       }
-  //     })
-  //   );
-  //   return this.client;
-  // }
-
-  // getProfile(email: string): Observable<Profile> {
-  //   this.afs.collection('profiles', (ref) => ref.where('email', '==', email));
-  // }
+  getProfile(id: string) {
+    return this.afs
+      .collection('profiles')
+      .doc(id)
+      .get()
+      .pipe(map((x) => x.data()));
+  }
 }
 
 // Try getting the Profile ID First, then fetching the profile by it's ID

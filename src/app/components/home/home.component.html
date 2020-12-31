@@ -1,20 +1,20 @@
 <div class="container mt-3">
-  <h2>Users</h2>
+  <h2>My Profile</h2>
 
-  <div class="card card-body" *ngIf="users?.length > 0; else noUsers">
-    <ul class="list-group" *ngFor="let user of users">
-      <li class="list-group-item">
-        <div class="row">
-          <div class="col">{{ user.firstName }} {{ user.lastName }}</div>
-          <div class="col">{{ user.email }}</div>
-          <div class="col">{{ user.password }}</div>
-        </div>
-      </li>
-    </ul>
+  <div class="card card-body" *ngIf="profile; else noProfile">
+    <div class="list-group">
+      <div class="list-group-item">First Name: {{ profile.firstName }}</div>
+      <div class="list-group-item">Last Name: {{ profile.lastName }}</div>
+      <div class="list-group-item">Age: {{ profile.age }}</div>
+      <div class="list-group-item">
+        Birthday: {{ profile.birthday.seconds * 1000 | date: "yyyy-MM-dd" }}
+      </div>
+    </div>
   </div>
 </div>
 
-<ng-template #noUsers>
+<ng-template #noProfile>
   <hr />
-  <h5>There are no users in the system</h5>
+  <h4>You Don't Have a Profile</h4>
+  <button class="btn btn-primary">Create a Profile</button>
 </ng-template>
