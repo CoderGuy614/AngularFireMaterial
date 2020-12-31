@@ -42,22 +42,22 @@ export class UserService {
     return this.users.find((u) => u.email === email);
   }
 
-  login(email, password) {
-    const found = this.users.some((el) => el.email === email);
-    if (!found) {
-      return { error: 'This user does not exist' };
-    } else if (
-      this.users.some((el) => el.email === email && el.password !== password)
-    ) {
-      return {
-        error: 'Invalid Credentials',
-      };
-    } else if (
-      this.users.some((el) => el.email === email && el.password === password)
-    ) {
-      return {
-        message: 'Login Success',
-      };
-    }
-  }
+  // login(email, password) {
+  //   const found = this.users.some((el) => el.email === email);
+  //   if (!found) {
+  //     return { error: 'This user does not exist' };
+  //   } else if (
+  //     this.users.some((el) => el.email === email && el.password !== password)
+  //   ) {
+  //     return {
+  //       error: 'Invalid Credentials',
+  //     };
+  //   } else if (
+  //     this.users.some((el) => el.email === email && el.password === password)
+  //   ) {
+  //     return {
+  //       message: 'Login Success',
+  //     };
+  //   }
+  // }
 }
