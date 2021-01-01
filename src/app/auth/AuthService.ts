@@ -9,29 +9,9 @@ import { map } from 'rxjs/operators';
 export class AuthService {
   constructor(private afAuth: AngularFireAuth) {}
 
-  // login(email: string, password: string) {
-  //   return new Promise((resolve, reject) => {
-  //     this.afAuth.signInWithEmailAndPassword(email, password).then(
-  //       (userData) => resolve(userData),
-  //       (err) => reject(err)
-  //     );
-  //   });
-  // }
-
-  login(email: string, password: string) {
-    const sub = from(this.afAuth.signInWithEmailAndPassword(email, password));
-
-    return sub;
+  login(email: string, password: string): Observable<any> {
+    return from(this.afAuth.signInWithEmailAndPassword(email, password));
   }
-
-  // register(email: string, password: string) {
-  //   return new Promise((resolve, reject) => {
-  //     this.afAuth.createUserWithEmailAndPassword(email, password).then(
-  //       (userData) => resolve(userData),
-  //       (err) => reject(err)
-  //     );
-  //   });
-  // }
 
   getAuth() {
     return this.afAuth.authState.pipe(map((auth) => auth));

@@ -44,19 +44,13 @@ const routes: Routes = [
     FormsModule,
     BrowserAnimationsModule,
     AuthModule.forRoot(),
-    StoreDevtoolsModule.instrument({
-      maxAge: 25,
-    }),
     FlashMessagesModule.forRoot(),
 
     StoreModule.forRoot(reducers, {
       metaReducers,
-      runtimeChecks: {
-        strictStateImmutability: true,
-        strictActionImmutability: true,
-        strictActionSerializability: true,
-        strictStateSerializability: true,
-      },
+    }),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
     }),
     StoreRouterConnectingModule.forRoot({
       stateKey: 'router',

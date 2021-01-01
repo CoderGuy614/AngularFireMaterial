@@ -5,7 +5,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { map, tap } from 'rxjs/operators';
 import { noop } from 'rxjs';
-
+import { AppState } from '../../reducers';
 import { Store } from '@ngrx/store';
 
 import { FlashMessagesService } from 'angular2-flash-messages';
@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private store: Store,
+    private store: Store<AppState>,
     private flashMessage: FlashMessagesService,
     private authService: AuthService,
     private fb: FormBuilder
@@ -39,26 +39,6 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  // onSubmit() {
-  //   const val = this.form.value;
-  //   this.authService
-  //     .login(val.email, val.password)
-  //     .then((res) => {
-  //       this.flashMessage.show('You are now logged in', {
-  //         cssClass: 'alert-success',
-  //         timeout: 3000,
-  //       });
-
-  //       this.router.navigate(['/']);
-  //     })
-  //     .catch((err) => {
-  //       this.flashMessage.show(err.message, {
-  //         cssClass: 'alert-danger',
-  //         timeout: 4000,
-  //       });
-  //     });
-  // }
-
   onSubmit() {
     const val = this.form.value;
     this.authService
@@ -68,6 +48,7 @@ export class LoginComponent implements OnInit {
       // Navigate to the homepage
       .pipe(
         tap((u) => {
+          this.store.dispatch(login({ email: u.user.email, id: u.user.uid }));
           this.router.navigate(['/']);
         })
       )
