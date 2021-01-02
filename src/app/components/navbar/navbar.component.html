@@ -16,8 +16,18 @@
       <a class="nav-item nav-link active" routerLink="/"
         >Home <span class="sr-only">(current)</span></a
       >
-      <a class="nav-item nav-link" routerLink="/login">Login</a>
-      <a class="nav-item nav-link" (click)="onLogoutClick()">Logout</a>
+      <a
+        *ngIf="isLoggedOut$ | async"
+        class="nav-item nav-link"
+        routerLink="/login"
+        >Login</a
+      >
+      <a
+        *ngIf="isLoggedIn$ | async"
+        class="nav-item nav-link"
+        (click)="onLogoutClick()"
+        >Logout</a
+      >
     </div>
   </div>
 </nav>

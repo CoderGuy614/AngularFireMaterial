@@ -1,3 +1,4 @@
+import { EffectsModule } from '@ngrx/effects';
 import { AuthModule } from './auth/auth.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -5,6 +6,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
+
 import { FlashMessagesModule } from 'angular2-flash-messages';
 
 import { AppComponent } from './app.component';
@@ -45,6 +47,7 @@ const routes: Routes = [
     BrowserAnimationsModule,
     AuthModule.forRoot(),
     FlashMessagesModule.forRoot(),
+    EffectsModule.forRoot([]),
 
     StoreModule.forRoot(reducers, {
       metaReducers,
