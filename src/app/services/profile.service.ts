@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { tap, map, first, take } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import {
   AngularFirestore,
@@ -7,6 +7,9 @@ import {
   AngularFirestoreDocument,
 } from '@angular/fire/firestore';
 import { Profile } from '../models/Profile';
+import { Store } from '@ngrx/store';
+import { AppState } from '../reducers';
+import { storeProfile } from '../auth/auth.actions';
 
 @Injectable({
   providedIn: 'root',
@@ -16,23 +19,7 @@ export class ProfileService {
   profileDoc: AngularFirestoreDocument<Profile>;
   profiles: Observable<Profile[]>;
   profile: Observable<any>;
-  constructor(private afs: AngularFirestore) {}
-
-  // getProfiles(email): Observable<Profile[]> {
-  //   this.profiles = this.afs
-  //     .collection('profiles', (ref) => ref.where('email', '==', email))
-  //     .snapshotChanges()
-  //     .pipe(
-  //       map((actions) =>
-  //         actions.map((a) => {
-  //           const data = a.payload.doc.data() as Profile;
-  //           return data;
-  //         })
-  //       )
-  //     );
-
-  //   return this.profiles;
-  // }
+  constructor(private afs: AngularFirestore, private store: Store<AppState>) {}
 
   getProfileId(email: string): Observable<string> {
     return this.afs
@@ -49,5 +36,3 @@ export class ProfileService {
       .pipe(map((x) => x.data()));
   }
 }
-
-// Try getting the Profile ID First, then fetching the profile by it's ID

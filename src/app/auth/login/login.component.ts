@@ -43,9 +43,6 @@ export class LoginComponent implements OnInit {
     const val = this.form.value;
     this.authService
       .login(val.email, val.password)
-      //If u comes back with a user, then I am successfully logged in to the firebase API
-      // Dispatch the user login function in auth actions to put the user in the store
-      // Navigate to the homepage
       .pipe(
         tap((u) => {
           this.store.dispatch(login({ email: u.user.email, id: u.user.uid }));
