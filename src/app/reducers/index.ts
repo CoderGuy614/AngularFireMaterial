@@ -1,3 +1,4 @@
+import { authReducer } from './../auth/reducers/index';
 import {
   ActionReducer,
   ActionReducerMap,
@@ -12,6 +13,7 @@ export interface AppState {}
 
 export const reducers: ActionReducerMap<AppState> = {
   router: routerReducer,
+  auth: authReducer,
 };
 
 export function logger(reducer: ActionReducer<any>): ActionReducer<any> {

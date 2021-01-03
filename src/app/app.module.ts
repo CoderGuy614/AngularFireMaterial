@@ -47,7 +47,7 @@ const routes: Routes = [
     BrowserAnimationsModule,
     AuthModule.forRoot(),
     FlashMessagesModule.forRoot(),
-    EffectsModule.forRoot([]),
+    EffectsModule.forRoot(),
 
     StoreModule.forRoot(reducers, {
       metaReducers,
