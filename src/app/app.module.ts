@@ -27,6 +27,7 @@ import { reducers, metaReducers } from './reducers';
 import { PERSISTENCE } from '@angular/fire/auth';
 import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
 import { EmailVerifiedComponent } from './auth/email-verified/email-verified.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 
 const routes: Routes = [
@@ -53,7 +54,12 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, NavbarComponent],
+  declarations: [
+    AppComponent, 
+    HomeComponent, 
+    NavbarComponent,
+    ProfileComponent
+  ],
   imports: [
     BrowserModule,
     AngularFireModule.initializeApp(environment.firebase),

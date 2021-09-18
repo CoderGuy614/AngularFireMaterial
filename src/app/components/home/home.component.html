@@ -6,31 +6,10 @@
     <h2>Welcome, guest!</h2>
   </ng-template>
 
-
-<div class="my-4">
-  <div class="card card-body" *ngIf="profile; else noProfile">
-    <div class="list-group">
-      <div class="list-group-item">Name: {{ profile.firstName + " " + profile.lastName }}
-        <button type="button" class="btn btn-primary mx-4" data-bs-toggle="modal" data-bs-target="#exampleModal">Edit</button>
-      </div>
-      <div class="list-group-item">Age: {{ profile.age }}
-        <button type="button" class="btn btn-primary mx-4" data-bs-toggle="modal" data-bs-target="#exampleModal">Edit</button>
-      </div>
-      <div class="list-group-item">
-        Birthday: {{ profile.birthday.seconds * 1000 | date: "yyyy-MM-dd" }}
-        <button type="button" class="btn btn-primary mx-4" data-bs-toggle="modal" data-bs-target="#exampleModal">Edit</button>
-      </div>
-    </div>
-  </div>
-</div>
+  <app-profile [profile]="profile"></app-profile> 
 
 </div>
 
-<ng-template #noProfile>
-  <hr />
-  <h4>You Don't Have a Profile</h4>
-  <button class="btn btn-primary">Create a Profile</button>
-</ng-template>
 
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">

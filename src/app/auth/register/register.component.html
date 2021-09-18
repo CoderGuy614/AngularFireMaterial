@@ -9,7 +9,7 @@
           Auth
         </h1>
         <form [formGroup]="form" (submit)="onSubmit()">
-          <div class="form-group" [ngClass]="displayFieldCss('email')">
+          <div class="form-group my-3" [ngClass]="displayFieldCss('email')">
             <label for="email">Email</label>
             <input
               class="form-control"
@@ -24,7 +24,7 @@
               errorMsg="Please enter a valid email address">
             </app-field-error-display>
           </div>
-          <div class="form-group"  [ngClass]="displayFieldCss('password')">
+          <div class="form-group my-3"  [ngClass]="displayFieldCss('password')">
             <label for="password">Password</label>
             <input
               type="password"
@@ -39,7 +39,7 @@
               errorMsg="Please enter a valid password">
             </app-field-error-display>
           </div>
-          <div class="form-group" [ngClass]="displayFieldCss('confirmPassword')">
+          <div class="form-group my-3" [ngClass]="displayFieldCss('confirmPassword')">
             <label for="confirmPassword">Confirm Password</label>
             <input
               type="password"
@@ -59,13 +59,13 @@
       </div>
     </div>
     <div class="d-inline-flex mt-2 mx-auto">
-      <p class="text-muted">Already have an account? </p><a href="/login" class="link-primary ml-2">Login</a>
+      <p class="text-muted">Already have an account? </p><a href="/login" class="link-primary ms-2">Login</a>
     </div>
   </div>
 </div>
 
 <ng-template #thenBlock>
-  <button class="btn btn-secondary btn-block">
+  <button class="btn btn-secondary w-100">
     <span class="spinner-border spinner-border-sm"></span>
     Loading..
   </button>
@@ -75,7 +75,7 @@
     <input
     type="submit"
     value="Register"
-    class="btn btn-secondary btn-block"            
+    class="btn btn-secondary w-100"            
     />
   </div>
 </ng-template>

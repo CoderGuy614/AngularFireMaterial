@@ -41,11 +41,13 @@ export class HomeComponent implements OnInit {
 
 
   fetchProfile(email: string) {
-    return this.profileService.getProfileId(email).subscribe(profileId => {
-      this.profileService.getProfile(profileId).subscribe(profile => {
-        this.store.dispatch(loadProfile({ profile }));
-        this.profile = profile;
-      })
-    });
+    if(email) {
+      return this.profileService.getProfileId(email).subscribe(profileId => {
+        this.profileService.getProfile(profileId).subscribe(profile => {
+          this.store.dispatch(loadProfile({ profile }));
+          this.profile = profile;
+        })
+      });
+    }
   };
 };

@@ -1,0 +1,39 @@
+
+<div class="container" *ngIf="profile; else noProfile">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-header">
+          Your Info:
+        </div>
+        <div class="card-body">
+          <div class="list-group">
+            <div class="list-group-item d-flex justify-content-between">Name: {{ profile.firstName + " " + profile.lastName }}
+              <button type="button" class="btn btn-outline-primary mx-4" data-bs-toggle="modal" data-bs-target="#exampleModal">Edit</button>
+            </div>
+            <div class="list-group-item d-flex justify-content-between">Age: {{ profile.age }}
+              <button type="button" class="btn btn-outline-primary mx-4" data-bs-toggle="modal" data-bs-target="#exampleModal">Edit</button>
+            </div>
+            <div class="list-group-item d-flex justify-content-between">
+              Birthday: {{ profile.birthday.seconds * 1000 | date: "yyyy-MM-dd" }}
+              <button type="button" class="btn btn-outline-primary mx-4" data-bs-toggle="modal" data-bs-target="#exampleModal">Edit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+  
+
+    </div>
+
+
+  </div>
+
+</div>
+  
+  <ng-template #noProfile>
+    <hr />
+    <h4>You Don't Have a Profile</h4>
+    <button class="btn btn-primary">Create a Profile</button>
+  </ng-template>

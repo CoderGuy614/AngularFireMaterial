@@ -13,9 +13,14 @@ import { FieldErrorDisplayComponent } from './field-error-display/field-error-di
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { EmailVerifiedComponent } from './email-verified/email-verified.component';
 
-
 @NgModule({
-  declarations: [LoginComponent, RegisterComponent, FieldErrorDisplayComponent, ForgotPasswordComponent, EmailVerifiedComponent],
+  declarations: [
+    LoginComponent, 
+    RegisterComponent, 
+    FieldErrorDisplayComponent, 
+    ForgotPasswordComponent, 
+    EmailVerifiedComponent, 
+  ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
