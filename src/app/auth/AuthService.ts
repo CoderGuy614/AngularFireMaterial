@@ -43,7 +43,7 @@ export class AuthService {
       this.flashMessages.showMessage('A verification email was sent, please check your inbox', 'alert-success', 3000);
     })
     .catch(() => {
-      this.flashMessages.showMessage('Oops, something went wrong, please try again', 'alert-danger', 3000);
+      this.flashMessages.showMessage('Could not verify your email address', 'alert-warning', 3000);
     })
     return from(verifyEmailResult);
   }
