@@ -1,4 +1,4 @@
-import { authReducer } from './../auth/reducers/index';
+import { authReducer } from '../auth/reducers/authReducer';
 import {
   ActionReducer,
   ActionReducerMap,

@@ -4,15 +4,15 @@
 
 export const environment = {
   production: false,
-  firebase: {
-    apiKey: 'AIzaSyCW_m3F_IVIoW2CvG_DIJi_6YShcsLOWPs',
-    authDomain: 'angularpro-dbc5d.firebaseapp.com',
-    projectId: 'angularpro-dbc5d',
-    storageBucket: 'angularpro-dbc5d.appspot.com',
-    messagingSenderId: '474720310710',
-    appId: '1:474720310710:web:676c70d244cbe8172a5d17',
-    measurementId: 'G-RGZNMR4KNQ',
-  },
+  firebase:  {
+    apiKey: "AIzaSyAlhPbOgeKxwurLG4FwaOl2fXFNCIVN2ck",
+    authDomain: "sharestream-62d6a.firebaseapp.com",
+    projectId: "sharestream-62d6a",
+    storageBucket: "sharestream-62d6a.appspot.com",
+    messagingSenderId: "1013568546238",
+    appId: "1:1013568546238:web:02f4b8d50f0ed5ada7c5ef",
+    measurementId: "G-YCJL4LL1BH"
+  }
 };
 
 /*

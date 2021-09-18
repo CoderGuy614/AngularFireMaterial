@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" routerLink="/">AngularPro</a>
+  <a class="navbar-brand" routerLink="/">AngularFire</a>
   <button
     class="navbar-toggler"
     type="button"
@@ -14,20 +14,22 @@
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
     <div class="navbar-nav">
       <a class="nav-item nav-link active" routerLink="/"
-        >Home <span class="sr-only">(current)</span></a
-      >
+        >Home <span class="sr-only">(current)</span></a>
       <a
         *ngIf="isLoggedOut$ | async"
         class="nav-item nav-link"
         routerLink="/login"
-        >Login</a
-      >
+        >Login</a>
+      <a
+        *ngIf="isLoggedOut$ | async"
+        class="nav-item nav-link"
+        routerLink="/register"
+        >Sign Up</a>
       <a
         *ngIf="isLoggedIn$ | async"
         class="nav-item nav-link"
         (click)="onLogoutClick()"
-        >Logout</a
-      >
+        >Logout</a>
     </div>
   </div>
 </nav>

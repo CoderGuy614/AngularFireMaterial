@@ -1,5 +1,12 @@
 <div class="container mt-3">
-  <h2>My Profile</h2>
+  <div *ngIf="user$ | async as user; else guest">
+    <h2>Welcome, {{ user.email }} </h2>
+  </div>
+  <ng-template #guest>
+    <h2>Welcome, guest!</h2>
+  </ng-template>
+
+
 
   <div class="card card-body" *ngIf="profile; else noProfile">
     <div class="list-group">

@@ -1,16 +1,13 @@
-import { getAuth } from './../auth.actions';
-import { login } from '../auth.actions';
-import { AuthService } from '../AuthService';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { map, tap } from 'rxjs/operators';
-import { noop, Observable } from 'rxjs';
 import { AppState } from '../../reducers';
-import { Store, select } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 
-import { FlashMessagesService } from 'angular2-flash-messages';
-import { AuthActions } from '../action-types';
+import { MessageService } from '../../services/MessageService';
+import * as actions from '../auth.actions';
+import { isLoading, isLoggedIn } from '../auth.selectors';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -19,52 +16,30 @@ import { AuthActions } from '../action-types';
 })
 export class LoginComponent implements OnInit {
   form: FormGroup;
+  loading$: Observable<boolean> = this.store.pipe(select(isLoading));
 
   constructor(
     private router: Router,
     private store: Store<AppState>,
-    private flashMessage: FlashMessagesService,
-    private authService: AuthService,
+    private flashMessage: MessageService,
     private fb: FormBuilder
   ) {
     this.form = fb.group({
-      email: ['jonny@gmail.com', [Validators.required]],
-      password: ['123456', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required]],
     });
-  }
-
-  // ngOnInit() {
-  //   this.authService.getAuth().subscribe((auth) => {
-  //     if (auth) {
-  //       this.router.navigate(['/']);
-  //     }
-  //   });
-  // }
+  };
 
   ngOnInit() {
-    this.store.dispatch(AuthActions.getAuth());
-  }
-
-  // onSubmit() {
-  //   const { email, password } = this.form.value;
-  //   this.authService
-  //     .login(email, password)
-  //     .pipe(
-  //       tap((u) => {
-  //         this.store.dispatch(login({ email, password }));
-  //         this.router.navigate(['/']);
-  //       })
-  //     )
-  //     .subscribe(noop, () =>
-  //       this.flashMessage.show('Oops, something went wrong', {
-  //         cssClass: 'alert-danger',
-  //         timeout: 3000,
-  //       })
-  //     );
-  // }
+    this.store.select(isLoggedIn).subscribe((loggedIn) => {
+      if((loggedIn)) {
+        this.router.navigate(['/'])
+      }
+    })
+  };
 
   onSubmit() {
     const { email, password } = this.form.value;
-    this.store.dispatch(login({ email, password }));
-  }
+    this.store.dispatch(actions.login({ payload: { email, password } }));
+  };
 }

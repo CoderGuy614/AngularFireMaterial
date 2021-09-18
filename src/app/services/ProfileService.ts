@@ -9,7 +9,7 @@ import {
 import { Profile } from '../models/Profile';
 import { Store } from '@ngrx/store';
 import { AppState } from '../reducers';
-import { storeProfile } from '../auth/auth.actions';
+import { loadProfile } from '../auth/auth.actions';
 
 @Injectable({
   providedIn: 'root',

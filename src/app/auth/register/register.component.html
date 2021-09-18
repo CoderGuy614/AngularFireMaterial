@@ -1,0 +1,81 @@
+<div class="row mt-2">
+  <div class="col-md-6 mx-auto d-flex flex-column">
+    <div class="card">
+      <div class="card-body">
+        <h1 class="text-center py-3">
+          <span class="text-secondary"
+            ><i class="fa fa-fire mx-2"></i>AngularFire
+          </span>
+          Auth
+        </h1>
+        <form [formGroup]="form" (submit)="onSubmit()">
+          <div class="form-group" [ngClass]="displayFieldCss('email')">
+            <label for="email">Email</label>
+            <input
+              class="form-control"
+              type="email"
+              formControlName="email"
+              name="email"
+              placeholder="example@mail.com"
+              
+            />
+            <app-field-error-display 
+              [displayError]="isFieldValid('email')" 
+              errorMsg="Please enter a valid email address">
+            </app-field-error-display>
+          </div>
+          <div class="form-group"  [ngClass]="displayFieldCss('password')">
+            <label for="password">Password</label>
+            <input
+              type="password"
+              name="password"
+              formControlName="password"
+              class="form-control"
+              placeholder="Must be at least 6 characters"
+
+            />
+            <app-field-error-display 
+              [displayError]="isFieldValid('password')" 
+              errorMsg="Please enter a valid password">
+            </app-field-error-display>
+          </div>
+          <div class="form-group" [ngClass]="displayFieldCss('confirmPassword')">
+            <label for="confirmPassword">Confirm Password</label>
+            <input
+              type="password"
+              name="confirmPassword"
+              formControlName="confirmPassword"
+              class="form-control"
+              placeholder="Confirm Password"
+            />
+            <app-field-error-display 
+              [displayError]="isConfirmPasswordValid()" 
+              errorMsg="Passwords do not match">
+            </app-field-error-display>
+          </div>
+          
+          <div *ngIf="loading$ | async; then thenBlock else elseBlock"></div>
+        </form>
+      </div>
+    </div>
+    <div class="d-inline-flex mt-2 mx-auto">
+      <p class="text-muted">Already have an account? </p><a href="/login" class="link-primary ml-2">Login</a>
+    </div>
+  </div>
+</div>
+
+<ng-template #thenBlock>
+  <button class="btn btn-secondary btn-block">
+    <span class="spinner-border spinner-border-sm"></span>
+    Loading..
+  </button>
+</ng-template>
+<ng-template #elseBlock> 
+  <div class="form-group">           
+    <input
+    type="submit"
+    value="Register"
+    class="btn btn-secondary btn-block"            
+    />
+  </div>
+</ng-template>
