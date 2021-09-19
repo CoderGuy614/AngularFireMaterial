@@ -50,3 +50,16 @@ export const loadProfile = createAction(
   '[Home] Store Profile',
   props<{ profile: Profile }>()
 );
+
+export const updateDisplayName = createAction(
+  '[Edit displayName Modal] Update Display Name',
+  props<{ payload: any }>()
+);
+
+export const updateDisplayNameSuccess = createAction(
+  '[Edit displayName Modal] Update Display Name Success'
+);
+
+export const updateDisplayNameFail = createAction(
+  '[Edit displayName Modal] Update Display Name Fail'
+);

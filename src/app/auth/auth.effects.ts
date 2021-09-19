@@ -17,7 +17,8 @@ export class AuthEffects {
     private authService: AuthService,
     private afAuth: AngularFireAuth,
     private flashMessages: MessageService,
-    private store: Store<AppState>
+    private store: Store<AppState>,
+
   ) {}
 
   getUser$ = createEffect(() =>
@@ -27,8 +28,10 @@ export class AuthEffects {
         this.afAuth.authState.pipe(
           map((firebaseUser) => {
             if(firebaseUser) {
+              console.log('GET USER YES')
               return actions.authenticated({ payload: this.fromFirebaseUser(firebaseUser) })
             } else { 
+              console.log('GET USER NO')
               return actions.notAuthenticated();
             }
           }
@@ -88,6 +91,19 @@ export class AuthEffects {
             return actions.sendPasswordResetEmailSuccess()
         }),
         catchError(error => of(actions.sendPasswordResetEmailFail())))
+      )
+    )
+  );
+
+  updateDisplayName$ = createEffect(() =>
+  this.actions$.pipe(
+    ofType(actions.updateDisplayName),
+    exhaustMap(action =>
+      this.authService.updateUserProfile(action.payload).pipe(
+        map(() => {
+            return actions.updateDisplayNameSuccess()
+        }),
+        catchError(error => of(actions.updateDisplayNameFail())))
       )
     )
   );

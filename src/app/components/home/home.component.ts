@@ -18,36 +18,26 @@ import { User } from 'src/app/auth/model/user.model';
 })
 export class HomeComponent implements OnInit {
 
-  profile: Profile = null;
   user$: Observable<User>;
   isLoggedIn$: Observable<boolean>;
 
   constructor(
-    private profileService: ProfileService,
     private store: Store<AppState>
   ) {}
 
   ngOnInit() {
     this.user$ = this.store.pipe(select(getUser));
     this.isLoggedIn$ = this.store.pipe(select(isLoggedIn));
-    this.isLoggedIn$.subscribe(loggedIn => {
-      if(loggedIn){
-        const user = this.user$.subscribe(user => {
-          this.fetchProfile(user.email)
-        });
-      };
-    });
-  };
+  }
 
-
-  fetchProfile(email: string) {
-    if(email) {
-      return this.profileService.getProfileId(email).subscribe(profileId => {
-        this.profileService.getProfile(profileId).subscribe(profile => {
-          this.store.dispatch(loadProfile({ profile }));
-          this.profile = profile;
-        })
-      });
-    }
-  };
+  // fetchProfile(email: string) {
+  //   if(email) {
+  //     return this.profileService.getProfileId(email).subscribe(profileId => {
+  //       this.profileService.getProfile(profileId).subscribe(profile => {
+  //         this.store.dispatch(loadProfile({ profile }));
+  //         this.profile = profile;
+  //       })
+  //     });
+  //   }
+  // };
 };
