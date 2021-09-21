@@ -16,13 +16,13 @@
         <li class="nav-item"><a class="nav-link" routerLink="/">Home</a></li>
         <div *ngIf="isLoggedIn$ | async as loggedIn then loggedIn; else loggedOut"></div>
       </ul>
+      <ul class='navbar-nav ms-auto'>
+        <li class='nav-item' *ngIf="user$ | async as user then currentUser; else guestUser">
+        </li>
+      </ul>
     </div>
   </div>
 </nav>
-
-<ng-template #guest>
-  <h2>Welcome, guest!</h2>
-</ng-template>
 
 <ng-template #loggedIn>
   <li class="nav-item">
@@ -50,3 +50,16 @@
   </li>
 </ng-template> 
 
+<ng-template #currentUser>
+  <div *ngIf="user$ | async as user" class='d-flex'> 
+    <img class='navbar-avatar rounded-circle' src="{{ user.photoURL ? user.photoURL : userPhotoPlaceholder}}" alt="profile-pic">
+    <p class="nav-link">Welcome, {{ user.displayName || user.email }}</p>
+  </div>
+</ng-template>
+
+<ng-template #guestUser>
+  <div class="d-flex">
+    <img class='navbar-avatar rounded-circle' src="{{ userPhotoPlaceholder}}" alt="profile-pic">
+    <p class="nav-link">Welcome, Guest</p>
+  </div>
+</ng-template>
