@@ -56,10 +56,15 @@ export const updateDisplayName = createAction(
   props<{ payload: any }>()
 );
 
-export const updateDisplayNameSuccess = createAction(
-  '[Edit displayName Modal] Update Display Name Success'
+export const updatePhotoURL = createAction(
+  '[Edit photoURL Modal] Update PhotoURL',
+  props<{ payload: any }>()
 );
 
-export const updateDisplayNameFail = createAction(
-  '[Edit displayName Modal] Update Display Name Fail'
+export const updateProfileSuccess = createAction(
+  '[Edit displayName Modal] Update Profile Success'
+);
+
+export const updateProfileFail = createAction(
+  '[Edit displayName Modal] Update Profile Fail'
 );

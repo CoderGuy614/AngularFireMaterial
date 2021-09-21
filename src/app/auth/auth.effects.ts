@@ -28,10 +28,8 @@ export class AuthEffects {
         this.afAuth.authState.pipe(
           map((firebaseUser) => {
             if(firebaseUser) {
-              console.log('GET USER YES')
               return actions.authenticated({ payload: this.fromFirebaseUser(firebaseUser) })
             } else { 
-              console.log('GET USER NO')
               return actions.notAuthenticated();
             }
           }
@@ -99,15 +97,27 @@ export class AuthEffects {
   this.actions$.pipe(
     ofType(actions.updateDisplayName),
     exhaustMap(action =>
-      this.authService.updateUserProfile(action.payload).pipe(
+      this.authService.updateDisplayName(action.payload).pipe(
         map(() => {
-            return actions.updateDisplayNameSuccess()
+            return actions.updateProfileSuccess()
         }),
-        catchError(error => of(actions.updateDisplayNameFail())))
+        catchError(error => of(actions.updateProfileFail())))
       )
     )
   );
 
+  updatePhotoURL$ = createEffect(() =>
+  this.actions$.pipe(
+    ofType(actions.updatePhotoURL),
+    exhaustMap(action =>
+      this.authService.updatePhotoURL(action.payload).pipe(
+        map(() => {
+            return actions.updateProfileSuccess()
+        }),
+        catchError(error => of(actions.updateProfileFail())))
+      )
+    )
+  );
 
   private fromFirebaseUser(firebaseUser): User {
     const { uid, displayName, email, phoneNumber, emailVerified, photoURL } = firebaseUser;
@@ -115,4 +125,4 @@ export class AuthEffects {
     return user;
   };
 
-}
+};

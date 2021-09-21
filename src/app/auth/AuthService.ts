@@ -52,21 +52,29 @@ export class AuthService {
       this.flashMessages.showMessage('Could not verify your email address', 'alert-warning', 3000);
     })
     return from(verifyEmailResult);
-  }
+  };
 
-  updateUserProfile(displayName?:string, photoURL?:string): Observable<any> {
-    const updateUserProfileResult = this.afAuth.currentUser.then(user => user.updateProfile({ displayName, photoURL}))
+  updateDisplayName(displayName:string): Observable<any> {
+    const updateUserProfileResult = this.afAuth.currentUser.then(user => user.updateProfile({ displayName }))
     .then(() => {
-
-      //Try moving this to a new effect
-      this.afAuth.currentUser.then(user => this.store.dispatch(authActions.authenticated({ payload: this.fromFirebaseUser(user) })) )
-      this.flashMessages.showMessage('Update Succeeded!', 'alert-success', 3000);
+      this.reloadCurrentUserInfo();
     })
     .catch(() => {
       this.flashMessages.showMessage('Failed to update your profile', 'alert-warning', 3000);
     })
     return from(updateUserProfileResult);
-  }
+  };
+
+  updatePhotoURL(photoURL:string): Observable<any> {
+    const updateUserProfileResult = this.afAuth.currentUser.then(user => user.updateProfile({ photoURL }))
+    .then(() => {
+      this.reloadCurrentUserInfo();
+    })
+    .catch(() => {
+      this.flashMessages.showMessage('Failed to update your profile', 'alert-warning', 3000);
+    })
+    return from(updateUserProfileResult);
+  };
   
   
   logout() {
@@ -83,10 +91,17 @@ export class AuthService {
     this.router.navigate(['/login'])
   };
 
+  private reloadCurrentUserInfo() {
+    this.afAuth.currentUser.then(user => this.store.dispatch(authActions.authenticated({ payload: this.fromFirebaseUser(user) })) )
+      this.flashMessages.showMessage('Your profile info has been updated', 'alert-success', 3000);
+  };
+
   private fromFirebaseUser(firebaseUser): User {
     const { uid, displayName, email, phoneNumber, emailVerified, photoURL } = firebaseUser;
     const user = { uid, displayName, email, phoneNumber, emailVerified, photoURL } as User;
     return user;
   };
+
+
 
 };

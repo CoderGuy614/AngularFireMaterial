@@ -4,7 +4,8 @@ import { User } from 'src/app/auth/model/user.model';
 import { select, Store } from '@ngrx/store';
 import * as authActions from '../../auth/auth.actions';
 import { AppState } from 'src/app/reducers';
-import { Modal } from 'bootstrap';
+import { closeModal } from '../../auth/utils/modalHelpers';
+
 
 @Component({
   selector: 'app-profile',
@@ -13,6 +14,9 @@ import { Modal } from 'bootstrap';
 })
 export class ProfileComponent implements OnInit {
   displayNameForm: FormGroup;
+  photoURLForm: FormGroup;
+  photoURLPlaceholder: string = "Enter a Photo URL"
+  displayNamePlaceholder: string = "Enter a Display Name"
 
   @Input() user: User;
   constructor(
@@ -21,7 +25,10 @@ export class ProfileComponent implements OnInit {
     ) {
     this.displayNameForm = fb.group({
       displayName: ['', [Validators.required]]
-    })
+    });
+    this.photoURLForm = fb.group({
+      photoURL: ['', [Validators.required]]
+    });
    }
 
   ngOnInit(): void {
@@ -30,10 +37,12 @@ export class ProfileComponent implements OnInit {
   onSubmitDisplayName() {
     const { displayName } = this.displayNameForm.value;
     this.store.dispatch(authActions.updateDisplayName({ payload: displayName }));
-    var displayNameModalEl = document.querySelector('#editDisplayName');
-    var modalBackdrop = document.querySelector('.modal-backdrop');
-    var modal = Modal.getOrCreateInstance(displayNameModalEl);
-    modal.hide();
-    modalBackdrop.remove();
+    closeModal('editDisplayName');
+  };
+
+  onSubmitPhotoURL() {
+    const { photoURL } = this.photoURLForm.value;
+    this.store.dispatch(authActions.updatePhotoURL({ payload: photoURL }));
+    closeModal('editPhotoURL');
   };
 };

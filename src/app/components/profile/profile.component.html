@@ -17,6 +17,9 @@
             <li class="list-group-item d-flex justify-content-between align-items-center">Phone: {{ user.phoneNumber ? user.phoneNumber : "None" }} 
               <button type="button" class="btn btn-outline-primary mx-4" data-bs-toggle="modal" data-bs-target="#exampleModal">Edit</button>
             </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">Photo Url: {{ user.photoURL ? user.photoURL : "None" }} 
+              <button type="button" class="btn btn-outline-primary mx-4" data-bs-toggle="modal" data-bs-target="#editPhotoURL">Edit</button>
+            </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">Email Verified: {{ user.emailVerified ? "Yes" : "No" }} 
               <button type="button" class="btn btn-outline-primary mx-4" data-bs-toggle="modal" data-bs-target="#exampleModal">Edit</button>
             </li>
@@ -27,7 +30,7 @@
   </div>
 </div>
   
-
+<!-- Edit Display Name Modal  -->
 <div class="modal fade" id="editDisplayName" tabindex="-1" aria-labelledby="editDisplayNameLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -36,8 +39,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-
-        <form [formGroup]="displayNameForm" (submit)="onSubmitDisplayName()">
+        <form [formGroup]="displayNameForm">
           <div class="mb-3">
             <label for="displayName" class="col-form-label">Display Name</label>
             <input 
@@ -47,19 +49,47 @@
             formControlName="displayName"
             name="displayName"
             required
+            placeholder="{{ user && user.displayName ? user.displayName : displayNamePlaceholder }}"
             >
-            
           </div>
         </form>
-
       </div>
       <div class="modal-footer">
-
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
         <button type="button" class="btn btn-primary" (click)="onSubmitDisplayName()" [disabled]="!displayNameForm.valid">Save</button>
-
       </div>
+    </div>
+  </div>
+</div>
 
+<!-- Edit PhotoURL Modal -->
+<div class="modal fade" id="editPhotoURL" tabindex="-1" aria-labelledby="editPhotoURLLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editPhotoURLLabel">Edit Photo URL</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="photoURLForm">
+          <div class="mb-3">
+            <label for="photoURL" class="col-form-label">PhotoURL</label>
+            <input 
+            type="text" 
+            class="form-control" 
+            id="photoURL"
+            formControlName="photoURL"
+            name="photoURL"
+            required
+            placeholder="{{ user && user.photoURL ? user.photoURL : photoURLPlaceholder }}"
+            >
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" (click)="onSubmitPhotoURL()" [disabled]="!photoURLForm.valid">Save</button>
+      </div>
     </div>
   </div>
 </div>

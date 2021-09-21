@@ -1,35 +1,52 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" routerLink="/">AngularFire</a>
-  <button
-    class="navbar-toggler"
-    type="button"
-    data-toggle="collapse"
-    data-target="#navbarNavAltMarkup"
-    aria-controls="navbarNavAltMarkup"
-    aria-expanded="false"
-    aria-label="Toggle navigation"
-  >
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-    <div class="navbar-nav">
-      <a class="nav-item nav-link active" routerLink="/"
-        >Home <span class="sr-only">(current)</span></a>
-      <a
-        *ngIf="isLoggedOut$ | async"
-        class="nav-item nav-link"
-        routerLink="/login"
-        >Login</a>
-      <a
-        *ngIf="isLoggedOut$ | async"
-        class="nav-item nav-link"
-        routerLink="/register"
-        >Sign Up</a>
-      <a
-        *ngIf="isLoggedIn$ | async"
-        class="nav-item nav-link"
-        (click)="onLogoutClick()"
-        >Logout</a>
+<nav class="navbar navbar-expand-md navbar-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" routerLink="/">AngularFire</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      aria-controls="navbar"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+      (click)="toggleCollapse()"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="navbar-collapse collapse" id="navbar">
+      <ul class="navbar-nav ms-2">
+        <li class="nav-item"><a class="nav-link" routerLink="/">Home</a></li>
+        <div *ngIf="isLoggedIn$ | async as loggedIn then loggedIn; else loggedOut"></div>
+      </ul>
     </div>
   </div>
 </nav>
+
+<ng-template #guest>
+  <h2>Welcome, guest!</h2>
+</ng-template>
+
+<ng-template #loggedIn>
+  <li class="nav-item">
+    <a class="nav-link"
+    (click)="onLogoutClick()"
+    >Logout
+    </a>
+  </li>
+</ng-template>
+
+<ng-template #loggedOut>
+  <li class="nav-item"> 
+    <a
+    *ngIf="isLoggedOut$ | async"
+    class="nav-link"
+    routerLink="/login"
+    >Login</a>
+  </li>
+  <li class="nav-item">
+    <a
+    *ngIf="isLoggedOut$ | async"
+    class="nav-link"
+    routerLink="/register"
+    >Sign Up</a>
+  </li>
+</ng-template> 
+

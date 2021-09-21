@@ -1,10 +1,6 @@
 <div class="container mt-3">
-  <div *ngIf="user$ | async as user; else guest">
-    <h2>Welcome, {{ user.displayName || user.email }} </h2>
+  <div *ngIf="user$ | async as user">
     <app-profile [user]="user"></app-profile> 
   </div>
 </div>
 
-<ng-template #guest>
-  <h2>Welcome, guest!</h2>
-</ng-template>

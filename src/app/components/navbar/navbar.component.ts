@@ -7,7 +7,8 @@ import { MessageService } from '../../services/MessageService';
 import { select, Store } from '@ngrx/store';
 import { AppState } from '../../reducers';
 import * as actions from '../../auth/auth.actions';
-import { isLoggedIn, isLoggedOut } from '../../auth/auth.selectors';
+import { getUser, isLoggedIn, isLoggedOut } from '../../auth/auth.selectors';
+import { User } from 'src/app/auth/model/user.model';
 
 @Component({
   selector: 'app-navbar',
@@ -15,8 +16,13 @@ import { isLoggedIn, isLoggedOut } from '../../auth/auth.selectors';
   styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent implements OnInit {
+  
   isLoggedIn$: Observable<boolean>;
   isLoggedOut$: Observable<boolean>;
+  user$: Observable<User>;
+  userPhotoPlaceholder: string = 'https://www.gravatar.com/avatar/02f1c10ef8930a258e3d6b6e8640d155?s=200&r=pg&d=mm'
+  isNavOpen: boolean = false;
+
   constructor(
     private authService: AuthService,
     private store: Store<AppState>,
@@ -32,7 +38,18 @@ export class NavbarComponent implements OnInit {
   };
 
   ngOnInit() {
+    this.user$ = this.store.pipe(select(getUser));
     this.isLoggedIn$ = this.store.pipe(select(isLoggedIn));
     this.isLoggedOut$ = this.store.pipe(select(isLoggedOut));
+  };
+
+  toggleCollapse() {
+    const navbar = document.getElementById('navbar');
+      if(navbar.classList.contains('show')) {
+        navbar.classList.remove('show');
+        navbar.classList.add('collapse');
+      } else if(navbar.classList.contains('collapse')) {
+        navbar.classList.add('show')
+      }
   };
 };
