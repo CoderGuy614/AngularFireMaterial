@@ -28,6 +28,7 @@ import { PERSISTENCE } from '@angular/fire/auth';
 import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
 import { EmailVerifiedComponent } from './auth/email-verified/email-verified.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { ProfileDropdownComponent } from './components/navbar/profile-dropdown/profile-dropdown.component';
 
 
 const routes: Routes = [
@@ -58,7 +59,8 @@ const routes: Routes = [
     AppComponent, 
     HomeComponent, 
     NavbarComponent,
-    ProfileComponent
+    ProfileComponent,
+    ProfileDropdownComponent
   ],
   imports: [
     BrowserModule,

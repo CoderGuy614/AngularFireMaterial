@@ -1,9 +1,10 @@
 import { Modal } from 'bootstrap';
 
 export const closeModal = (modalId: string) => {
+    console.log(modalId)
     var displayNameModalEl = document.querySelector(`#${modalId}`);
     var modalBackdrop = document.querySelector('.modal-backdrop');
     var modal = Modal.getOrCreateInstance(displayNameModalEl);
-    modal.hide();
     modalBackdrop.remove();
+    modal.hide();
 };

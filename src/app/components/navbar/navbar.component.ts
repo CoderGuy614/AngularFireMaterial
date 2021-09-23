@@ -21,7 +21,6 @@ export class NavbarComponent implements OnInit {
   isLoggedOut$: Observable<boolean>;
   user$: Observable<User>;
   userPhotoPlaceholder: string = 'https://www.gravatar.com/avatar/02f1c10ef8930a258e3d6b6e8640d155?s=200&r=pg&d=mm'
-  isNavOpen: boolean = false;
 
   constructor(
     private authService: AuthService,
@@ -30,13 +29,6 @@ export class NavbarComponent implements OnInit {
     private router: Router
   ) {}
 
-  onLogoutClick() {
-    this.authService.logout();
-    this.store.dispatch(actions.logout());
-    this.flashMessage.showMessage('You are now logged out', 'alert-warning', 3000);
-    this.router.navigate(['/login']);
-  };
-
   ngOnInit() {
     this.user$ = this.store.pipe(select(getUser));
     this.isLoggedIn$ = this.store.pipe(select(isLoggedIn));
@@ -44,12 +36,7 @@ export class NavbarComponent implements OnInit {
   };
 
   toggleCollapse() {
-    const navbar = document.getElementById('navbar');
-      if(navbar.classList.contains('show')) {
-        navbar.classList.remove('show');
-        navbar.classList.add('collapse');
-      } else if(navbar.classList.contains('collapse')) {
-        navbar.classList.add('show')
-      }
+    const navClasses = document.getElementById('navbar').classList;
+    navClasses.contains('show') ? navClasses.remove('show') : navClasses.add('show');
   };
 };

@@ -14,7 +14,7 @@
     <div class="navbar-collapse collapse" id="navbar">
       <ul class="navbar-nav ms-2">
         <li class="nav-item"><a class="nav-link" routerLink="/">Home</a></li>
-        <div *ngIf="isLoggedIn$ | async as loggedIn then loggedIn; else loggedOut"></div>
+        <div *ngIf="isLoggedOut$ | async as loggedOut"></div>
       </ul>
       <ul class='navbar-nav ms-auto'>
         <li class='nav-item' *ngIf="user$ | async as user then currentUser; else guestUser">
@@ -24,26 +24,15 @@
   </div>
 </nav>
 
-<ng-template #loggedIn>
-  <li class="nav-item">
-    <a class="nav-link"
-    (click)="onLogoutClick()"
-    >Logout
-    </a>
-  </li>
-</ng-template>
-
 <ng-template #loggedOut>
   <li class="nav-item"> 
     <a
-    *ngIf="isLoggedOut$ | async"
     class="nav-link"
     routerLink="/login"
     >Login</a>
   </li>
   <li class="nav-item">
     <a
-    *ngIf="isLoggedOut$ | async"
     class="nav-link"
     routerLink="/register"
     >Sign Up</a>
@@ -51,9 +40,8 @@
 </ng-template> 
 
 <ng-template #currentUser>
-  <div *ngIf="user$ | async as user" class='d-flex'> 
-    <img class='navbar-avatar rounded-circle' src="{{ user.photoURL ? user.photoURL : userPhotoPlaceholder}}" alt="profile-pic">
-    <p class="nav-link">Welcome, {{ user.displayName || user.email }}</p>
+  <div *ngIf="user$ | async as user"> 
+    <app-profile-dropdown [user]="user"></app-profile-dropdown>
   </div>
 </ng-template>
 
