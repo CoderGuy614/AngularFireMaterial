@@ -30,7 +30,6 @@ import { EmailVerifiedComponent } from './auth/email-verified/email-verified.com
 import { ProfileComponent } from './components/profile/profile.component';
 import { ProfileDropdownComponent } from './components/navbar/profile-dropdown/profile-dropdown.component';
 
-
 const routes: Routes = [
   {
     path: '',

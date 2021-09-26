@@ -12,6 +12,7 @@ import { AuthEffects } from './auth.effects';
 import { FieldErrorDisplayComponent } from './field-error-display/field-error-display.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { EmailVerifiedComponent } from './email-verified/email-verified.component';
+import { MaterialModule } from '../material.module';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { EmailVerifiedComponent } from './email-verified/email-verified.componen
     EffectsModule.forFeature([AuthEffects]),
     RouterModule.forChild([{ path: 'login', component: LoginComponent }, { path: 'register', component: RegisterComponent }]),
     StoreModule.forFeature('auth', authReducer),
+    MaterialModule
   ],
   exports: [LoginComponent, RegisterComponent],
 })
