@@ -2,12 +2,11 @@ import { AuthService } from './AuthService';
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
-import { map, exhaustMap, catchError, mergeMap, mapTo, switchMap } from 'rxjs/operators';
+import { map, exhaustMap, catchError } from 'rxjs/operators';
 import * as actions from './auth.actions';
 import { Store } from '@ngrx/store';
 import { AppState } from '../reducers';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { MessageService } from '../services/MessageService';
 import { User } from './model/user.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -17,7 +16,6 @@ export class AuthEffects {
     private actions$: Actions,
     private authService: AuthService,
     private afAuth: AngularFireAuth,
-    private flashMessages: MessageService,
     private store: Store<AppState>,
     private snackBar: MatSnackBar
 
@@ -49,8 +47,7 @@ export class AuthEffects {
           map(user => {
             if(user) {
               const { uid, displayName, email, phoneNumber, emailVerified, photoURL } = user.user;
-              this.snackBar.open('Login was successful!', null, { duration: 2500 })
-              // this.flashMessages.showMessage('Login was successful!', 'alert-success', 3000);
+              this.snackBar.open('Login was successful!', null, { duration: 3000 })
               return actions.authenticated({ payload: { uid, displayName, email, phoneNumber, emailVerified, photoURL } })
             } else {
               return actions.notAuthenticated();
@@ -71,8 +68,7 @@ export class AuthEffects {
             if(user) {
               const { uid, displayName, email, phoneNumber, emailVerified, photoURL } = user.user;
               this.authService.sendVerificationEmail();
-              this.snackBar.open('Login was successful!', null, { duration: 2500 })
-              // this.flashMessages.showMessage('Account was successfully created!', 'alert-success', 3000);
+              this.snackBar.open('Account was successfully created', null, { duration: 3000 });
               return actions.authenticated({ payload: { uid, displayName, email, phoneNumber, emailVerified, photoURL } })
             } else {
               return actions.notAuthenticated();

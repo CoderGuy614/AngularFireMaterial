@@ -1,7 +1,6 @@
 import { Observable, from, of } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { MessageService } from '../services/MessageService';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from '../reducers';
@@ -15,7 +14,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 export class AuthService {
   constructor(private afAuth: AngularFireAuth,
-              private flashMessages: MessageService,
               private router: Router,
               private store: Store<AppState>,
               private snackBar: MatSnackBar
@@ -48,11 +46,11 @@ export class AuthService {
   sendVerificationEmail(): Observable<any> {
     const verifyEmailResult = this.afAuth.currentUser.then(user => user.sendEmailVerification({url: 'http://localhost:4200/email-verified'}))
     .then(() => {
-      this.flashMessages.showMessage('A verification email was sent, please check your inbox', 'alert-success', 3000);
+      this.snackBar.open('A verification email was sent, please check your inbox', null, { duration: 3000 });
     })
     .catch(() => {
-      this.flashMessages.showMessage('Could not verify your email address', 'alert-warning', 3000);
-    })
+      this.snackBar.open('Could not verify your email address', null, { duration: 3000 });
+    });
     return from(verifyEmailResult);
   };
 
@@ -62,7 +60,7 @@ export class AuthService {
       this.reloadCurrentUserInfo();
     })
     .catch(() => {
-      this.flashMessages.showMessage('Failed to update your profile', 'alert-warning', 3000);
+      this.snackBar.open('Failed to update your profile', null, { duration: 3000 });
     })
     return from(updateUserProfileResult);
   };
@@ -73,7 +71,7 @@ export class AuthService {
       this.reloadCurrentUserInfo();
     })
     .catch(() => {
-      this.flashMessages.showMessage('Failed to update your profile', 'alert-warning', 3000);
+      this.snackBar.open('Failed to update your profile', null, { duration: 3000 });
     })
     return from(updateUserProfileResult);
   };
@@ -85,18 +83,17 @@ export class AuthService {
 
   private handlePwResetErrorResponse(error) {
     const { code, message }  = error;
-    this.snackBar.open(`${message}`, null, { duration: 2500 });
-    // this.flashMessages.showMessage(`${message}`, 'alert-danger', 3000);
+    this.snackBar.open(`${message}`, null, { duration: 3000 });
   };
 
   private handlePwResetEmailSuccessResponse() {
-    this.flashMessages.showMessage('Email sent, please check your inbox', 'alert-success', 3000);
+    this.snackBar.open('Reset password email sent, please check your inbox', null, { duration: 3000 });
     this.router.navigate(['/login'])
   };
 
   private reloadCurrentUserInfo() {
     this.afAuth.currentUser.then(user => this.store.dispatch(authActions.authenticated({ payload: this.fromFirebaseUser(user) })) )
-      this.flashMessages.showMessage('Your profile info has been updated', 'alert-success', 3000);
+      this.snackBar.open('Your profile info has been updated', null, { duration: 3000 });
   };
 
   private fromFirebaseUser(firebaseUser): User {

@@ -2,10 +2,10 @@ import { Component, Input, OnInit } from '@angular/core';
 import { User } from 'src/app/auth/model/user.model';
 import * as actions from '../../../auth/auth.actions';
 import { select, Store } from '@ngrx/store';
-import { MessageService } from '../../../services/MessageService';
 import { AuthService } from '../../../auth/AuthService';
 import { AppState } from 'src/app/reducers';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-profile-dropdown',
@@ -20,14 +20,14 @@ export class ProfileDropdownComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private store: Store<AppState>,
-    private flashMessage: MessageService,
-    private router: Router
+    private router: Router,
+    private snackbar: MatSnackBar
   ) {}
 
   onLogoutClick() {
     this.authService.logout();
     this.store.dispatch(actions.logout());
-    this.flashMessage.showMessage('You are now logged out', 'alert-warning', 3000);
+    this.snackbar.open('You are now logged out', null, { duration: 3000 });
     this.router.navigate(['/login']);
   };
 

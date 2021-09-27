@@ -9,34 +9,40 @@
           Material
         </h1>
         <form [formGroup]="loginForm" (submit)="onSubmitLogin()">
-          <div class="container d-flex flex-column justify-content-center">
-            <mat-form-field appearance="legacy">
-              <mat-label for="email">Email</mat-label>
-              <input
-                matInput
-                type="email"
-                formControlName="email"
-                name="email"
-                placeholder="Enter your email"
-                required
-              />
-            </mat-form-field>
-            <mat-form-field appearance="legacy">
-              <mat-label for="password">Password</mat-label>
-              <input
-                matInput
-                type="password"
-                name="password"
-                formControlName="password"
-                class="form-control"
-                placeholder="Enter password"
-                required
-              />
-            </mat-form-field>
-            <div class="my-3 mx-auto">
-              <a href='/forgot-password' class="link-primary">Forgot Password?</a>
+          <div class="container fluid">
+            <div class="row d-flex flex-column justify-content-center align-items-center">
+              <div class="d-flex flex-column">
+                <mat-form-field appearance="legacy">
+                  <mat-label for="email">Email</mat-label>
+                  <input
+                    matInput
+                    type="email"
+                    formControlName="email"
+                    name="email"
+                    placeholder="Enter your email"
+                    required
+                  />
+                </mat-form-field>
+                <mat-form-field appearance="legacy">
+                  <mat-label for="password">Password</mat-label>
+                  <input
+                    matInput
+                    type="password"
+                    name="password"
+                    formControlName="password"
+                    class="form-control"
+                    placeholder="Enter password"
+                    required
+                  />
+                </mat-form-field>
+
+                <div class="my-3 mx-auto">
+                  <a mat-flat-button href='/forgot-password' class="link-primary">Forgot Password?</a>
+                </div>
+                <div *ngIf="loading$ | async; then thenLoginBlock else elseLoginBlock"></div>
+
+              </div>
             </div>
-            <div *ngIf="loading$ | async; then thenLoginBlock else elseLoginBlock"></div>
           </div>
         </form>
       </div>
@@ -111,7 +117,7 @@
 
 
       <ng-template #thenRegisterBlock>
-        <button class="btn btn-secondary w-100">
+        <button mat-button color="primary">
           <span class="spinner-border spinner-border-sm"></span>
           Loading..
         </button>
@@ -128,7 +134,7 @@
       </ng-template>
 
     <ng-template #thenLoginBlock>
-      <button class="btn btn-secondary w-100">
+      <button mat-raised-button color="primary">
         <span class="spinner-border spinner-border-sm"></span>
         Loading..
       </button>
@@ -136,11 +142,14 @@
 
     <ng-template #elseLoginBlock> 
       <div class="form-group">           
-        <input
-        type="submit"
-        value="Login"
-        class="btn btn-secondary w-100"
-        [disabled]="!registerForm.valid"          
-        />
+        <button 
+        mat-raised-button 
+        color="primary" 
+        type="submit" 
+        [disabled]="!loginForm.valid"
+        class="w-100"
+        >
+          Login
+        </button>
       </div>
     </ng-template>
