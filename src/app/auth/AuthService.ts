@@ -7,6 +7,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../reducers';
 import * as authActions from './auth.actions';
 import { User } from './model/user.model';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root',
@@ -17,6 +18,7 @@ export class AuthService {
               private flashMessages: MessageService,
               private router: Router,
               private store: Store<AppState>,
+              private snackBar: MatSnackBar
               ) {}
 
   getUser() {
@@ -83,7 +85,8 @@ export class AuthService {
 
   private handlePwResetErrorResponse(error) {
     const { code, message }  = error;
-    this.flashMessages.showMessage(`${message}`, 'alert-danger', 3000);
+    this.snackBar.open(`${message}`, null, { duration: 2500 });
+    // this.flashMessages.showMessage(`${message}`, 'alert-danger', 3000);
   };
 
   private handlePwResetEmailSuccessResponse() {

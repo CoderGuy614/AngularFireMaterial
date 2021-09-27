@@ -1,126 +1,123 @@
 <mat-card>
   <mat-tab-group  mat-align-tabs="center">
     <mat-tab label="Login">
-      <div class="row mt-2">
-        <div class="col-md-6 mx-auto d-flex flex-column">
-          <div class="card">
-            <div class="card-body">
-              <h1 class="text-center py-3">
-                <span class="text-secondary"
-                  ><i class="fa fa-fire mx-2"></i>AngularFire
-                </span>
-                Auth
-              </h1>
-              <form [formGroup]="loginForm" (submit)="onSubmitLogin()">
-                <div class="form-group my-3">
-                  <label for="email">Email</label>
-                  <input
-                    class="form-control"
-                    type="email"
-                    formControlName="email"
-                    name="email"
-                    placeholder="Enter your email"
-                    required
-                  />
-                </div>
-                <div class="form-group my-3">
-                  <label for="password">Password</label>
-                  <input
-                    type="password"
-                    name="password"
-                    formControlName="password"
-                    class="form-control"
-                    placeholder="Enter password"
-                    required
-                  />
-                </div>
-                <div class="my-3 mx-auto">
-                  <a href='/forgot-password' class="link-primary">Forgot Password?</a>
-                </div>
-                  <div *ngIf="loading$ | async; then thenLoginBlock else elseLoginBlock"></div>
-              </form>
+      <div class="container d-flex flex-column justify-content-center">
+        <h1 class="text-center">
+          <span class="text-secondary"
+            ><i class="fa fa-fire mx-2"></i>AngularFire
+          </span>
+          Material
+        </h1>
+        <form [formGroup]="loginForm" (submit)="onSubmitLogin()">
+          <div class="container d-flex flex-column justify-content-center">
+            <mat-form-field appearance="legacy">
+              <mat-label for="email">Email</mat-label>
+              <input
+                matInput
+                type="email"
+                formControlName="email"
+                name="email"
+                placeholder="Enter your email"
+                required
+              />
+            </mat-form-field>
+            <mat-form-field appearance="legacy">
+              <mat-label for="password">Password</mat-label>
+              <input
+                matInput
+                type="password"
+                name="password"
+                formControlName="password"
+                class="form-control"
+                placeholder="Enter password"
+                required
+              />
+            </mat-form-field>
+            <div class="my-3 mx-auto">
+              <a href='/forgot-password' class="link-primary">Forgot Password?</a>
             </div>
+            <div *ngIf="loading$ | async; then thenLoginBlock else elseLoginBlock"></div>
           </div>
-          <div class="d-inline-flex mt-2 mx-auto">
-            <p class="text-muted">Don't have an account? </p><a href="/register" class="link-primary ms-2">Sign Up</a>
-          </div>
-        </div>
-      </div> 
-    </mat-tab>
-    <mat-tab label="Register">
-      <div class="row mt-2">
-        <div class="col-md-6 mx-auto d-flex flex-column">
-          <div class="card">
-            <div class="card-body">
-              <h1 class="text-center py-3">
-                <span class="text-secondary"
-                  ><i class="fa fa-fire mx-2"></i>AngularFire
-                </span>
-                Auth
-              </h1>
-              <form [formGroup]="registerForm" (submit)="onSubmitRegister()">
-                <div class="form-group my-3" [ngClass]="displayFieldCssRegister('email')">
-                  <label for="email">Email</label>
-                  <input
-                    class="form-control"
-                    type="email"
-                    formControlName="email"
-                    name="email"
-                    placeholder="example@mail.com"
-                    
-                  />
-                  <app-field-error-display 
-                    [displayError]="isFieldValidRegister('email')" 
-                    errorMsg="Please enter a valid email address">
-                  </app-field-error-display>
-                </div>
-                <div class="form-group my-3"  [ngClass]="displayFieldCssRegister('password')">
-                  <label for="password">Password</label>
-                  <input
-                    type="password"
-                    name="password"
-                    formControlName="password"
-                    class="form-control"
-                    placeholder="Must be at least 6 characters"
-      
-                  />
-                  <app-field-error-display 
-                    [displayError]="isFieldValidRegister('password')" 
-                    errorMsg="Please enter a valid password">
-                  </app-field-error-display>
-                </div>
-                <div class="form-group my-3" [ngClass]="displayFieldCssRegister('confirmPassword')">
-                  <label for="confirmPassword">Confirm Password</label>
-                  <input
-                    type="password"
-                    name="confirmPassword"
-                    formControlName="confirmPassword"
-                    class="form-control"
-                    placeholder="Confirm Password"
-                  />
-                  <app-field-error-display 
-                    [displayError]="isConfirmPasswordValid()" 
-                    errorMsg="Passwords do not match">
-                  </app-field-error-display>
-                </div>
-                
-                <div *ngIf="loading$ | async; then thenRegisterBlock else elseRegisterBlock"></div>
-              </form>
-            </div>
-          </div>
-          <div class="d-inline-flex mt-2 mx-auto">
-            <p class="text-muted">Already have an account? </p><a href="/login" class="link-primary ms-2">Login</a>
-          </div>
-        </div>
+        </form>
       </div>
-      
-      <ng-template #thenLoginBlock>
+    </mat-tab>
+    
+    <mat-tab label="Register">
+
+      <div class="container d-flex flex-column justify-content-center">
+   
+      <h1 class="text-center py-3">
+        <span class="text-secondary"
+          ><i class="fa fa-fire mx-2"></i>AngularFire
+        </span>
+        Auth
+      </h1>
+
+      <form [formGroup]="registerForm" (submit)="onSubmitRegister()">
+        <div class="container d-flex flex-column justify-content-center">
+          <mat-form-field appearance="legacy" [ngClass]="displayFieldCssRegister('email')">
+            <mat-label for="email">Email</mat-label>
+            <input
+              matInput
+              type="email"
+              formControlName="email"
+              name="email"
+              placeholder="example@mail.com"
+              
+            />
+            <app-field-error-display 
+              [displayError]="isFieldValidRegister('email')" 
+              errorMsg="Please enter a valid email address">
+            </app-field-error-display>
+          </mat-form-field>
+          <mat-form-field  [ngClass]="displayFieldCssRegister('password')">
+            <mat-label for="password">Password</mat-label>
+            <input
+              matInput
+              type="password"
+              name="password"
+              formControlName="password"
+              placeholder="Must be at least 6 characters"
+
+            />
+            <app-field-error-display 
+              [displayError]="isFieldValidRegister('password')" 
+              errorMsg="Please enter a valid password">
+            </app-field-error-display>
+          </mat-form-field>
+          <!-- <mat-form-field [ngClass]="displayFieldCssRegister('confirmPassword')"> -->
+          <mat-form-field [ngClass]="displayFieldCssRegister('confirmPassword')">
+            <mat-label for="confirmPassword">Confirm Password</mat-label>
+            <input
+              matInput
+              type="password"
+              name="confirmPassword"
+              formControlName="confirmPassword"
+              placeholder="Confirm Password"
+            />
+            <app-field-error-display 
+              [displayError]="isConfirmPasswordValid()" 
+              errorMsg="Passwords do not match">
+            </app-field-error-display>
+          </mat-form-field>
+        </div>
+        <div *ngIf="loading$ | async; then thenRegisterBlock else elseRegisterBlock"></div>
+      </form>
+
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</mat-card>
+
+
+      <ng-template #thenRegisterBlock>
         <button class="btn btn-secondary w-100">
           <span class="spinner-border spinner-border-sm"></span>
           Loading..
         </button>
       </ng-template>
-      <ng-template #elseLoginBlock> 
+
+      <ng-template #elseRegisterBlock> 
         <div class="form-group">           
           <input
           type="submit"
@@ -129,23 +126,21 @@
           />
         </div>
       </ng-template>
-    </mat-tab>
-  </mat-tab-group>
-</mat-card>
 
-<ng-template #thenRegisterBlock>
-  <button class="btn btn-secondary w-100">
-    <span class="spinner-border spinner-border-sm"></span>
-    Loading..
-  </button>
-</ng-template>
-<ng-template #elseRegisterBlock> 
-  <div class="form-group">           
-    <input
-    type="submit"
-    value="Login"
-    class="btn btn-secondary w-100"
-    [disabled]="!registerForm.valid"          
-    />
-  </div>
-</ng-template>
+    <ng-template #thenLoginBlock>
+      <button class="btn btn-secondary w-100">
+        <span class="spinner-border spinner-border-sm"></span>
+        Loading..
+      </button>
+    </ng-template>
+
+    <ng-template #elseLoginBlock> 
+      <div class="form-group">           
+        <input
+        type="submit"
+        value="Login"
+        class="btn btn-secondary w-100"
+        [disabled]="!registerForm.valid"          
+        />
+      </div>
+    </ng-template>

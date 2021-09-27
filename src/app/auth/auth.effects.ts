@@ -9,6 +9,7 @@ import { AppState } from '../reducers';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { MessageService } from '../services/MessageService';
 import { User } from './model/user.model';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable()
 export class AuthEffects {
@@ -18,6 +19,7 @@ export class AuthEffects {
     private afAuth: AngularFireAuth,
     private flashMessages: MessageService,
     private store: Store<AppState>,
+    private snackBar: MatSnackBar
 
   ) {}
 
@@ -47,7 +49,8 @@ export class AuthEffects {
           map(user => {
             if(user) {
               const { uid, displayName, email, phoneNumber, emailVerified, photoURL } = user.user;
-              this.flashMessages.showMessage('Login was successful!', 'alert-success', 3000);
+              this.snackBar.open('Login was successful!', null, { duration: 2500 })
+              // this.flashMessages.showMessage('Login was successful!', 'alert-success', 3000);
               return actions.authenticated({ payload: { uid, displayName, email, phoneNumber, emailVerified, photoURL } })
             } else {
               return actions.notAuthenticated();
@@ -68,7 +71,8 @@ export class AuthEffects {
             if(user) {
               const { uid, displayName, email, phoneNumber, emailVerified, photoURL } = user.user;
               this.authService.sendVerificationEmail();
-              this.flashMessages.showMessage('Account was successfully created!', 'alert-success', 3000);
+              this.snackBar.open('Login was successful!', null, { duration: 2500 })
+              // this.flashMessages.showMessage('Account was successfully created!', 'alert-success', 3000);
               return actions.authenticated({ payload: { uid, displayName, email, phoneNumber, emailVerified, photoURL } })
             } else {
               return actions.notAuthenticated();
