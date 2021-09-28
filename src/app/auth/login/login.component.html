@@ -60,54 +60,57 @@
       </h1>
 
       <form [formGroup]="registerForm" (submit)="onSubmitRegister()">
-        <div class="container d-flex flex-column justify-content-center">
-          <mat-form-field appearance="legacy" [ngClass]="displayFieldCssRegister('email')">
-            <mat-label for="email">Email</mat-label>
-            <input
-              matInput
-              type="email"
-              formControlName="email"
-              name="email"
-              placeholder="example@mail.com"
-              
-            />
-            <app-field-error-display 
-              [displayError]="isFieldValidRegister('email')" 
-              errorMsg="Please enter a valid email address">
-            </app-field-error-display>
-          </mat-form-field>
-          <mat-form-field  [ngClass]="displayFieldCssRegister('password')">
-            <mat-label for="password">Password</mat-label>
-            <input
-              matInput
-              type="password"
-              name="password"
-              formControlName="password"
-              placeholder="Must be at least 6 characters"
+        <div class="container fluid">
+          <div class="row d-flex flex-column justify-content-center align-items-center">
+            <div class="d-flex flex-column">
+              <mat-form-field appearance="legacy" [ngClass]="displayFieldCssRegister('email')">
+                <mat-label for="email">Email</mat-label>
+                <input
+                  matInput
+                  type="email"
+                  formControlName="email"
+                  name="email"
+                  placeholder="example@mail.com"
+                  
+                />
+                <app-field-error-display 
+                  [displayError]="isFieldValidRegister('email')" 
+                  errorMsg="Please enter a valid email address">
+                </app-field-error-display>
+              </mat-form-field>
+              <mat-form-field  [ngClass]="displayFieldCssRegister('password')">
+                <mat-label for="password">Password</mat-label>
+                <input
+                  matInput
+                  type="password"
+                  name="password"
+                  formControlName="password"
+                  placeholder="Must be at least 6 characters"
 
-            />
-            <app-field-error-display 
-              [displayError]="isFieldValidRegister('password')" 
-              errorMsg="Please enter a valid password">
-            </app-field-error-display>
-          </mat-form-field>
-          <!-- <mat-form-field [ngClass]="displayFieldCssRegister('confirmPassword')"> -->
-          <mat-form-field [ngClass]="displayFieldCssRegister('confirmPassword')">
-            <mat-label for="confirmPassword">Confirm Password</mat-label>
-            <input
-              matInput
-              type="password"
-              name="confirmPassword"
-              formControlName="confirmPassword"
-              placeholder="Confirm Password"
-            />
-            <app-field-error-display 
-              [displayError]="isConfirmPasswordValid()" 
-              errorMsg="Passwords do not match">
-            </app-field-error-display>
-          </mat-form-field>
+                />
+                <app-field-error-display 
+                  [displayError]="isFieldValidRegister('password')" 
+                  errorMsg="Please enter a valid password">
+                </app-field-error-display>
+              </mat-form-field>
+              <mat-form-field [ngClass]="displayFieldCssRegister('confirmPassword')">
+                <mat-label for="confirmPassword">Confirm Password</mat-label>
+                <input
+                  matInput
+                  type="password"
+                  name="confirmPassword"
+                  formControlName="confirmPassword"
+                  placeholder="Confirm Password"
+                />
+                <app-field-error-display 
+                  [displayError]="isConfirmPasswordValid()" 
+                  errorMsg="Passwords do not match">
+                </app-field-error-display>
+              </mat-form-field>
+              <div *ngIf="loading$ | async; then thenRegisterBlock else elseRegisterBlock"></div>
+            </div>
+          </div>  
         </div>
-        <div *ngIf="loading$ | async; then thenRegisterBlock else elseRegisterBlock"></div>
       </form>
 
       </div>
@@ -124,13 +127,15 @@
       </ng-template>
 
       <ng-template #elseRegisterBlock> 
-        <div class="form-group">           
-          <input
-          type="submit"
-          value="Register"
-          class="btn btn-secondary w-100"            
-          />
-        </div>
+        <button 
+        mat-raised-button 
+        color="primary" 
+        type="submit" 
+        [disabled]="!registerForm.valid"
+        class="w-100"
+        >
+          Submit
+        </button>
       </ng-template>
 
     <ng-template #thenLoginBlock>
@@ -140,8 +145,7 @@
       </button>
     </ng-template>
 
-    <ng-template #elseLoginBlock> 
-      <div class="form-group">           
+    <ng-template #elseLoginBlock>        
         <button 
         mat-raised-button 
         color="primary" 
@@ -151,5 +155,4 @@
         >
           Login
         </button>
-      </div>
     </ng-template>
