@@ -1,5 +1,4 @@
 import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { authReducer } from './reducers/authReducer';
@@ -17,7 +16,6 @@ import { MaterialModule } from '../material.module';
 @NgModule({
   declarations: [
     LoginComponent, 
-    RegisterComponent, 
     FieldErrorDisplayComponent, 
     ForgotPasswordComponent, 
     EmailVerifiedComponent, 
@@ -26,11 +24,11 @@ import { MaterialModule } from '../material.module';
     CommonModule,
     ReactiveFormsModule,
     EffectsModule.forFeature([AuthEffects]),
-    RouterModule.forChild([{ path: 'login', component: LoginComponent }, { path: 'register', component: RegisterComponent }]),
+    RouterModule.forChild([{ path: 'login', component: LoginComponent }]),
     StoreModule.forFeature('auth', authReducer),
     MaterialModule
   ],
-  exports: [LoginComponent, RegisterComponent],
+  exports: [LoginComponent],
 })
 export class AuthModule {
   static forRoot(): ModuleWithProviders<AuthModule> {

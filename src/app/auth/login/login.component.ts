@@ -5,7 +5,6 @@ import { AppState } from '../../reducers';
 import { select, Store } from '@ngrx/store';
 import * as validators from '../utils/validators';
 
-import { MessageService } from '../../services/MessageService';
 import * as actions from '../auth.actions';
 import { isLoading, isLoggedIn } from '../auth.selectors';
 import { Observable } from 'rxjs';
@@ -23,7 +22,6 @@ export class LoginComponent implements OnInit {
   constructor(
     private router: Router,
     private store: Store<AppState>,
-    private flashMessage: MessageService,
     private fb: FormBuilder
   ) {
     this.loginForm = fb.group({

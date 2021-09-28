@@ -4,8 +4,6 @@ import { User } from 'src/app/auth/model/user.model';
 import { select, Store } from '@ngrx/store';
 import * as authActions from '../../auth/auth.actions';
 import { AppState } from 'src/app/reducers';
-import { closeModal } from '../../auth/utils/modalHelpers';
-
 
 @Component({
   selector: 'app-profile',
@@ -37,12 +35,10 @@ export class ProfileComponent implements OnInit {
   onSubmitDisplayName() {
     const { displayName } = this.displayNameForm.value;
     this.store.dispatch(authActions.updateDisplayName({ payload: displayName }));
-    // closeModal('editDisplayName');
   };
 
   onSubmitPhotoURL() {
     const { photoURL } = this.photoURLForm.value;
     this.store.dispatch(authActions.updatePhotoURL({ payload: photoURL }));
-    // closeModal('editPhotoURL');
   };
 };

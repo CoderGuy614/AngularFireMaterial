@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AppState } from 'src/app/reducers';
-import { MessageService } from 'src/app/services/MessageService';
 import { isLoading, isLoggedIn } from '../auth.selectors';
 import * as actions from '../auth.actions';
 
@@ -20,7 +19,6 @@ export class ForgotPasswordComponent implements OnInit {
   constructor(
     private router: Router,
     private store: Store<AppState>,
-    private flashMessage: MessageService,
     private fb: FormBuilder
   ) {
     this.form = fb.group({

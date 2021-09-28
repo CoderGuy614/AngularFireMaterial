@@ -7,28 +7,25 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 
-import { FlashMessagesModule } from 'angular2-flash-messages';
-
-import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterState, StoreRouterConnectingModule } from '@ngrx/router-store';
 
 import { environment } from '../environments/environment';
 import { AngularFireModule } from '@angular/fire';
 
-import { HomeComponent } from './components/home/home.component';
-import { NavbarComponent } from './components/navbar/navbar.component';
 import { StoreModule } from '@ngrx/store';
 
+import { AppComponent } from './app.component';
 import { LoginComponent } from './auth/login/login.component';
-import { RegisterComponent } from './auth/register/register.component';
-
-import { reducers, metaReducers } from './reducers';
-import { PERSISTENCE } from '@angular/fire/auth';
 import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
 import { EmailVerifiedComponent } from './auth/email-verified/email-verified.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { ProfileDropdownComponent } from './components/navbar/profile-dropdown/profile-dropdown.component';
+import { HomeComponent } from './components/home/home.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+
+import { reducers, metaReducers } from './reducers';
+import { PERSISTENCE } from '@angular/fire/auth';
 import { MaterialModule } from './material.module';
 
 const routes: Routes = [
@@ -39,10 +36,6 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
-  },
-  {
-    path: 'register',
-    component: RegisterComponent,
   },
   {
     path: 'forgot-password',
@@ -71,7 +64,6 @@ const routes: Routes = [
     MaterialModule,
     BrowserAnimationsModule,
     AuthModule.forRoot(),
-    FlashMessagesModule.forRoot(),
     EffectsModule.forRoot(),
     StoreModule.forRoot(reducers, {
       metaReducers,
