@@ -120,10 +120,12 @@
 
 
       <ng-template #thenRegisterBlock>
-        <button mat-button color="primary">
-          <span class="spinner-border spinner-border-sm"></span>
-          Loading..
-        </button>
+        <div class='d-flex flex-row justify-content-center align-items-center'>
+          <mat-spinner [diameter]="20" class="mx-2"></mat-spinner>
+          <button mat-raised-button [disabled]=true color="primary">
+            Loading...
+          </button>
+        </div>
       </ng-template>
 
       <ng-template #elseRegisterBlock> 
@@ -139,10 +141,12 @@
       </ng-template>
 
     <ng-template #thenLoginBlock>
-      <button mat-raised-button color="primary">
-        <span class="spinner-border spinner-border-sm"></span>
-        Loading..
-      </button>
+      <div class='d-flex flex-row justify-content-center align-items-center'>
+        <mat-spinner [diameter]="20" class="mx-2"></mat-spinner>
+        <button mat-raised-button [disabled]=true color="primary">
+          Loading...
+        </button>
+      </div>
     </ng-template>
 
     <ng-template #elseLoginBlock>        

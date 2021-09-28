@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-light">
+<!-- <nav class="navbar navbar-expand-md navbar-light">
   <div class="container-fluid">
     <a class="navbar-brand" routerLink="/">AngularFireMaterial</a>
     <button
@@ -22,7 +22,26 @@
       </ul>
     </div>
   </div>
-</nav>
+</nav> -->
+
+<p>
+  <mat-toolbar>
+   <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span>AngularFire</span>
+  <span class="example-spacer"></span>
+  <ul class="ml-auto">
+    <li *ngIf="user$ | async as user then currentUser; else guestUser"></li>
+  </ul>
+  <!-- <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+    <mat-icon>favorite</mat-icon>
+  </button> -->
+  <!-- <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+   <mat-icon>share</mat-icon>
+ </button> -->
+</mat-toolbar>
+</p>
 
 <ng-template #loggedOut>
   <li class="nav-item"> 
@@ -46,8 +65,8 @@
 </ng-template>
 
 <ng-template #guestUser>
-  <div class="d-flex">
-    <img class='navbar-avatar rounded-circle' src="{{ userPhotoPlaceholder}}" alt="profile-pic">
-    <p class="nav-link">Welcome, Guest</p>
+  <div class='d-flex flex-row align-items-center justify-content-center'>
+    <img class='navbar-avatar rounded-circle mx-1' src="{{ userPhotoPlaceholder }}" alt="profile-pic">
+    <button mat-button>Welcome, Guest</button>
   </div>
 </ng-template>

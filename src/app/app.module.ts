@@ -29,6 +29,7 @@ import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.
 import { EmailVerifiedComponent } from './auth/email-verified/email-verified.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { ProfileDropdownComponent } from './components/navbar/profile-dropdown/profile-dropdown.component';
+import { MaterialModule } from './material.module';
 
 const routes: Routes = [
   {
@@ -67,6 +68,7 @@ const routes: Routes = [
     RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' }),
     ReactiveFormsModule,
     FormsModule,
+    MaterialModule,
     BrowserAnimationsModule,
     AuthModule.forRoot(),
     FlashMessagesModule.forRoot(),
