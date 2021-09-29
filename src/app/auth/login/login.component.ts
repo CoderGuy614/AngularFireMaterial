@@ -58,20 +58,6 @@ export class LoginComponent implements OnInit {
     }
   };
 
-  displayFieldCssLogin(field: string) {
-    return {
-      'has-error': this.isFieldValidLogin(field),
-      'has-feedback': this.isFieldValidLogin(field)
-    };
-  };
-
-  displayFieldCssRegister(field: string) {
-    return {
-      'has-error': this.isFieldValidRegister(field),
-      'has-feedback': this.isFieldValidRegister(field)
-    };
-  };
-
   validateAllFormFields(formGroup: FormGroup) {         
     Object.keys(formGroup.controls).forEach(field => {
       const control = formGroup.get(field);             
@@ -83,16 +69,14 @@ export class LoginComponent implements OnInit {
     });
   };
 
-  isFieldValidLogin(field: string) {
-    return !this.loginForm.get(field).valid && this.loginForm.get(field).touched;
+  isFieldValid(field: string, form: FormGroup) {
+    return !form.get(field).valid && form.get(field).touched;
   };
 
-  isFieldValidRegister(field: string) {
-    return !this.registerForm.get(field).valid && this.registerForm.get(field).touched;
-  };
-  
-  isConfirmPasswordValid() {
-    return !this.registerForm.valid && this.registerForm.get('confirmPassword').touched;
+  isConfirmPasswordInvalid(form: FormGroup) {
+    const isInvalid = form.hasError('passwordsDontMatch');
+    form.get('confirmPassword').setErrors(isInvalid ? { valid: false } : null);
+    return isInvalid;
   };
 
 }

@@ -63,7 +63,7 @@
         <div class="container fluid">
           <div class="row d-flex flex-column justify-content-center align-items-center">
             <div class="d-flex flex-column">
-              <mat-form-field appearance="legacy" [ngClass]="displayFieldCssRegister('email')">
+              <mat-form-field appearance="legacy" class="mb-1">
                 <mat-label for="email">Email</mat-label>
                 <input
                   matInput
@@ -73,12 +73,9 @@
                   placeholder="example@mail.com"
                   
                 />
-                <app-field-error-display 
-                  [displayError]="isFieldValidRegister('email')" 
-                  errorMsg="Please enter a valid email address">
-                </app-field-error-display>
+                <mat-error *ngIf="isFieldValid('email', registerForm)">Please enter a valid email address</mat-error>
               </mat-form-field>
-              <mat-form-field  [ngClass]="displayFieldCssRegister('password')">
+              <mat-form-field appearance="legacy" class="mb-1">
                 <mat-label for="password">Password</mat-label>
                 <input
                   matInput
@@ -88,25 +85,21 @@
                   placeholder="Must be at least 6 characters"
 
                 />
-                <app-field-error-display 
-                  [displayError]="isFieldValidRegister('password')" 
-                  errorMsg="Please enter a valid password">
-                </app-field-error-display>
+                <mat-error *ngIf="isFieldValid('password', registerForm)">Please enter a valid password</mat-error>
               </mat-form-field>
-              <mat-form-field [ngClass]="displayFieldCssRegister('confirmPassword')">
+              <mat-form-field appearance="legacy" class="mb-1">
                 <mat-label for="confirmPassword">Confirm Password</mat-label>
                 <input
                   matInput
+                  (keyup)="isConfirmPasswordInvalid(registerForm)"
                   type="password"
                   name="confirmPassword"
                   formControlName="confirmPassword"
                   placeholder="Confirm Password"
                 />
-                <app-field-error-display 
-                  [displayError]="isConfirmPasswordValid()" 
-                  errorMsg="Passwords do not match">
-                </app-field-error-display>
+                <mat-error *ngIf="isConfirmPasswordInvalid(registerForm)">Passwords do not match</mat-error>
               </mat-form-field>
+              <!-- <mat-error *ngIf="isConfirmPasswordValid()">Please enter a valid password</mat-error> -->
               <div *ngIf="loading$ | async; then thenRegisterBlock else elseRegisterBlock"></div>
             </div>
           </div>  
