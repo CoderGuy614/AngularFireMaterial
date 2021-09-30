@@ -4,6 +4,7 @@ import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { select, Store } from '@ngrx/store';
 import { User } from 'src/app/auth/model/user.model';
 import * as authActions from '../../auth/auth.actions';
+import { generateRandomPic } from 'src/app/auth/utils/randomPicGenerator';
 
 @Component({
   selector: 'app-edit-photo-url-modal',
@@ -28,6 +29,10 @@ export class EditPhotoURLModalComponent implements OnInit {
 
   ngOnInit(): void {
   };
+
+  onChooseRandom(){
+    this.photoURLForm.get('photoURL').patchValue(generateRandomPic());
+  }
 
   onSubmitPhotoURL() {
     const { photoURL } = this.photoURLForm.value;

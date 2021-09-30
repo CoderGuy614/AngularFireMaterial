@@ -13,6 +13,11 @@ export const getUser = createSelector(
   (auth) => auth.user
 );
 
+export const isAuthLoading = createSelector(
+  selectAuthState,
+  (auth) => auth.loading
+);
+
 export const isLoggedOut = createSelector(isLoggedIn, (loggedIn) => !loggedIn);
 
 export const isLoading = createSelector(selectAuthState, (auth) => auth.loading);

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { AppState } from './reducers';
 import * as authActions from './auth/auth.actions';
+import { isAuthLoading } from './auth/auth.selectors';
 
 @Component({
   selector: 'app-root',
@@ -13,10 +14,12 @@ import * as authActions from './auth/auth.actions';
 export class AppComponent implements OnInit {
 
   title = 'angular-pro';
+  isAuthLoading$: Observable<boolean>;
 
   constructor(private router: Router, private store: Store<AppState>) {}
 
   ngOnInit() {
-    this.store.dispatch(authActions.getUser())
+    this.isAuthLoading$ = this.store.select(isAuthLoading);
+    this.store.dispatch(authActions.getUser());
   }
-}
+};

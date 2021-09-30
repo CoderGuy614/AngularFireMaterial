@@ -24,6 +24,9 @@ import { ProfileDropdownComponent } from './components/navbar/profile-dropdown/p
 import { HomeComponent } from './components/home/home.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 
+//Pages
+import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
+
 //Modals
 import { EditDisplayNameModalComponent } from './components/edit-display-name-modal/edit-display-name-modal.component';
 import { EditPhotoURLModalComponent } from './components/edit-photo-url-modal/edit-photo-url-modal.component';
@@ -42,6 +45,10 @@ const routes: Routes = [
     component: LoginComponent,
   },
   {
+    path: 'profile',
+    component: ProfilePageComponent,
+  },
+  {
     path: 'forgot-password',
     component: ForgotPasswordComponent,
   },
@@ -57,6 +64,7 @@ const routes: Routes = [
     HomeComponent, 
     NavbarComponent,
     ProfileComponent,
+    ProfilePageComponent,
     ProfileDropdownComponent,
     EditDisplayNameModalComponent,
     EditPhotoURLModalComponent
