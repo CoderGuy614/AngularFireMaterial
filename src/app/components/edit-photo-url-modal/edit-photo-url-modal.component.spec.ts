@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FieldErrorDisplayComponent } from './field-error-display.component';
+import { EditPhotoURLModalComponent } from './edit-photo-url-modal.component';
 
-describe('FieldErrorDisplayComponent', () => {
-  let component: FieldErrorDisplayComponent;
-  let fixture: ComponentFixture<FieldErrorDisplayComponent>;
+describe('EditPhotoUrlModalComponent', () => {
+  let component: EditPhotoURLModalComponent;
+  let fixture: ComponentFixture<EditPhotoURLModalComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FieldErrorDisplayComponent ]
+      declarations: [ EditPhotoURLModalComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FieldErrorDisplayComponent);
+    fixture = TestBed.createComponent(EditPhotoURLModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

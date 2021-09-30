@@ -1,9 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from 'src/app/auth/model/user.model';
 import { select, Store } from '@ngrx/store';
 import * as authActions from '../../auth/auth.actions';
 import { AppState } from 'src/app/reducers';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { EditDisplayNameModalComponent } from '../edit-display-name-modal/edit-display-name-modal.component';
+import { EditPhotoURLModalComponent } from '../edit-photo-url-modal/edit-photo-url-modal.component';
 
 @Component({
   selector: 'app-profile',
@@ -11,34 +14,29 @@ import { AppState } from 'src/app/reducers';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-  displayNameForm: FormGroup;
-  photoURLForm: FormGroup;
-  photoURLPlaceholder: string = "Enter a Photo URL"
-  displayNamePlaceholder: string = "Enter a Display Name"
 
   @Input() user: User;
   constructor(
-    private fb: FormBuilder,
     private store: Store<AppState>,
-    ) {
-    this.displayNameForm = fb.group({
-      displayName: ['', [Validators.required]]
-    });
-    this.photoURLForm = fb.group({
-      photoURL: ['', [Validators.required]]
-    });
-   }
+    private dialog: MatDialog
+    ) {}
 
   ngOnInit(): void {
-  }
-
-  onSubmitDisplayName() {
-    const { displayName } = this.displayNameForm.value;
-    this.store.dispatch(authActions.updateDisplayName({ payload: displayName }));
   };
 
-  onSubmitPhotoURL() {
-    const { photoURL } = this.photoURLForm.value;
-    this.store.dispatch(authActions.updatePhotoURL({ payload: photoURL }));
+  openEditDisplayNameModal():void {
+    const dialogRef = this.dialog.open(EditDisplayNameModalComponent, {
+      width: '350px',
+      data: this.user
+    })
   };
-};
+
+  openEditPhotoURLModal():void {
+    const dialogRef = this.dialog.open(EditPhotoURLModalComponent, {
+      width: '350px',
+      data: this.user
+    })
+  };
+
+}
+

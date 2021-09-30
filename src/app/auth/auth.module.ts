@@ -8,7 +8,6 @@ import { CommonModule } from '@angular/common';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { AuthEffects } from './auth.effects';
-import { FieldErrorDisplayComponent } from './field-error-display/field-error-display.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { EmailVerifiedComponent } from './email-verified/email-verified.component';
 import { MaterialModule } from '../material.module';
@@ -16,7 +15,6 @@ import { MaterialModule } from '../material.module';
 @NgModule({
   declarations: [
     LoginComponent, 
-    FieldErrorDisplayComponent, 
     ForgotPasswordComponent, 
     EmailVerifiedComponent, 
   ],

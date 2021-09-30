@@ -1,0 +1,20 @@
+<h1 mat-dialog-title>Edit Display Name</h1>
+<div mat-dialog-content>
+  <form [formGroup]="displayNameForm">
+    <mat-form-field appearance="legacy">
+      <mat-label>Display Name</mat-label>
+      <input 
+      matInput 
+      required
+      type="text"
+      formControlName="displayName"
+      placeholder="{{ data.displayName ? data.displayName : displayNamePlaceholder }}"
+      >
+    </mat-form-field>
+
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button (click)="onSubmitDisplayName()" [disabled]="!displayNameForm.valid" [mat-dialog-close]="true" cdkFocusInitial>Save</button>
+</div>

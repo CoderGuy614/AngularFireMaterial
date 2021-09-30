@@ -24,6 +24,10 @@ import { ProfileDropdownComponent } from './components/navbar/profile-dropdown/p
 import { HomeComponent } from './components/home/home.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 
+//Modals
+import { EditDisplayNameModalComponent } from './components/edit-display-name-modal/edit-display-name-modal.component';
+import { EditPhotoURLModalComponent } from './components/edit-photo-url-modal/edit-photo-url-modal.component';
+
 import { reducers, metaReducers } from './reducers';
 import { PERSISTENCE } from '@angular/fire/auth';
 import { MaterialModule } from './material.module';
@@ -53,7 +57,9 @@ const routes: Routes = [
     HomeComponent, 
     NavbarComponent,
     ProfileComponent,
-    ProfileDropdownComponent
+    ProfileDropdownComponent,
+    EditDisplayNameModalComponent,
+    EditPhotoURLModalComponent
   ],
   imports: [
     BrowserModule,
