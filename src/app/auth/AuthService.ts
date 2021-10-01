@@ -98,8 +98,7 @@ export class AuthService {
 
   private fromFirebaseUser(firebaseUser): User {
     const { uid, displayName, email, phoneNumber, emailVerified, photoURL } = firebaseUser;
-    const user = { uid, displayName, email, phoneNumber, emailVerified, photoURL } as User;
-    return user;
+    return { uid, displayName, email, phoneNumber, emailVerified, photoURL } as User;
   };
 
 

@@ -67,7 +67,7 @@ export class AuthEffects {
           map(user => {
             if(user) {
               const { uid, displayName, email, phoneNumber, emailVerified, photoURL } = user.user;
-              this.authService.sendVerificationEmail();
+              // this.authService.sendVerificationEmail();
               this.snackBar.open('Account was successfully created', null, { duration: 3000 });
               return actions.authenticated({ payload: { uid, displayName, email, phoneNumber, emailVerified, photoURL } })
             } else {

@@ -13,7 +13,7 @@
         </li>
         <li class="d-flex flex-row justify-content-between my-2">
           <p><strong>Email Verified: </strong>{{user.emailVerified ? "Yes" : "No" }}</p>
-          <button mat-raised-button color="accent">Edit</button>
+          <button mat-raised-button (click)="verifyEmail()" [disabled]="user.emailVerified" color="accent">Verify</button>
         </li>
       </ul>
     </mat-card-content>
