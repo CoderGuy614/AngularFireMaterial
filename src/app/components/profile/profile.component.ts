@@ -14,6 +14,8 @@ import { AuthService } from 'src/app/auth/AuthService';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
+  
+  verifyEmailSent: boolean = false;
 
   @Input() user: User;
   constructor(
@@ -41,6 +43,7 @@ export class ProfileComponent implements OnInit {
 
   verifyEmail():void {
     this.authService.sendVerificationEmail();
+    this.verifyEmailSent = true;
   }
 
 }
