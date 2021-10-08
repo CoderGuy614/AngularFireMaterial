@@ -15,14 +15,19 @@ import { AngularFireModule } from '@angular/fire';
 
 import { StoreModule } from '@ngrx/store';
 
+//Auth Components
 import { AppComponent } from './app.component';
 import { LoginComponent } from './auth/login/login.component';
 import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
 import { EmailVerifiedComponent } from './auth/email-verified/email-verified.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { ProfileDropdownComponent } from './components/navbar/profile-dropdown/profile-dropdown.component';
+
+//App Components
 import { HomeComponent } from './components/home/home.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { ProductComponent } from './components/product/product.component';
+import { ProductsComponent } from './pages/products/products.component';
 
 //Pages
 import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
@@ -66,6 +71,8 @@ const routes: Routes = [
     ProfileComponent,
     ProfilePageComponent,
     ProfileDropdownComponent,
+    ProductComponent,
+    ProductsComponent,
     EditDisplayNameModalComponent,
     EditPhotoURLModalComponent
   ],
