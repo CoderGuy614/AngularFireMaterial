@@ -1,8 +1,17 @@
-.example-card {
+.product-card {
   max-width: 300px;
+  box-sizing: border-box;
 }
 
-.example-header-image {
+.product-card:hover {
+  transform: scale(1.02);
+  transition: all linear 200ms;
+  z-index: 1;
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
+
+/* .example-header-image {
   background-image: url("https://material.angular.io/assets/img/examples/shiba1.jpg");
   background-size: cover;
-}
+} */
