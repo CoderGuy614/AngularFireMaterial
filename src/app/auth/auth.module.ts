@@ -11,6 +11,7 @@ import { AuthEffects } from './auth.effects';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { EmailVerifiedComponent } from './email-verified/email-verified.component';
 import { MaterialModule } from '../material.module';
+import { authRoutes } from './shared/authRoutes';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,7 @@ import { MaterialModule } from '../material.module';
     CommonModule,
     ReactiveFormsModule,
     EffectsModule.forFeature([AuthEffects]),
-    RouterModule.forChild([{ path: 'login', component: LoginComponent }]),
+    RouterModule.forChild(authRoutes),
     StoreModule.forFeature('auth', authReducer),
     MaterialModule
   ],

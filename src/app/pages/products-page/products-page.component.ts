@@ -4,10 +4,10 @@ import { productData } from './productData';
 
 @Component({
   selector: 'app-products',
-  templateUrl: './products.component.html',
-  styleUrls: ['./products.component.css'],
+  templateUrl: './products-page.component.html',
+  styleUrls: ['./products-page.component.css'],
 })
-export class ProductsComponent implements OnInit {
+export class ProductsPageComponent implements OnInit {
   products: Product[] = productData;
 
   constructor() {}

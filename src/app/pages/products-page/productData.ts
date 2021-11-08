@@ -1,6 +1,7 @@
 import { Product } from '../../models/Product';
 export const productData: Product[] = [
   {
+    id: '1',
     title: 'Bambi',
     subtitle: 'From $99/Night, Up to 4 Guests',
     description:
@@ -11,6 +12,7 @@ export const productData: Product[] = [
   },
 
   {
+    id: '2',
     title: 'Flying Cloud',
     subtitle: 'From $130/Night, Up to 8 Guests',
     description:
@@ -21,6 +23,7 @@ export const productData: Product[] = [
   },
 
   {
+    id: '3',
     title: 'International',
     subtitle: 'From $160/Night, Up to 6 Guests',
     description:
@@ -31,6 +34,7 @@ export const productData: Product[] = [
   },
 
   {
+    id: '4',
     title: 'Globetrotter',
     subtitle: 'From $180/Night, Up to 6 Guests',
     description:
