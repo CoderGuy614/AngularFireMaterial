@@ -10,6 +10,8 @@ import { EffectsModule } from '@ngrx/effects';
 import { AuthEffects } from './auth.effects';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { EmailVerifiedComponent } from './email-verified/email-verified.component';
+import { ProfileComponent } from '../components/profile/profile.component';
+import { ProfilePageComponent } from "../pages/profile-page/profile-page.component";
 import { MaterialModule } from '../material.module';
 import { authRoutes } from './shared/authRoutes';
 
@@ -18,6 +20,8 @@ import { authRoutes } from './shared/authRoutes';
     LoginComponent, 
     ForgotPasswordComponent, 
     EmailVerifiedComponent, 
+    ProfileComponent,
+    ProfilePageComponent,
   ],
   imports: [
     CommonModule,
