@@ -28,6 +28,7 @@ import { ProductComponent } from './components/product/product.component';
 //Pages
 import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
 import { ProductsPageComponent } from './pages/products-page/products-page.component';
+import { ProductDetailPageComponent } from './pages/product-detail-page/product-detail-page.component';
 
 //Modals
 import { EditDisplayNameModalComponent } from './components/edit-display-name-modal/edit-display-name-modal.component';
@@ -48,6 +49,7 @@ import { routes } from './shared/appRoutes';
     ProfileDropdownComponent,
     ProductComponent,
     ProductsPageComponent,
+    ProductDetailPageComponent,
     EditDisplayNameModalComponent,
     EditPhotoURLModalComponent
   ],

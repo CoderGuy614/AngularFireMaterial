@@ -13,7 +13,6 @@
     <p>{{ product.description }}</p>
   </mat-card-content>
   <mat-card-actions class="d-flex justify-content-center">
-    <button mat-raised-button color="primary">BOOK NOW</button>
-    <!-- <button mat-raised-button color="secondary">DETAILS</button> -->
+    <a mat-button href="/product-detail?productId={{ product.id }}" mat-raised-button color="primary">BOOK NOW</a>
   </mat-card-actions>
 </mat-card>

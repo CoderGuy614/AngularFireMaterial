@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Product } from 'src/app/models/Product';
+import { productData } from '../products-page/productData';
 
 @Component({
   selector: 'app-product-detail-page',
@@ -7,9 +10,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProductDetailPageComponent implements OnInit {
 
-  constructor() { }
+  productId: string;
+  product: Product;
 
-  ngOnInit(): void {
+  constructor(
+    private route: ActivatedRoute,
+  ) {}
+
+  ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      this.productId = params['productId'];
+    });
+    this.product = productData.find((product) => product.id === this.productId);
   }
-
 }
+
