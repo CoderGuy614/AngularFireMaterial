@@ -24,7 +24,7 @@ import { ProfileDropdownComponent } from './components/navbar/profile-dropdown/p
 import { HomeComponent } from './components/home/home.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { ProductComponent } from './components/product/product.component';
-import { ProductDetailComponent } from './components/product-detail/product-detail.component';
+import { DemoComponent } from './components/mwl-demo-component/mwl-demo-component';
 import { DatePickerComponent } from './components/date-picker/date-picker.component';
 
 //Pages
@@ -35,10 +35,17 @@ import { ProductDetailPageComponent } from './pages/product-detail-page/product-
 import { EditDisplayNameModalComponent } from './components/edit-display-name-modal/edit-display-name-modal.component';
 import { EditPhotoURLModalComponent } from './components/edit-photo-url-modal/edit-photo-url-modal.component';
 
+//Calendar 
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+
 import { reducers, metaReducers } from './reducers';
 import { PERSISTENCE } from '@angular/fire/auth';
 import { MaterialModule } from './material.module';
 import { routes } from './shared/appRoutes';
+import { NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CommonModule } from '@angular/common';
+import { FlatpickrModule } from 'angularx-flatpickr';
 
 @NgModule({
   declarations: [
@@ -48,7 +55,7 @@ import { routes } from './shared/appRoutes';
     NavbarComponent,
     ProfileDropdownComponent,
     ProductComponent,
-    ProductDetailComponent,
+    DemoComponent,
     ProductsPageComponent,
     ProductDetailPageComponent,
     EditDisplayNameModalComponent,
@@ -56,6 +63,10 @@ import { routes } from './shared/appRoutes';
   ],
   imports: [
     BrowserModule,
+    CommonModule,
+    FormsModule,
+    NgbModalModule,
+    FlatpickrModule.forRoot(),
     AngularFireModule.initializeApp(environment.firebase),
     RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' }),
     ReactiveFormsModule,
@@ -76,7 +87,10 @@ import { routes } from './shared/appRoutes';
       stateKey: 'router',
       routerState: RouterState.Minimal,
     }),
+    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
+    NgbModule,
   ],
+  exports: [DemoComponent],
   providers: [
     { provide: PERSISTENCE, useValue: 'local' },
   ],
