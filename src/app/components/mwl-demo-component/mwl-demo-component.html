@@ -31,7 +31,7 @@
     <div class="col-md-4">
       <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
     </div>
-    <div class="col-md-4">
+    <!-- <div class="col-md-4">
       <div class="btn-group">
         <div
           class="btn btn-primary"
@@ -55,7 +55,7 @@
           Day
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
   <br />
   <div [ngSwitch]="view">
@@ -70,7 +70,7 @@
       (eventTimesChanged)="eventTimesChanged($event)"
     >
     </mwl-calendar-month-view>
-    <mwl-calendar-week-view
+    <!-- <mwl-calendar-week-view
       *ngSwitchCase="CalendarView.Week"
       [viewDate]="viewDate"
       [events]="events"
@@ -78,8 +78,8 @@
       (eventClicked)="handleEvent('Clicked', $event.event)"
       (eventTimesChanged)="eventTimesChanged($event)"
     >
-    </mwl-calendar-week-view>
-    <mwl-calendar-day-view
+    </mwl-calendar-week-view> -->
+    <!-- <mwl-calendar-day-view
       *ngSwitchCase="CalendarView.Day"
       [viewDate]="viewDate"
       [events]="events"
@@ -87,12 +87,12 @@
       (eventClicked)="handleEvent('Clicked', $event.event)"
       (eventTimesChanged)="eventTimesChanged($event)"
     >
-    </mwl-calendar-day-view>
+    </mwl-calendar-day-view> -->
   </div>
   
   <!-- Everything you see below is just for the demo, you don't need to include it in your app -->
   
-  <br /><br /><br />
+  <!-- <br /><br /><br />
   
   <h3>
     Edit events
@@ -177,7 +177,7 @@
         </tr>
       </tbody>
     </table>
-  </div>
+  </div> -->
   
   <ng-template #modalContent let-close="close">
     <div class="modal-header">
