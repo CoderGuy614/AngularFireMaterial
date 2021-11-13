@@ -23,6 +23,7 @@ import {
   CalendarEventTimesChangedEvent,
   CalendarView,
 } from 'angular-calendar';
+import { Booking, Product } from 'src/app/models/Product';
 
 const colors: any = {
   red: {
@@ -47,7 +48,7 @@ const colors: any = {
 })
 export class DemoComponent {
   @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any>;
-  @Input() product: string;
+  @Input() product: Product;
 
   view: CalendarView = CalendarView.Month;
 
@@ -121,23 +122,31 @@ export class DemoComponent {
   //   },
   // ];
 
-  activeDayIsOpen: boolean = true;
+  activeDayIsOpen: boolean = false;
 
   constructor(private modal: NgbModal) {}
 
-  dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
-    if (isSameMonth(date, this.viewDate)) {
-      if (
-        (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
-        events.length === 0
-      ) {
-        this.activeDayIsOpen = false;
-      } else {
-        this.activeDayIsOpen = true;
-      }
-      this.viewDate = date;
-    }
+  checkIfSameDay(date1: Date, date2: Date): boolean {
+    return isSameDay(date1,date2) ? true : false
   }
+
+  // dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
+  //   if (isSameMonth(date, this.viewDate)) {
+  //     if (
+  //       (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
+  //       events.length === 0
+  //     ) {
+  //       this.activeDayIsOpen = false;
+  //     } else {
+  //       this.activeDayIsOpen = true;
+  //     }
+  //     this.viewDate = date;
+  //   }
+  // }
+
+  // showBookings(bookings: Booking[]): void {
+  //   bookings.map(booking => if(booking.startDate === this.viewDate))
+  // }
 
   // eventTimesChanged({
   //   event,

@@ -99,8 +99,8 @@
         >{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span
       >
     </div>
-    <small [style.background-color]="product.isAvailable ? 'green' : 'red' "
-      >{{ product.isAvailable ? 'Available' : 'Unavailable' }}</small
+    <small [style.background-color]="checkIfSameDay(product.bookings[0].startDate, day.date) ? 'green' : 'red' "
+      >{{ checkIfSameDay(product.bookings[0].startDate, day.date) ? 'Unavailable' : 'Available'  }}</small
     >
   </ng-template>
   

@@ -5,11 +5,20 @@ export interface Product {
   description: string;
   imageUrl: string;
   imageAltText: string;
-  isAvailable: boolean;
-  isBooked: boolean; 
-
-  // price: string,
-  // pricePer: string,
-  // isAvailable: boolean,
-  // createdBy: string
+  bookings: Booking[]
 }
+
+export interface Booking {
+  // id: string,
+  // userId: string,
+  startDate: Date;
+  nights: number;
+  // endDate: Date;
+  // guests: number;
+}
+
+// interface Date {
+//   month: number;
+//   day: number;
+//   year: number
+// }
