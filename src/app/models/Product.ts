@@ -5,6 +5,8 @@ export interface Product {
   description: string;
   imageUrl: string;
   imageAltText: string;
+  isAvailable: boolean;
+  isBooked: boolean; 
 
   // price: string,
   // pricePer: string,

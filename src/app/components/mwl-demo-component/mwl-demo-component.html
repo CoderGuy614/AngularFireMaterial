@@ -62,12 +62,13 @@
     <mwl-calendar-month-view
       *ngSwitchCase="CalendarView.Month"
       [viewDate]="viewDate"
-      [events]="events"
       [refresh]="refresh"
       [activeDayIsOpen]="activeDayIsOpen"
       (dayClicked)="dayClicked($event.day)"
       (eventClicked)="handleEvent('Clicked', $event.event)"
       (eventTimesChanged)="eventTimesChanged($event)"
+      [cellTemplate]="customCellTemplate"
+      [product]="product"
     >
     </mwl-calendar-month-view>
     <!-- <mwl-calendar-week-view
@@ -89,6 +90,19 @@
     >
     </mwl-calendar-day-view> -->
   </div>
+  <ng-template #customCellTemplate let-day="day" let-locale="locale">
+    <div class="cal-cell-top">
+      <span class="cal-day-badge" *ngIf="day.badgeTotal > 0"
+        >{{ day.badgeTotal }}</span
+      >
+      <span class="cal-day-number"
+        >{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span
+      >
+    </div>
+    <small [style.background-color]="product.isAvailable ? 'green' : 'red' "
+      >{{ product.isAvailable ? 'Available' : 'Unavailable' }}</small
+    >
+  </ng-template>
   
   <!-- Everything you see below is just for the demo, you don't need to include it in your app -->
   
