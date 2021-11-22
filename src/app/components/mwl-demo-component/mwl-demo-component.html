@@ -31,33 +31,11 @@
     <div class="col-md-4">
       <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
     </div>
-    <!-- <div class="col-md-4">
-      <div class="btn-group">
-        <div
-          class="btn btn-primary"
-          (click)="setView(CalendarView.Month)"
-          [class.active]="view === CalendarView.Month"
-        >
-          Month
-        </div>
-        <div
-          class="btn btn-primary"
-          (click)="setView(CalendarView.Week)"
-          [class.active]="view === CalendarView.Week"
-        >
-          Week
-        </div>
-        <div
-          class="btn btn-primary"
-          (click)="setView(CalendarView.Day)"
-          [class.active]="view === CalendarView.Day"
-        >
-          Day
-        </div>
-      </div>
-    </div> -->
+
   </div>
+
   <br />
+
   <div [ngSwitch]="view">
     <mwl-calendar-month-view
       *ngSwitchCase="CalendarView.Month"
@@ -68,27 +46,12 @@
       (eventClicked)="handleEvent('Clicked', $event.event)"
       (eventTimesChanged)="eventTimesChanged($event)"
       [cellTemplate]="customCellTemplate"
+      [headerTemplate]="customHeaderTemplate"
       [product]="product"
     >
     </mwl-calendar-month-view>
-    <!-- <mwl-calendar-week-view
-      *ngSwitchCase="CalendarView.Week"
-      [viewDate]="viewDate"
-      [events]="events"
-      [refresh]="refresh"
-      (eventClicked)="handleEvent('Clicked', $event.event)"
-      (eventTimesChanged)="eventTimesChanged($event)"
-    >
-    </mwl-calendar-week-view> -->
-    <!-- <mwl-calendar-day-view
-      *ngSwitchCase="CalendarView.Day"
-      [viewDate]="viewDate"
-      [events]="events"
-      [refresh]="refresh"
-      (eventClicked)="handleEvent('Clicked', $event.event)"
-      (eventTimesChanged)="eventTimesChanged($event)"
-    >
-    </mwl-calendar-day-view> -->
+
+  
   </div>
   <ng-template #customCellTemplate let-day="day" let-locale="locale">
     <div class="cal-cell-top">
@@ -99,121 +62,31 @@
         >{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span
       >
     </div>
-    <small [style.background-color]="checkIfSameDay(product.bookings[0].startDate, day.date) ? 'green' : 'red' "
-      >{{ checkIfSameDay(product.bookings[0].startDate, day.date) ? 'Unavailable' : 'Available'  }}</small
+    <small [style.background-color]="checkIfDayIsBooked(day.date, product) ? 'red' : 'green' "
+      >{{ checkIfDayIsBooked(day.date, product) ? 'Unavailable' : 'Available'  }}</small
     >
   </ng-template>
-  
-  <!-- Everything you see below is just for the demo, you don't need to include it in your app -->
-  
-  <!-- <br /><br /><br />
-  
-  <h3>
-    Edit events
-    <button class="btn btn-primary float-right" (click)="addEvent()">
-      Add new
-    </button>
-    <div class="clearfix"></div>
-  </h3>
-  
-  <div class="table-responsive">
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th>Title</th>
-          <th>Primary color</th>
-          <th>Secondary color</th>
-          <th>Starts at</th>
-          <th>Ends at</th>
-          <th>Remove</th>
-        </tr>
-      </thead>
-  
-      <tbody>
-        <tr *ngFor="let event of events">
-          <td>
-            <input
-              type="text"
-              class="form-control"
-              [(ngModel)]="event.title"
-              (keyup)="refresh.next()"
-            />
-          </td>
-          <td>
-            <input
-              type="color"
-              [(ngModel)]="event.color.primary"
-              (change)="refresh.next()"
-            />
-          </td>
-          <td>
-            <input
-              type="color"
-              [(ngModel)]="event.color.secondary"
-              (change)="refresh.next()"
-            />
-          </td>
-          <td>
-            <input
-              class="form-control"
-              type="text"
-              mwlFlatpickr
-              [(ngModel)]="event.start"
-              (ngModelChange)="refresh.next()"
-              [altInput]="true"
-              [convertModelValue]="true"
-              [enableTime]="true"
-              dateFormat="Y-m-dTH:i"
-              altFormat="F j, Y H:i"
-              placeholder="Not set"
-            />
-          </td>
-          <td>
-            <input
-              class="form-control"
-              type="text"
-              mwlFlatpickr
-              [(ngModel)]="event.end"
-              (ngModelChange)="refresh.next()"
-              [altInput]="true"
-              [convertModelValue]="true"
-              [enableTime]="true"
-              dateFormat="Y-m-dTH:i"
-              altFormat="F j, Y H:i"
-              placeholder="Not set"
-            />
-          </td>
-          <td>
-            <button class="btn btn-danger" (click)="deleteEvent(event)">
-              Delete
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div> -->
-  
-  <ng-template #modalContent let-close="close">
-    <div class="modal-header">
-      <h5 class="modal-title">Event action occurred</h5>
-      <button type="button" class="close" (click)="close()">
-        <span aria-hidden="true">&times;</span>
-      </button>
+
+  <!-- <ng-template
+  #customHeaderTemplate
+  let-days="days"
+  let-locale="locale">
+  <div class="cal-cell-row cal-header">
+    <div
+      class="cal-cell"
+      *ngFor="let day of days; trackBy:trackByWeekDayHeaderDate"
+      [class.cal-past]="day.isPast"
+      [class.cal-today]="day.isToday"
+      [class.cal-future]="day.isFuture"
+      [class.cal-weekend]="day.isWeekend"
+      [ngClass]="day.cssClass">
+      {{ day.date | calendarDate:'monthViewColumnHeader':locale }}
     </div>
-    <div class="modal-body">
-      <div>
-        Action:
-        <pre>{{ modalData?.action }}</pre>
-      </div>
-      <div>
-        Event:
-        <pre>{{ modalData?.event | json }}</pre>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-outline-secondary" (click)="close()">
-        OK
-      </button>
-    </div>
-  </ng-template>
+  </div>
+</ng-template>
+<ng-template
+  [ngTemplateOutlet]="customTemplate || defaultTemplate"
+  [ngTemplateOutletContext]="{days: days, locale: locale}">
+</ng-template> -->
   
+ 

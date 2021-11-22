@@ -11,8 +11,7 @@ export interface Product {
 export interface Booking {
   // id: string,
   // userId: string,
-  startDate: Date;
-  nights: number;
+  dates: Date[];
   // endDate: Date;
   // guests: number;
 }

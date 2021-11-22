@@ -9,7 +9,7 @@ export const productData: Product[] = [
     imageUrl:
       'https://cdn.airstream.com/wp-content/uploads/2019/07/2020-Airstream-Bambi-16RB-Exterior-Bug-Eye.jpg?auto=true&crop=edges&fit=clamp&ixlib=imgixjs-3.4.0&w=2258',
     imageAltText: 'Picture of an Airstream Bambi',
-    bookings: [{ startDate: new Date(2021, 10, 15), nights: 1 }]
+    bookings: [{ dates: [new Date(2021, 10, 15), new Date(2021, 10, 16)] }]
   },
 
   {
