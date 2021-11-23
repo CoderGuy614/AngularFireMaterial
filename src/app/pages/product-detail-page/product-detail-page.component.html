@@ -1,9 +1,30 @@
 <div class="container">
   <div class="row">
     <div class="col-sm-6">
-      <mwl-demo-component [product]="product"></mwl-demo-component>
+      <span class="d-flex flex-row justify-content-between">
+        <button mat-icon-button color="secondary" aria-label="back button">
+          <mat-icon>arrow_circle_left</mat-icon>
+        </button>
+        <h3 class="text-center mb-2 d-inline-block">{{ product.title }} Details</h3>
+        <button mat-icon-button color="secondary" aria-label="back button">
+          <mat-icon>arrow_circle_right</mat-icon>
+        </button>
+      </span>
+      <mat-card class="details-card">
+        <mat-card-header>
+          <mat-card-title>{{ product.title }}</mat-card-title>
+          <mat-card-subtitle>{{ product.subtitle }}</mat-card-subtitle>
+        </mat-card-header>
+        <img class="header-image" src="{{ product.imageUrl }}" alt="{{ product.imageAltText }}">
+        <mat-card-content>
+          {{ product.description }}
+        </mat-card-content>
+      </mat-card>
     </div>
-    <div class="col-sm-6">col-sm-4</div>
+    <div class="col-sm-6">
+      <h3 class="text-center mb-2">Current Availability</h3>
+      <full-calendar [options]="calendarOptions"></full-calendar>
+    </div>
   </div>
   <div class="row">
     <div class="col-sm">col-sm</div>

@@ -1,0 +1,9 @@
+.details-card {
+    max-width: 550px;
+    margin-bottom: 16px;
+  }
+
+.header-image { 
+    width: 100%;
+    height: auto;
+}

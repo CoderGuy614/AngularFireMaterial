@@ -39,6 +39,10 @@ import { EditPhotoURLModalComponent } from './components/edit-photo-url-modal/ed
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 
+//Full Calendar
+import { FullCalendarModule } from '@fullcalendar/angular'; 
+import dayGridPlugin from '@fullcalendar/daygrid';
+
 import { reducers, metaReducers } from './reducers';
 import { PERSISTENCE } from '@angular/fire/auth';
 import { MaterialModule } from './material.module';
@@ -46,6 +50,10 @@ import { routes } from './shared/appRoutes';
 import { NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
 import { FlatpickrModule } from 'angularx-flatpickr';
+
+FullCalendarModule.registerPlugins([
+  dayGridPlugin
+]);
 
 @NgModule({
   declarations: [
@@ -88,6 +96,7 @@ import { FlatpickrModule } from 'angularx-flatpickr';
       routerState: RouterState.Minimal,
     }),
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
+    FullCalendarModule,
     NgbModule,
   ],
   exports: [DemoComponent],
