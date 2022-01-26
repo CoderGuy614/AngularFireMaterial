@@ -24,7 +24,6 @@ import { ProfileDropdownComponent } from './components/navbar/profile-dropdown/p
 import { HomeComponent } from './components/home/home.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { ProductComponent } from './components/product/product.component';
-import { DemoComponent } from './components/mwl-demo-component/mwl-demo-component';
 import { DatePickerComponent } from './components/date-picker/date-picker.component';
 
 //Pages
@@ -35,12 +34,8 @@ import { ProductDetailPageComponent } from './pages/product-detail-page/product-
 import { EditDisplayNameModalComponent } from './components/edit-display-name-modal/edit-display-name-modal.component';
 import { EditPhotoURLModalComponent } from './components/edit-photo-url-modal/edit-photo-url-modal.component';
 
-//Calendar 
-import { CalendarModule, DateAdapter } from 'angular-calendar';
-import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
-
 //Full Calendar
-import { FullCalendarModule } from '@fullcalendar/angular'; 
+import { FullCalendarModule } from '@fullcalendar/angular';
 import dayGridPlugin from '@fullcalendar/daygrid';
 
 import { reducers, metaReducers } from './reducers';
@@ -51,23 +46,20 @@ import { NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
 import { FlatpickrModule } from 'angularx-flatpickr';
 
-FullCalendarModule.registerPlugins([
-  dayGridPlugin
-]);
+FullCalendarModule.registerPlugins([dayGridPlugin]);
 
 @NgModule({
   declarations: [
-    AppComponent, 
+    AppComponent,
     DatePickerComponent,
-    HomeComponent, 
+    HomeComponent,
     NavbarComponent,
     ProfileDropdownComponent,
     ProductComponent,
-    DemoComponent,
     ProductsPageComponent,
     ProductDetailPageComponent,
     EditDisplayNameModalComponent,
-    EditPhotoURLModalComponent
+    EditPhotoURLModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -95,14 +87,10 @@ FullCalendarModule.registerPlugins([
       stateKey: 'router',
       routerState: RouterState.Minimal,
     }),
-    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
     FullCalendarModule,
     NgbModule,
   ],
-  exports: [DemoComponent],
-  providers: [
-    { provide: PERSISTENCE, useValue: 'local' },
-  ],
+  providers: [{ provide: PERSISTENCE, useValue: 'local' }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
