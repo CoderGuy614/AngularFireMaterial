@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Product, Booking } from 'src/app/models/Product';
+import { Product, Booking, CalendarEvent } from 'src/app/models/Product';
 import { productData } from '../products-page/productData';
-import { CalendarOptions } from '@fullcalendar/angular';
+import { CalendarOptions, EventApi } from '@fullcalendar/angular';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-product-detail-page',
@@ -10,12 +11,10 @@ import { CalendarOptions } from '@fullcalendar/angular';
   styleUrls: ['./product-detail-page.component.css'],
 })
 export class ProductDetailPageComponent implements OnInit {
-  calendarOptions: CalendarOptions = {
+  // This should be typed as CalendarOptions
+  calendarOptions: any = {
     initialView: 'dayGridMonth',
-    events: [
-      { title: 'event 1', date: '2022-01-01', color: 'red' },
-      { title: 'event 2', date: '2022-01-02', color: 'green' },
-    ],
+    events: [],
   };
 
   productId: string;
@@ -32,23 +31,28 @@ export class ProductDetailPageComponent implements OnInit {
     this.showUnavailableDates(this.product);
   }
 
-  handleDateClick(arg) {
-    alert('date click! ' + arg.dateStr);
-  }
-
   private showUnavailableDates(product: Product) {
-    let unavailableDates: Date[];
+    let unavailableDates: moment.Moment[];
     if (product) {
-      this.getAllDates(product);
+      this.getAllDates(product).forEach((date) => {
+        let newEvent = new CalendarEvent(
+          'Booked',
+          date.format('YYYY-MM-DD'),
+          'red'
+        );
+        this.calendarOptions.events.push(newEvent);
+        console.log(date.format('YYYY-MM-DD'));
+      });
+
       // Will use this to push dates into the events array
     }
   }
 
-  private getAllDates(product: Product): Date[] {
-    let result: Date[] = [];
+  private getAllDates(product: Product): moment.Moment[] {
+    let allDates: moment.Moment[] = [];
     product.bookings.forEach((booking) =>
-      booking.dates.forEach((date) => result.push(date))
+      booking.dates.forEach((date) => allDates.push(date))
     );
-    return result;
+    return allDates;
   }
 }

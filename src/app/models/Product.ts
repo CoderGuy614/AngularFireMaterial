@@ -1,23 +1,33 @@
+import * as moment from 'moment';
 export interface Product {
-  id: string,
+  id: string;
   title: string;
   subtitle: string;
   description: string;
   imageUrl: string;
   imageAltText: string;
-  bookings: Booking[]
+  bookings: Booking[];
 }
 
 export interface Booking {
   // id: string,
   // userId: string,
-  dates: Date[];
+  dates: moment.Moment[];
   // endDate: Date;
   // guests: number;
 }
 
-// interface Date {
-//   month: number;
-//   day: number;
-//   year: number
-// }
+export class CalendarEvent {
+  title: string;
+  date: string;
+  color: string;
+  constructor(title: string, date: string, color: string) {
+    this.title = title;
+    this.date = date;
+    this.color = color;
+  }
+
+  setEvent() {
+    return { title: this.title, date: this.date, color: this.color };
+  }
+}
