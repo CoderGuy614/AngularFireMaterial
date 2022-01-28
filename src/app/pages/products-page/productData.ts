@@ -9,7 +9,10 @@ export const productData: Product[] = [
     imageUrl:
       'https://cdn.airstream.com/wp-content/uploads/2019/07/2020-Airstream-Bambi-16RB-Exterior-Bug-Eye.jpg?auto=true&crop=edges&fit=clamp&ixlib=imgixjs-3.4.0&w=2258',
     imageAltText: 'Picture of an Airstream Bambi',
-    bookings: [{ dates: [new Date(2021, 10, 15), new Date(2021, 10, 16)] }]
+    bookings: [
+      { dates: [new Date(2022, 0, 1), new Date(2022, 0, 2)] },
+      { dates: [new Date(2022, 0, 5), new Date(2022, 0, 6)] },
+    ],
   },
 
   {
@@ -21,7 +24,7 @@ export const productData: Product[] = [
     imageUrl:
       'https://cdn.airstream.com/wp-content/uploads/2020/06/2021-Airstream-Flying-Cloud-Exterior-Curb-Side.jpg?auto=format&fit=crop&crop=edges&w=1080',
     imageAltText: 'Picture of an Airstream Flying Cloud',
-    bookings: []
+    bookings: [],
   },
 
   {
@@ -33,7 +36,7 @@ export const productData: Product[] = [
     imageUrl:
       'https://cdn.airstream.com/wp-content/uploads/2021/07/International-Nav-Icon.png?auto=format&fit=crop&crop=edges&w=1728',
     imageAltText: 'Picture of an Airstream International',
-    bookings: []
+    bookings: [],
   },
 
   {
@@ -45,6 +48,6 @@ export const productData: Product[] = [
     imageUrl:
       'https://cdn.airstream.com/wp-content/uploads/2021/07/Globetrotter-Nav-Icon.png?auto=format&fit=crop&crop=edges&w=1728',
     imageAltText: 'Picture of an Airstream Globetrotter',
-    bookings: []
+    bookings: [],
   },
 ];
