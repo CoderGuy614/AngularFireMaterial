@@ -26,7 +26,7 @@ export const productData: Product[] = [
     imageUrl:
       'https://cdn.airstream.com/wp-content/uploads/2020/06/2021-Airstream-Flying-Cloud-Exterior-Curb-Side.jpg?auto=format&fit=crop&crop=edges&w=1080',
     imageAltText: 'Picture of an Airstream Flying Cloud',
-    bookings: [],
+    bookings: [{ dates: [moment('2022-01-05'), moment('2022-01-06')] }],
   },
 
   {

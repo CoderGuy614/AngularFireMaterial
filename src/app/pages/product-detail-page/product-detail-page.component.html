@@ -5,7 +5,9 @@
         <button mat-icon-button color="secondary" aria-label="back button">
           <mat-icon>arrow_circle_left</mat-icon>
         </button>
-        <h3 class="text-center mb-2 d-inline-block">{{ product.title }} Details</h3>
+        <h3 class="text-center mb-2 d-inline-block">
+          {{ product.title }} Details
+        </h3>
         <button mat-icon-button color="secondary" aria-label="back button">
           <mat-icon>arrow_circle_right</mat-icon>
         </button>
@@ -15,7 +17,11 @@
           <mat-card-title>{{ product.title }}</mat-card-title>
           <mat-card-subtitle>{{ product.subtitle }}</mat-card-subtitle>
         </mat-card-header>
-        <img class="header-image" src="{{ product.imageUrl }}" alt="{{ product.imageAltText }}">
+        <img
+          class="header-image"
+          src="{{ product.imageUrl }}"
+          alt="{{ product.imageAltText }}"
+        />
         <mat-card-content>
           {{ product.description }}
         </mat-card-content>
@@ -23,7 +29,8 @@
     </div>
     <div class="col-sm-6">
       <h3 class="text-center mb-2">Current Availability</h3>
-      <full-calendar [options]="calendarOptions"></full-calendar>
+      <!-- <button (click)="someMethod()">Some Method</button> -->
+      <full-calendar #calendar [options]="calendarOptions"></full-calendar>
     </div>
   </div>
   <div class="row">

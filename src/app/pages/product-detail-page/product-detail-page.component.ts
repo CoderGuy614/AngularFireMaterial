@@ -1,8 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  AfterViewChecked,
+  AfterViewInit,
+  Component,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Product, Booking, CalendarEvent } from 'src/app/models/Product';
 import { productData } from '../products-page/productData';
-import { CalendarOptions, EventApi } from '@fullcalendar/angular';
+import {
+  CalendarOptions,
+  EventApi,
+  FullCalendarComponent,
+} from '@fullcalendar/angular';
 import * as moment from 'moment';
 
 @Component({
@@ -10,11 +20,12 @@ import * as moment from 'moment';
   templateUrl: './product-detail-page.component.html',
   styleUrls: ['./product-detail-page.component.css'],
 })
-export class ProductDetailPageComponent implements OnInit {
+export class ProductDetailPageComponent implements OnInit, AfterViewInit {
+  @ViewChild('calendar') calendarComponent: FullCalendarComponent;
   // This should be typed as CalendarOptions
-  calendarOptions: any = {
+  calendarOptions: CalendarOptions = {
     initialView: 'dayGridMonth',
-    events: [],
+    // events: [],
   };
 
   productId: string;
@@ -27,12 +38,16 @@ export class ProductDetailPageComponent implements OnInit {
       this.productId = params['productId'];
     });
     this.product = productData.find((product) => product.id === this.productId);
-
-    this.showUnavailableDates(this.product);
   }
 
-  private showUnavailableDates(product: Product) {
-    let unavailableDates: moment.Moment[];
+  ngAfterViewInit() {
+    this.calendarComponent
+      .getApi()
+      .addEventSource(this.createEvents(this.product));
+  }
+
+  private createEvents(product: Product): CalendarEvent[] {
+    let events: CalendarEvent[] = [];
     if (product) {
       this.getAllDates(product).forEach((date) => {
         let newEvent = new CalendarEvent(
@@ -40,12 +55,10 @@ export class ProductDetailPageComponent implements OnInit {
           date.format('YYYY-MM-DD'),
           'red'
         );
-        this.calendarOptions.events.push(newEvent);
-        console.log(date.format('YYYY-MM-DD'));
+        events.push(newEvent);
       });
-
-      // Will use this to push dates into the events array
     }
+    return events;
   }
 
   private getAllDates(product: Product): moment.Moment[] {
@@ -55,4 +68,11 @@ export class ProductDetailPageComponent implements OnInit {
     );
     return allDates;
   }
+
+  // someMethod() {
+  //   console.log(this.calendarComponent.getApi().removeAllEvents());
+  //   this.calendarComponent
+  //     .getApi()
+  //     .addEventSource(this.createEvents(this.product));
+  // }
 }
