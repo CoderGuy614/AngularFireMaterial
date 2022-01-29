@@ -37,6 +37,7 @@ import { EditPhotoURLModalComponent } from './components/edit-photo-url-modal/ed
 //Full Calendar
 import { FullCalendarModule } from '@fullcalendar/angular';
 import dayGridPlugin from '@fullcalendar/daygrid';
+import interactionPlugin from '@fullcalendar/interaction';
 
 import { reducers, metaReducers } from './reducers';
 import { PERSISTENCE } from '@angular/fire/auth';
@@ -46,7 +47,7 @@ import { NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
 import { FlatpickrModule } from 'angularx-flatpickr';
 
-FullCalendarModule.registerPlugins([dayGridPlugin]);
+FullCalendarModule.registerPlugins([dayGridPlugin, interactionPlugin]);
 
 @NgModule({
   declarations: [

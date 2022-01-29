@@ -22,10 +22,13 @@ import * as moment from 'moment';
 })
 export class ProductDetailPageComponent implements OnInit, AfterViewInit {
   @ViewChild('calendar') calendarComponent: FullCalendarComponent;
-  // This should be typed as CalendarOptions
   calendarOptions: CalendarOptions = {
     initialView: 'dayGridMonth',
-    // events: [],
+    selectable: true,
+    defaultAllDay: true,
+    select: function () {
+      alert('YOU CLICKED A DATE');
+    },
   };
 
   productId: string;
@@ -44,6 +47,10 @@ export class ProductDetailPageComponent implements OnInit, AfterViewInit {
     this.calendarComponent
       .getApi()
       .addEventSource(this.createEvents(this.product));
+
+    this.calendarComponent
+      .getApi()
+      .select(() => console.log('selected a date'));
   }
 
   private createEvents(product: Product): CalendarEvent[] {
@@ -51,9 +58,10 @@ export class ProductDetailPageComponent implements OnInit, AfterViewInit {
     if (product) {
       this.getAllDates(product).forEach((date) => {
         let newEvent = new CalendarEvent(
-          'Booked',
+          '',
           date.format('YYYY-MM-DD'),
-          'red'
+          'red',
+          'background'
         );
         events.push(newEvent);
       });

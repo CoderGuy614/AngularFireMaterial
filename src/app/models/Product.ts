@@ -21,13 +21,20 @@ export class CalendarEvent {
   title: string;
   date: string;
   color: string;
-  constructor(title: string, date: string, color: string) {
+  display?: string;
+  constructor(title: string, date: string, color: string, display?: string) {
     this.title = title;
     this.date = date;
     this.color = color;
+    this.display = display;
   }
 
-  setEvent() {
-    return { title: this.title, date: this.date, color: this.color };
-  }
+  // setEvent() {
+  //   return {
+  //     title: this.title,
+  //     date: this.date,
+  //     color: this.color,
+  //     display: 'background',
+  //   };
+  // }
 }

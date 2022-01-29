@@ -26,6 +26,7 @@
     "@angular/router": "~10.2.0",
     "@fullcalendar/angular": "^5.10.1",
     "@fullcalendar/daygrid": "^5.10.1",
+    "@fullcalendar/interaction": "^5.10.1",
     "@ng-bootstrap/ng-bootstrap": "^8.0.4",
     "@ngrx/effects": "^10.1.2",
     "@ngrx/router-store": "^10.1.2",
