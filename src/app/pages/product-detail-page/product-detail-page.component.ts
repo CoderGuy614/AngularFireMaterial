@@ -14,6 +14,7 @@ import {
   FullCalendarComponent,
 } from '@fullcalendar/angular';
 import * as moment from 'moment';
+import { formatDate } from '@fullCalendar/core';
 
 @Component({
   selector: 'app-product-detail-page',
@@ -26,8 +27,16 @@ export class ProductDetailPageComponent implements OnInit, AfterViewInit {
     initialView: 'dayGridMonth',
     selectable: true,
     defaultAllDay: true,
-    select: function () {
-      alert('YOU CLICKED A DATE');
+    select: function (info) {
+      alert(`You selected ${info.startStr}, ${info.endStr}`);
+    },
+    selectAllow: function (info) {
+      // Make this dynamic to block selection of the booked dates
+      if (formatDate(info.start) !== '1/31/2022') {
+        return true;
+      } else {
+        return false;
+      }
     },
   };
 
