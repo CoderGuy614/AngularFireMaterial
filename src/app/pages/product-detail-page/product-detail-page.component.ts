@@ -13,8 +13,8 @@ import {
   EventApi,
   FullCalendarComponent,
 } from '@fullcalendar/angular';
-import * as moment from 'moment';
 import { formatDate } from '@fullCalendar/core';
+import { getAllDates, getProductData } from '../../shared/helpers';
 
 @Component({
   selector: 'app-product-detail-page',
@@ -30,9 +30,11 @@ export class ProductDetailPageComponent implements OnInit, AfterViewInit {
     select: function (info) {
       alert(`You selected ${info.startStr}, ${info.endStr}`);
     },
-    selectAllow: function (info) {
+    selectAllow: function (info, route) {
       // Make this dynamic to block selection of the booked dates
-      if (formatDate(info.start) !== '1/31/2022') {
+      let bookedDates = getAllDates(getProductData(window.location.search.split("=")[1]))
+      let selectedDate = info.startStr;
+      if (!bookedDates.includes(selectedDate)) {
         return true;
       } else {
         return false;
@@ -56,19 +58,15 @@ export class ProductDetailPageComponent implements OnInit, AfterViewInit {
     this.calendarComponent
       .getApi()
       .addEventSource(this.createEvents(this.product));
-
-    this.calendarComponent
-      .getApi()
-      .select(() => console.log('selected a date'));
   }
 
   private createEvents(product: Product): CalendarEvent[] {
     let events: CalendarEvent[] = [];
     if (product) {
-      this.getAllDates(product).forEach((date) => {
+      getAllDates(product).forEach((date) => {
         let newEvent = new CalendarEvent(
           '',
-          date.format('YYYY-MM-DD'),
+          date,
           'red',
           'background'
         );
@@ -78,18 +76,4 @@ export class ProductDetailPageComponent implements OnInit, AfterViewInit {
     return events;
   }
 
-  private getAllDates(product: Product): moment.Moment[] {
-    let allDates: moment.Moment[] = [];
-    product.bookings.forEach((booking) =>
-      booking.dates.forEach((date) => allDates.push(date))
-    );
-    return allDates;
-  }
-
-  // someMethod() {
-  //   console.log(this.calendarComponent.getApi().removeAllEvents());
-  //   this.calendarComponent
-  //     .getApi()
-  //     .addEventSource(this.createEvents(this.product));
-  // }
 }

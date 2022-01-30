@@ -1,5 +1,4 @@
 import { Product } from '../../models/Product';
-import * as moment from 'moment';
 
 export const productData: Product[] = [
   {
@@ -12,8 +11,8 @@ export const productData: Product[] = [
       'https://cdn.airstream.com/wp-content/uploads/2019/07/2020-Airstream-Bambi-16RB-Exterior-Bug-Eye.jpg?auto=true&crop=edges&fit=clamp&ixlib=imgixjs-3.4.0&w=2258',
     imageAltText: 'Picture of an Airstream Bambi',
     bookings: [
-      { dates: [moment('2022-01-01'), moment('2022-01-02')] },
-      { dates: [moment('2022-01-05'), moment('2022-01-06')] },
+      { dates: ['2022-01-01', '2022-01-02'] },
+      { dates: ['2022-01-05', '2022-01-06'] },
     ],
   },
 
@@ -26,7 +25,7 @@ export const productData: Product[] = [
     imageUrl:
       'https://cdn.airstream.com/wp-content/uploads/2020/06/2021-Airstream-Flying-Cloud-Exterior-Curb-Side.jpg?auto=format&fit=crop&crop=edges&w=1080',
     imageAltText: 'Picture of an Airstream Flying Cloud',
-    bookings: [{ dates: [moment('2022-01-05'), moment('2022-01-06')] }],
+    bookings: [{ dates: ['2022-01-05', '2022-01-06'] }],
   },
 
   {

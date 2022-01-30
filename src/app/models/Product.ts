@@ -12,7 +12,7 @@ export interface Product {
 export interface Booking {
   // id: string,
   // userId: string,
-  dates: moment.Moment[];
+  dates: string[];
   // endDate: Date;
   // guests: number;
 }
