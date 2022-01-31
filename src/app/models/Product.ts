@@ -28,13 +28,5 @@ export class CalendarEvent {
     this.color = color;
     this.display = display;
   }
-
-  // setEvent() {
-  //   return {
-  //     title: this.title,
-  //     date: this.date,
-  //     color: this.color,
-  //     display: 'background',
-  //   };
-  // }
+  
 }
