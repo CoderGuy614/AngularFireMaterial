@@ -13,6 +13,7 @@ import {
   FullCalendarComponent,
 } from '@fullcalendar/angular';
 import { getAllDates } from '../../shared/helpers';
+import tippy from 'tippy.js';
 
 @Component({
   selector: 'app-product-detail-page',
@@ -26,6 +27,13 @@ export class ProductDetailPageComponent implements OnInit, AfterViewInit {
     selectable: true,
     defaultAllDay: true,
     selectOverlap: false,
+    eventDidMount: function(info) {
+      var tooltip = tippy(info.el, {
+        content: 'Tooltip',
+        arrow: true
+        
+      })
+    },
     select: function (info) {
       console.log(`You selected ${info.startStr}, ${info.endStr}`);
     },
@@ -47,10 +55,11 @@ export class ProductDetailPageComponent implements OnInit, AfterViewInit {
     this.calendarComponent
       .getApi()
       .addEventSource(this.createEvents(this.product));
+    // this.calendarComponent.getApi().addEventSource(this.createBackgroundEvents());
   }
 
-  private createEvents(product: Product): CalendarEvent[] {
-    let events: CalendarEvent[] = [];
+  private createEvents(product: Product): any[] {
+    let events: any[] = [];
     if (product) {
       getAllDates(product).forEach((date) => {
         let newEvent = new CalendarEvent(
@@ -58,11 +67,22 @@ export class ProductDetailPageComponent implements OnInit, AfterViewInit {
           date,
           'red',
           'background'
+          
         );
+        
         events.push(newEvent);
       });
     }
     return events;
   }
+
+  // private createBackgroundEvents() {
+  //   return [
+  //     {
+  //       groupId: 'testGroupId',
+  //       start: '2022-01-01',
+  //     }
+  //   ]
+  // }
 
 }
