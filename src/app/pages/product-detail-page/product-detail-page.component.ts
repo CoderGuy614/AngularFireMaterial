@@ -28,10 +28,9 @@ export class ProductDetailPageComponent implements OnInit, AfterViewInit {
     defaultAllDay: true,
     selectOverlap: false,
     eventDidMount: function(info) {
-      var tooltip = tippy(info.el, {
-        content: 'Tooltip',
+      var unavailableTooltip = tippy(info.el, {
+        content: 'Unavailable',
         arrow: true
-        
       })
     },
     select: function (info) {
@@ -81,6 +80,9 @@ export class ProductDetailPageComponent implements OnInit, AfterViewInit {
   //     {
   //       groupId: 'testGroupId',
   //       start: '2022-01-01',
+  //       end: '2022-01-02',
+  //       color: 'green',
+  //       display: 'inverse-background'
   //     }
   //   ]
   // }
