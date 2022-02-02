@@ -6,15 +6,14 @@ import {
   ViewChild,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Product, Booking, CalendarEvent } from 'src/app/models/Product';
+import { Product, CalendarEvent } from 'src/app/models/Product';
 import { productData } from '../products-page/productData';
 import {
   CalendarOptions,
-  EventApi,
   FullCalendarComponent,
 } from '@fullcalendar/angular';
-import { formatDate } from '@fullCalendar/core';
-import { getAllDates, getProductData } from '../../shared/helpers';
+import { getAllDates } from '../../shared/helpers';
+import tippy from 'tippy.js';
 
 @Component({
   selector: 'app-product-detail-page',
@@ -27,18 +26,15 @@ export class ProductDetailPageComponent implements OnInit, AfterViewInit {
     initialView: 'dayGridMonth',
     selectable: true,
     defaultAllDay: true,
-    select: function (info) {
-      alert(`You selected ${info.startStr}, ${info.endStr}`);
+    selectOverlap: false,
+    eventDidMount: function(info) {
+      var unavailableTooltip = tippy(info.el, {
+        content: 'Unavailable',
+        arrow: true
+      })
     },
-    selectAllow: function (info, route) {
-      // Make this dynamic to block selection of the booked dates
-      let bookedDates = getAllDates(getProductData(window.location.search.split("=")[1]))
-      let selectedDate = info.startStr;
-      if (!bookedDates.includes(selectedDate)) {
-        return true;
-      } else {
-        return false;
-      }
+    select: function (info) {
+      console.log(`You selected ${info.startStr}, ${info.endStr}`);
     },
   };
 
@@ -58,10 +54,11 @@ export class ProductDetailPageComponent implements OnInit, AfterViewInit {
     this.calendarComponent
       .getApi()
       .addEventSource(this.createEvents(this.product));
+    // this.calendarComponent.getApi().addEventSource(this.createBackgroundEvents());
   }
 
-  private createEvents(product: Product): CalendarEvent[] {
-    let events: CalendarEvent[] = [];
+  private createEvents(product: Product): any[] {
+    let events: any[] = [];
     if (product) {
       getAllDates(product).forEach((date) => {
         let newEvent = new CalendarEvent(
@@ -69,11 +66,25 @@ export class ProductDetailPageComponent implements OnInit, AfterViewInit {
           date,
           'red',
           'background'
+          
         );
+        
         events.push(newEvent);
       });
     }
     return events;
   }
+
+  // private createBackgroundEvents() {
+  //   return [
+  //     {
+  //       groupId: 'testGroupId',
+  //       start: '2022-01-01',
+  //       end: '2022-01-02',
+  //       color: 'green',
+  //       display: 'inverse-background'
+  //     }
+  //   ]
+  // }
 
 }
