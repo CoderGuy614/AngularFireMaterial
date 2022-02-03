@@ -1,18 +1,9 @@
-import {
-  AfterViewChecked,
-  AfterViewInit,
-  Component,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Product, CalendarEvent } from 'src/app/models/Product';
 import { productData } from '../products-page/productData';
-import {
-  CalendarOptions,
-  FullCalendarComponent,
-} from '@fullcalendar/angular';
-import { getAllDates } from '../../shared/helpers';
+import { CalendarOptions, FullCalendarComponent } from '@fullcalendar/angular';
+import { getAllDates, setSomeDates } from '../../shared/helpers';
 import tippy from 'tippy.js';
 
 @Component({
@@ -27,19 +18,22 @@ export class ProductDetailPageComponent implements OnInit, AfterViewInit {
     selectable: true,
     defaultAllDay: true,
     selectOverlap: false,
-    eventDidMount: function(info) {
+    eventDidMount: function (info) {
       var unavailableTooltip = tippy(info.el, {
         content: 'Unavailable',
-        arrow: true
-      })
+        arrow: true,
+      });
     },
     select: function (info) {
-      console.log(`You selected ${info.startStr}, ${info.endStr}`);
+      // Dispatch an action put the dates in the store
+      setSomeDates([info.startStr, info.endStr]);
+      // this.dates = [info.startStr, info.endStr];
     },
   };
 
   productId: string;
   product: Product;
+  dates: string[] = [];
 
   constructor(private route: ActivatedRoute) {}
 
@@ -54,25 +48,30 @@ export class ProductDetailPageComponent implements OnInit, AfterViewInit {
     this.calendarComponent
       .getApi()
       .addEventSource(this.createEvents(this.product));
+    console.log(
+      this.calendarComponent.getApi().getCurrentData(),
+      'current data'
+    );
     // this.calendarComponent.getApi().addEventSource(this.createBackgroundEvents());
   }
 
-  private createEvents(product: Product): any[] {
+  private createEvents(product: Product): CalendarEvent[] {
     let events: any[] = [];
     if (product) {
       getAllDates(product).forEach((date) => {
-        let newEvent = new CalendarEvent(
-          '',
-          date,
-          'red',
-          'background'
-          
-        );
-        
+        let newEvent = new CalendarEvent('', date, 'red', 'background');
         events.push(newEvent);
       });
     }
+    console.log(events);
     return events;
+  }
+
+  public setDates(dates: string[]) {
+    //
+    console.log('SET DATES', dates);
+    this.dates = setSomeDates(dates);
+    return dates;
   }
 
   // private createBackgroundEvents() {
@@ -86,5 +85,4 @@ export class ProductDetailPageComponent implements OnInit, AfterViewInit {
   //     }
   //   ]
   // }
-
 }

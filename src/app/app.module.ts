@@ -25,6 +25,7 @@ import { HomeComponent } from './components/home/home.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { ProductComponent } from './components/product/product.component';
 import { DatePickerComponent } from './components/date-picker/date-picker.component';
+import { BookingFormComponent } from './components/booking-form/booking-form.component';
 
 //Pages
 import { ProductsPageComponent } from './pages/products-page/products-page.component';
@@ -61,6 +62,7 @@ FullCalendarModule.registerPlugins([dayGridPlugin, interactionPlugin]);
     ProductDetailPageComponent,
     EditDisplayNameModalComponent,
     EditPhotoURLModalComponent,
+    BookingFormComponent,
   ],
   imports: [
     BrowserModule,
