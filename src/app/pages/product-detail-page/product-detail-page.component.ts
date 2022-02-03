@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Product, CalendarEvent } from 'src/app/models/Product';
 import { productData } from '../products-page/productData';
 import { CalendarOptions, FullCalendarComponent } from '@fullcalendar/angular';
-import { getAllDates, setSomeDates } from '../../shared/helpers';
+import { getAllDates } from '../../shared/helpers';
 import tippy from 'tippy.js';
 
 @Component({
@@ -24,11 +24,7 @@ export class ProductDetailPageComponent implements OnInit, AfterViewInit {
         arrow: true,
       });
     },
-    select: function (info) {
-      // Dispatch an action put the dates in the store
-      setSomeDates([info.startStr, info.endStr]);
-      // this.dates = [info.startStr, info.endStr];
-    },
+    select: this.handleSelect.bind(this)
   };
 
   productId: string;
@@ -48,11 +44,10 @@ export class ProductDetailPageComponent implements OnInit, AfterViewInit {
     this.calendarComponent
       .getApi()
       .addEventSource(this.createEvents(this.product));
-    console.log(
-      this.calendarComponent.getApi().getCurrentData(),
-      'current data'
-    );
-    // this.calendarComponent.getApi().addEventSource(this.createBackgroundEvents());
+  }
+
+  handleSelect(arg) {
+    this.dates = [arg.startStr, arg.endStr]
   }
 
   private createEvents(product: Product): CalendarEvent[] {
@@ -63,26 +58,6 @@ export class ProductDetailPageComponent implements OnInit, AfterViewInit {
         events.push(newEvent);
       });
     }
-    console.log(events);
     return events;
   }
-
-  public setDates(dates: string[]) {
-    //
-    console.log('SET DATES', dates);
-    this.dates = setSomeDates(dates);
-    return dates;
-  }
-
-  // private createBackgroundEvents() {
-  //   return [
-  //     {
-  //       groupId: 'testGroupId',
-  //       start: '2022-01-01',
-  //       end: '2022-01-02',
-  //       color: 'green',
-  //       display: 'inverse-background'
-  //     }
-  //   ]
-  // }
 }

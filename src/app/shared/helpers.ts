@@ -7,7 +7,3 @@ export function getAllDates(product: Product): string[] {
   );
   return allDates;
 }
-
-export function setSomeDates(dates: string[]) {
-  return dates;
-}
