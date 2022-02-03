@@ -3,8 +3,25 @@
     <mat-card-title>Make a Booking</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <mat-list>
+    <!-- <mat-list>
       <mat-list-item *ngFor="let date of dates">{{ date }}</mat-list-item>
-    </mat-list>
+    </mat-list> -->
+
+    <table>
+      <!--- Note that these columns can be defined in any order.
+              The actual rendered columns are set as a property on the row definition" -->
+
+      <!-- Position Column -->
+      <ng-container>
+        <tr>
+          <th>Check In</th>
+          <th>Check Out</th>
+        </tr>
+        <tr>
+          <td>{{ dates[0] }}</td>
+          <td>{{ dates[1] }}</td>
+        </tr>
+      </ng-container>
+    </table>
   </mat-card-content>
 </mat-card>

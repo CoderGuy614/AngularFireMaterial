@@ -8,6 +8,9 @@ import { Booking } from 'src/app/models/Product';
 })
 export class BookingFormComponent implements OnInit {
   @Input() dates: string[];
+
+  displayedColumns: string[] = ['checkInDate', 'checkOutDate'];
+
   constructor() {}
 
   ngOnInit(): void {}
