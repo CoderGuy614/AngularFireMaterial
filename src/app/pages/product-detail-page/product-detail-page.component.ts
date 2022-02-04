@@ -15,7 +15,7 @@ export class ProductDetailPageComponent implements OnInit, AfterViewInit {
   @ViewChild('calendar') calendarComponent: FullCalendarComponent;
   calendarOptions: CalendarOptions = {
     initialView: 'dayGridMonth',
-    selectable: true,
+    selectable: false,
     defaultAllDay: true,
     selectOverlap: false,
     eventDidMount: function (info) {
@@ -24,7 +24,7 @@ export class ProductDetailPageComponent implements OnInit, AfterViewInit {
         arrow: true,
       });
     },
-    select: this.handleSelect.bind(this)
+    select: this.handleSelect.bind(this),
   };
 
   productId: string;
@@ -47,7 +47,7 @@ export class ProductDetailPageComponent implements OnInit, AfterViewInit {
   }
 
   handleSelect(arg) {
-    this.dates = [arg.startStr, arg.endStr]
+    this.dates = [arg.startStr, arg.endStr];
   }
 
   private createEvents(product: Product): CalendarEvent[] {
