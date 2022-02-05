@@ -1,10 +1,24 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import {
+  Component,
+  OnInit,
+  Input,
+  AfterViewInit,
+  OnChanges,
+} from '@angular/core';
+import {
+  FormControl,
+  FormGroup,
+  FormBuilder,
+  Validators,
+} from '@angular/forms';
 import {
   MatCalendarCellClassFunction,
   MatDatepickerInputEvent,
+  DateFilterFn,
 } from '@angular/material/datepicker';
-import { Booking } from 'src/app/models/Product';
+import { Booking, Product } from 'src/app/models/Product';
+import * as moment from 'moment';
+import { getAllDates } from 'src/app/shared/helpers';
 
 @Component({
   selector: 'app-booking-form',
@@ -12,18 +26,24 @@ import { Booking } from 'src/app/models/Product';
   styleUrls: ['./booking-form.component.css'],
 })
 export class BookingFormComponent implements OnInit {
-  range = new FormGroup({
-    start: new FormControl(),
-    end: new FormControl(),
+  get product(): Product {
+    return this._product;
+  }
+
+  @Input() set product(value: Product) {
+    this._product = value;
+  }
+
+  minDate: Date;
+  bookingForm = this.fb.group({
+    checkIn: ['', Validators.required],
+    checkOut: ['', Validators.required],
   });
 
   convertToString(date: Date): string {
     return date.toDateString();
   }
 
-  addDate(type: number, event: MatDatepickerInputEvent<Date>) {
-    this.dates[type] = event.value.toDateString();
-  }
   dateClass: MatCalendarCellClassFunction<Date> = (cellDate, view) => {
     // Only highligh dates inside the month view.
     if (view === 'month') {
@@ -36,9 +56,23 @@ export class BookingFormComponent implements OnInit {
 
     return '';
   };
-  @Input() dates: string[];
 
-  constructor() {}
+  onSubmit() {
+    console.log(this.bookingForm);
+  }
+
+  rangeFilter(date: Date): boolean {
+    let d = moment(date).format('YYYY-MM-DD');
+    let result = !getAllDates(this.product).includes(d);
+    console.log(result);
+    return result;
+  }
+
+  constructor(private fb: FormBuilder) {
+    this.minDate = new Date();
+  }
+
+  private _product: Product = null;
 
   ngOnInit(): void {}
 }

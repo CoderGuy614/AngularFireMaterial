@@ -31,12 +31,11 @@ export class ProductDetailPageComponent implements OnInit, AfterViewInit {
         arrow: true,
       });
     },
-    select: this.handleSelect.bind(this),
+    // select: this.handleSelect.bind(this),
   };
 
   productId: string;
   product: Product;
-  dates: string[] = [];
 
   constructor(private route: ActivatedRoute) {}
 
@@ -53,9 +52,9 @@ export class ProductDetailPageComponent implements OnInit, AfterViewInit {
       .addEventSource(this.createEvents(this.product));
   }
 
-  handleSelect(arg) {
-    this.dates = [arg.startStr, arg.endStr];
-  }
+  // handleSelect(arg) {
+  //   this.dates = [arg.startStr, arg.endStr];
+  // }
 
   private createEvents(product: Product): CalendarEvent[] {
     let events: any[] = [];
