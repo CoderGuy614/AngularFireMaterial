@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { MatCalendarCellClassFunction } from '@angular/material/datepicker';
+import { FormControl } from '@angular/forms';
+import { MatCalendarCellClassFunction, MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { Booking } from 'src/app/models/Product';
 
 @Component({
@@ -8,6 +9,9 @@ import { Booking } from 'src/app/models/Product';
   styleUrls: ['./booking-form.component.css'],
 })
 export class BookingFormComponent implements OnInit {
+  addDate(type: number, event: MatDatepickerInputEvent<Date>) {
+    this.dates[type] = event.value.toDateString()
+  }
   dateClass: MatCalendarCellClassFunction<Date> = (cellDate, view) => {
     // Only highligh dates inside the month view.
     if (view === 'month') {

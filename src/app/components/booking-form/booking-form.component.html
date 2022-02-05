@@ -6,7 +6,7 @@
     <div>
       <mat-form-field class="example-full-width" appearance="fill">
         <mat-label>Check In</mat-label>
-        <input matInput [matDatepicker]="picker1" />
+        <input matInput [formGroup] [matDatepicker]="picker1" (dateChange)="addDate(0, $event)" />
         <mat-datepicker-toggle
           matSuffix
           [for]="picker1"
@@ -14,10 +14,11 @@
         <mat-datepicker [dateClass]="dateClass" #picker1></mat-datepicker>
       </mat-form-field>
     </div>
+    {{ dates[0] }}
     <div>
       <mat-form-field class="example-full-width" appearance="fill">
         <mat-label>Check Out</mat-label>
-        <input matInput [matDatepicker]="picker2" />
+        <input matInput [matDatepicker]="picker2" (dateChange)="addDate(1, $event)" />
         <mat-datepicker-toggle
           matSuffix
           [for]="picker2"
@@ -25,5 +26,6 @@
         <mat-datepicker [dateClass]="dateClass" #picker2></mat-datepicker>
       </mat-form-field>
     </div>
+    {{ dates[1] }}
   </mat-card-content>
 </mat-card>
