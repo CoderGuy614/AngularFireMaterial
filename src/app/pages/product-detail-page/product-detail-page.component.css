@@ -1,9 +1,14 @@
 .details-card {
-    max-width: 550px;
-    margin-bottom: 16px;
-  }
+  max-width: 550px;
+  margin-bottom: 16px;
+}
 
-.header-image { 
-    width: 100%;
-    height: auto;
+.header-image {
+  width: 100%;
+  height: auto;
+}
+
+.example-custom-date-class {
+  background: orange;
+  border-radius: 100%;
 }

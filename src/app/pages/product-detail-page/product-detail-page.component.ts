@@ -1,4 +1,10 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  OnInit,
+  ViewChild,
+  ViewEncapsulation,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Product, CalendarEvent } from 'src/app/models/Product';
 import { productData } from '../products-page/productData';
@@ -10,6 +16,7 @@ import tippy from 'tippy.js';
   selector: 'app-product-detail-page',
   templateUrl: './product-detail-page.component.html',
   styleUrls: ['./product-detail-page.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class ProductDetailPageComponent implements OnInit, AfterViewInit {
   @ViewChild('calendar') calendarComponent: FullCalendarComponent;
