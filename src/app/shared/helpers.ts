@@ -1,4 +1,5 @@
 import { Product } from '../models/Product';
+import { productData } from '../pages/products-page/productData';
 
 export function getAllDates(product: Product): string[] {
   let allDates: string[] = [];
@@ -6,4 +7,8 @@ export function getAllDates(product: Product): string[] {
     booking.dates.forEach((date) => allDates.push(date))
   );
   return allDates;
+}
+
+export function getAllProductDates() {
+  return getAllDates(productData[0]);
 }

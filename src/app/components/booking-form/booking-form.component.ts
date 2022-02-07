@@ -18,7 +18,9 @@ import {
 } from '@angular/material/datepicker';
 import { Booking, Product } from 'src/app/models/Product';
 import * as moment from 'moment';
-import { getAllDates } from 'src/app/shared/helpers';
+import { getAllDates, getAllProductDates } from 'src/app/shared/helpers';
+import { ProductService  } from '../../services/ProductService';
+
 
 @Component({
   selector: 'app-booking-form',
@@ -26,6 +28,11 @@ import { getAllDates } from 'src/app/shared/helpers';
   styleUrls: ['./booking-form.component.css'],
 })
 export class BookingFormComponent implements OnInit {
+
+  constructor(private fb: FormBuilder, private productService: ProductService) {
+    this.minDate = new Date();
+  }
+
   get product(): Product {
     return this._product;
   }
@@ -39,6 +46,7 @@ export class BookingFormComponent implements OnInit {
     checkIn: ['', Validators.required],
     checkOut: ['', Validators.required],
   });
+  serviceProduct: Product;
 
   convertToString(date: Date): string {
     return date.toDateString();
@@ -63,13 +71,9 @@ export class BookingFormComponent implements OnInit {
 
   rangeFilter(date: Date): boolean {
     let d = moment(date).format('YYYY-MM-DD');
-    let result = !getAllDates(this.product).includes(d);
+    let result = getAllDates(this.productService.getProduct('1')).includes(d);
     console.log(result);
     return result;
-  }
-
-  constructor(private fb: FormBuilder) {
-    this.minDate = new Date();
   }
 
   private _product: Product = null;
