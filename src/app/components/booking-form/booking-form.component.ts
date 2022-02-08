@@ -1,10 +1,4 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  AfterViewInit,
-  OnChanges,
-} from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -13,14 +7,12 @@ import {
 } from '@angular/forms';
 import {
   MatCalendarCellClassFunction,
-  MatDatepickerInputEvent,
   DateFilterFn,
 } from '@angular/material/datepicker';
 import { Booking, Product } from 'src/app/models/Product';
 import * as moment from 'moment';
-import { getAllDates, getAllProductDates } from 'src/app/shared/helpers';
-import { ProductService  } from '../../services/ProductService';
-
+import { getAllDates } from 'src/app/shared/helpers';
+import { ProductService } from '../../services/ProductService';
 
 @Component({
   selector: 'app-booking-form',
@@ -28,7 +20,6 @@ import { ProductService  } from '../../services/ProductService';
   styleUrls: ['./booking-form.component.css'],
 })
 export class BookingFormComponent implements OnInit {
-
   constructor(private fb: FormBuilder, private productService: ProductService) {
     this.minDate = new Date();
   }
@@ -46,7 +37,6 @@ export class BookingFormComponent implements OnInit {
     checkIn: ['', Validators.required],
     checkOut: ['', Validators.required],
   });
-  serviceProduct: Product;
 
   convertToString(date: Date): string {
     return date.toDateString();
@@ -69,12 +59,10 @@ export class BookingFormComponent implements OnInit {
     console.log(this.bookingForm);
   }
 
-  rangeFilter(date: Date): boolean {
+  rangeFilter: DateFilterFn<Date> = (date: Date) => {
     let d = moment(date).format('YYYY-MM-DD');
-    let result = getAllDates(this.productService.getProduct('1')).includes(d);
-    console.log(result);
-    return result;
-  }
+    return !getAllDates(this.product).includes(d);
+  };
 
   private _product: Product = null;
 

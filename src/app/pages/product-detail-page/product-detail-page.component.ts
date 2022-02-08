@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Product, CalendarEvent } from 'src/app/models/Product';
-import { productData } from '../products-page/productData';
+import { ProductService } from 'src/app/services/ProductService';
 import { CalendarOptions, FullCalendarComponent } from '@fullcalendar/angular';
 import { getAllDates } from '../../shared/helpers';
 import tippy from 'tippy.js';
@@ -34,16 +34,17 @@ export class ProductDetailPageComponent implements OnInit, AfterViewInit {
     // select: this.handleSelect.bind(this),
   };
 
-  productId: string;
   product: Product;
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(
+    private route: ActivatedRoute,
+    private productService: ProductService
+  ) {}
 
   ngOnInit() {
     this.route.queryParams.subscribe((params) => {
-      this.productId = params['productId'];
+      this.product = this.productService.getProduct(params['productId']);
     });
-    this.product = productData.find((product) => product.id === this.productId);
   }
 
   ngAfterViewInit() {
