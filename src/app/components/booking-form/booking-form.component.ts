@@ -9,10 +9,11 @@ import {
   MatCalendarCellClassFunction,
   DateFilterFn,
 } from '@angular/material/datepicker';
-import { Booking, Product } from 'src/app/models/Product';
+import { Product } from 'src/app/models/Product';
 import * as moment from 'moment';
 import { getAllDates } from 'src/app/shared/helpers';
-import { ProductService } from '../../services/ProductService';
+import * as validators from '../../auth/utils/validators';
+
 
 @Component({
   selector: 'app-booking-form',
@@ -20,8 +21,17 @@ import { ProductService } from '../../services/ProductService';
   styleUrls: ['./booking-form.component.css'],
 })
 export class BookingFormComponent implements OnInit {
-  constructor(private fb: FormBuilder, private productService: ProductService) {
+
+  bookingForm: FormGroup;
+
+  constructor(private fb: FormBuilder) {
     this.minDate = new Date();
+    this.bookingForm = this.fb.group({
+      checkIn: ['', Validators.required],
+      checkOut: ['', Validators.required],
+    },
+    { validators: validators.dateRangeIsAvailable()}
+    );
   }
 
   get product(): Product {
@@ -33,14 +43,16 @@ export class BookingFormComponent implements OnInit {
   }
 
   minDate: Date;
-  bookingForm = this.fb.group({
-    checkIn: ['', Validators.required],
-    checkOut: ['', Validators.required],
-  });
 
   convertToString(date: Date): string {
     return date.toDateString();
   }
+
+  isDateRangeValid(selectedDate: string,form: FormGroup) {
+    const isInvalid = form.hasError('dateRangeNotAvailable');
+    form.get('checkIn').setErrors(isInvalid ? { valid: false } : null);
+    return isInvalid;
+  };
 
   dateClass: MatCalendarCellClassFunction<Date> = (cellDate, view) => {
     // Only highligh dates inside the month view.

@@ -16,11 +16,13 @@
             matStartDate
             formControlName="checkIn"
             placeholder="Check In Date"
+            (dateInput)="isDateRangeValid($event.value, bookingForm )"
           />
           <input
             matEndDate
             formControlName="checkOut"
             placeholder="Check Out Date"
+            (dateInput)="isDateRangeValid($event.value, bookingForm)"
           />
         </mat-date-range-input>
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
