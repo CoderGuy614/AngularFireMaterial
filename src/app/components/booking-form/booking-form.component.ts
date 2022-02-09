@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -14,14 +14,12 @@ import * as moment from 'moment';
 import { getAllDates } from 'src/app/shared/helpers';
 import * as validators from '../../auth/utils/validators';
 
-
 @Component({
   selector: 'app-booking-form',
   templateUrl: './booking-form.component.html',
   styleUrls: ['./booking-form.component.css'],
 })
-export class BookingFormComponent implements OnInit {
-
+export class BookingFormComponent implements OnInit, AfterViewInit {
   bookingForm: FormGroup;
 
   constructor(private fb: FormBuilder) {
@@ -29,9 +27,7 @@ export class BookingFormComponent implements OnInit {
     this.bookingForm = this.fb.group({
       checkIn: ['', Validators.required],
       checkOut: ['', Validators.required],
-    },
-    { validators: validators.dateRangeIsAvailable()}
-    );
+    });
   }
 
   get product(): Product {
@@ -48,11 +44,11 @@ export class BookingFormComponent implements OnInit {
     return date.toDateString();
   }
 
-  isDateRangeValid(selectedDate: string,form: FormGroup) {
+  isDateRangeValid(selectedDate: string, form: FormGroup) {
     const isInvalid = form.hasError('dateRangeNotAvailable');
     form.get('checkIn').setErrors(isInvalid ? { valid: false } : null);
     return isInvalid;
-  };
+  }
 
   dateClass: MatCalendarCellClassFunction<Date> = (cellDate, view) => {
     // Only highligh dates inside the month view.
@@ -79,4 +75,10 @@ export class BookingFormComponent implements OnInit {
   private _product: Product = null;
 
   ngOnInit(): void {}
+
+  ngAfterViewInit() {
+    this.bookingForm.setValidators(
+      validators.dateRangeIsAvailable(this.product)
+    );
+  }
 }
