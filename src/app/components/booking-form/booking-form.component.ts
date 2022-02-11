@@ -44,9 +44,16 @@ export class BookingFormComponent implements OnInit, AfterViewInit {
     return date.toDateString();
   }
 
-  isDateRangeValid(selectedDate: string, form: FormGroup) {
-    const isInvalid = form.hasError('dateRangeNotAvailable');
+  // isDateRangeValid(form: FormGroup) {
+  //   const isInvalid = form.hasError('dateRangeNotAvailable');
+  //   form.get('checkIn').setErrors({ dateRangeNotAvailable: true });
+  //   return isInvalid;
+  // }
+
+  isDateRangeInvalid(form: FormGroup) {
+    const isInvalid = form.dirty && form.hasError('dateRangeNotAvailable');
     form.get('checkIn').setErrors(isInvalid ? { valid: false } : null);
+    console.log(isInvalid);
     return isInvalid;
   }
 
