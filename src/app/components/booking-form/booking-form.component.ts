@@ -1,10 +1,5 @@
 import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
-import {
-  FormControl,
-  FormGroup,
-  FormBuilder,
-  Validators,
-} from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {
   MatCalendarCellClassFunction,
   DateFilterFn,
@@ -44,19 +39,6 @@ export class BookingFormComponent implements OnInit, AfterViewInit {
     return date.toDateString();
   }
 
-  // isDateRangeValid(form: FormGroup) {
-  //   const isInvalid = form.hasError('dateRangeNotAvailable');
-  //   form.get('checkIn').setErrors({ dateRangeNotAvailable: true });
-  //   return isInvalid;
-  // }
-
-  isDateRangeInvalid(form: FormGroup) {
-    const isInvalid = form.dirty && form.hasError('dateRangeNotAvailable');
-    form.get('checkIn').setErrors(isInvalid ? { valid: false } : null);
-    console.log(isInvalid);
-    return isInvalid;
-  }
-
   dateClass: MatCalendarCellClassFunction<Date> = (cellDate, view) => {
     // Only highligh dates inside the month view.
     if (view === 'month') {
@@ -72,6 +54,12 @@ export class BookingFormComponent implements OnInit, AfterViewInit {
 
   onSubmit() {
     console.log(this.bookingForm);
+  }
+
+  isDateRangeInvalid(form: FormGroup) {
+    const isInvalid = form.dirty && form.hasError('dateRangeNotAvailable');
+    form.get('checkIn').setErrors(isInvalid ? { valid: false } : null);
+    return isInvalid;
   }
 
   rangeFilter: DateFilterFn<Date> = (date: Date) => {

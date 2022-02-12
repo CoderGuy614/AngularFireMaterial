@@ -23,12 +23,13 @@
             placeholder="Check Out Date"
           />
         </mat-date-range-input>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
 
-        <mat-error *ngIf="isDateRangeInvalid(bookingForm)"></mat-error>
-        One or more of your selected dates is unavailable
+        <mat-error *ngIf="isDateRangeInvalid(bookingForm)"
+          >One or more of your selected dates is unavailable</mat-error
+        >
       </mat-form-field>
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-date-range-picker #picker></mat-date-range-picker>
     </div>
     <div>
       <button mat-raised-button color="primary" (click)="onSubmit()">
