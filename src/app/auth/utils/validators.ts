@@ -22,9 +22,9 @@ export function dateRangeIsAvailable(product: Product): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
     const checkIn = moment(control.get('checkIn').value).format('YYYY-MM-DD');
     const checkOut = moment(control.get('checkOut').value).format('YYYY-MM-DD');
-    const allProductDates = getAllDates(product);
+    const bookedDates = getAllDates(product);
     let invalid = false;
-    allProductDates.forEach((date) => {
+    bookedDates.forEach((date) => {
       if (moment(date).isBetween(checkIn, checkOut)) {
         invalid = true;
       }

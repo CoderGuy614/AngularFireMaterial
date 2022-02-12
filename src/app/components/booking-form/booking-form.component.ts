@@ -40,15 +40,11 @@ export class BookingFormComponent implements OnInit, AfterViewInit {
   }
 
   dateClass: MatCalendarCellClassFunction<Date> = (cellDate, view) => {
-    // Only highligh dates inside the month view.
     if (view === 'month') {
-      const date = cellDate.getDate();
-      console.log(date, 'DATE');
-
-      // Highlight the 1st and 20th day of each month.
-      return date === 2 || date === 20 ? 'example-custom-date-class' : '';
-    }
-
+      const date = this.formatDate(cellDate);
+      let bookedDates = getAllDates(this.product);
+      return bookedDates.includes(date) ? 'date-unavailable' : '';
+    } 
     return '';
   };
 
@@ -63,9 +59,13 @@ export class BookingFormComponent implements OnInit, AfterViewInit {
   }
 
   rangeFilter: DateFilterFn<Date> = (date: Date) => {
-    let d = moment(date).format('YYYY-MM-DD');
+    let d = this.formatDate(date);
     return !getAllDates(this.product).includes(d);
   };
+
+  formatDate(date: Date): string {
+    return moment(date).format('YYYY-MM-DD')
+  }
 
   private _product: Product = null;
 

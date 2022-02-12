@@ -8,7 +8,8 @@
   height: auto;
 }
 
-.example-custom-date-class {
-  background: orange;
+.date-unavailable {
+  background: red;
   border-radius: 100%;
+  opacity: 75%;
 }
