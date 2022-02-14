@@ -20,6 +20,8 @@ import tippy from 'tippy.js';
 })
 export class ProductDetailPageComponent implements OnInit, AfterViewInit {
   @ViewChild('calendar') calendarComponent: FullCalendarComponent;
+
+  problemSolution: boolean;
   calendarOptions: CalendarOptions = {
     initialView: 'dayGridMonth',
     selectable: false,
@@ -45,6 +47,8 @@ export class ProductDetailPageComponent implements OnInit, AfterViewInit {
     this.route.queryParams.subscribe((params) => {
       this.product = this.productService.getProduct(params['productId']);
     });
+
+    this.problemSolution = this.findPair3([4, 5, -3, 1, 9], 11);
   }
 
   ngAfterViewInit() {
@@ -53,6 +57,37 @@ export class ProductDetailPageComponent implements OnInit, AfterViewInit {
       .addEventSource(this.createEvents(this.product));
   }
 
+  findPair1(arr, k) {
+    for (let i = 0; i < arr.length; i++) {
+      for (let j = i + 1; j < arr.length; j++) {
+        if (arr[i] + arr[j] === k) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  findPair2(arr, k) {
+    arr = arr.sort((a, b) => a - b);
+    let left = 0,
+      right = arr.length - 1;
+    while (left < right) {
+      if (arr[left] + arr[right] === k) return true;
+      else if (arr[left] + arr[right] < k) left++;
+      else right--;
+    }
+    return false;
+  }
+
+  findPair3(arr, k) {
+    let obj = {};
+    for (const element of arr) {
+      if (obj[k - element]) return true;
+      else obj[element] = true;
+    }
+    return false;
+  }
   // handleSelect(arg) {
   //   this.dates = [arg.startStr, arg.endStr];
   // }
