@@ -16,6 +16,7 @@ import * as validators from '../../auth/utils/validators';
 })
 export class BookingFormComponent implements OnInit, AfterViewInit {
   bookingForm: FormGroup;
+  minDate: Date;
 
   constructor(private fb: FormBuilder) {
     this.minDate = new Date();
@@ -32,8 +33,6 @@ export class BookingFormComponent implements OnInit, AfterViewInit {
   @Input() set product(value: Product) {
     this._product = value;
   }
-
-  minDate: Date;
 
   convertToString(date: Date): string {
     return date.toDateString();
