@@ -8,6 +8,8 @@ import { Product } from 'src/app/models/Product';
 import * as moment from 'moment';
 import { getAllDates } from 'src/app/shared/helpers';
 import * as validators from '../../auth/utils/validators';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { BookingConfirmationModalComponent } from '../booking-confirmation-modal/booking-confirmation-modal.component';
 
 @Component({
   selector: 'app-booking-form',
@@ -18,7 +20,7 @@ export class BookingFormComponent implements OnInit, AfterViewInit {
   bookingForm: FormGroup;
   minDate: Date;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private dialog: MatDialog) {
     this.minDate = new Date();
     this.bookingForm = this.fb.group({
       checkIn: ['', Validators.required],
@@ -43,12 +45,13 @@ export class BookingFormComponent implements OnInit, AfterViewInit {
       const date = this.formatDate(cellDate);
       let bookedDates = getAllDates(this.product);
       return bookedDates.includes(date) ? 'date-unavailable' : '';
-    } 
+    }
     return '';
   };
 
   onSubmit() {
     console.log(this.bookingForm);
+    this.dialog.open(BookingConfirmationModalComponent);
   }
 
   isDateRangeInvalid(form: FormGroup) {
@@ -63,7 +66,7 @@ export class BookingFormComponent implements OnInit, AfterViewInit {
   };
 
   formatDate(date: Date): string {
-    return moment(date).format('YYYY-MM-DD')
+    return moment(date).format('YYYY-MM-DD');
   }
 
   private _product: Product = null;

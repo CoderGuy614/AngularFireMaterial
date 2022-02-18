@@ -1,3 +1,4 @@
+import { BookingConfirmationModalComponent } from './../../components/booking-confirmation-modal/booking-confirmation-modal.component';
 import {
   AfterViewInit,
   Component,
@@ -20,7 +21,7 @@ import tippy from 'tippy.js';
 })
 export class ProductDetailPageComponent implements OnInit, AfterViewInit {
   @ViewChild('calendar') calendarComponent: FullCalendarComponent;
-  
+
   calendarOptions: CalendarOptions = {
     initialView: 'dayGridMonth',
     selectable: false,
@@ -46,7 +47,6 @@ export class ProductDetailPageComponent implements OnInit, AfterViewInit {
     this.route.queryParams.subscribe((params) => {
       this.product = this.productService.getProduct(params['productId']);
     });
-
   }
 
   ngAfterViewInit() {
