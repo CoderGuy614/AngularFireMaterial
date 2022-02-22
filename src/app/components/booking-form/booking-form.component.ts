@@ -35,7 +35,7 @@ export class BookingFormComponent implements OnInit, AfterViewInit {
   }
 
   convertToString(date: Date): string {
-    return date.toDateString();
+    return date.toDateString()
   }
 
   dateClass: MatCalendarCellClassFunction<Date> = (cellDate, view) => {
