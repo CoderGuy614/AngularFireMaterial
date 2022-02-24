@@ -24,10 +24,16 @@
           />
         </mat-date-range-input>
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-date-range-picker [dateClass]="dateClass" #picker></mat-date-range-picker>
+        <mat-date-range-picker
+          [dateClass]="dateClass"
+          #picker
+        ></mat-date-range-picker>
 
         <mat-error *ngIf="isDateRangeInvalid(bookingForm)"
           >One or more of your selected dates is unavailable</mat-error
+        >
+        <mat-error *ngIf="isMinLengthInvalid(bookingForm)"
+          >You must stay at least 1 night</mat-error
         >
       </mat-form-field>
     </div>

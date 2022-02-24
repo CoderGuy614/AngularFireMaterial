@@ -50,13 +50,23 @@ export class BookingFormComponent implements OnInit, AfterViewInit {
   };
 
   onSubmit() {
+    if (this.bookingForm.valid) {
+      this.dialog.open(BookingConfirmationModalComponent);
+    }
     console.log(this.bookingForm);
-    this.dialog.open(BookingConfirmationModalComponent);
   }
 
   isDateRangeInvalid(form: FormGroup) {
     const isInvalid = form.dirty && form.hasError('dateRangeNotAvailable');
-    form.get('checkIn').setErrors(isInvalid ? { valid: false } : null);
+    form.get('checkIn').setErrors(isInvalid ? { dateRangeValid: false } : null);
+    return isInvalid;
+  }
+
+  isMinLengthInvalid(form: FormGroup) {
+    const isInvalid = form.dirty && form.hasError('minLength');
+    form
+      .get('checkOut')
+      .setErrors(isInvalid ? { minLengthValid: false } : null);
     return isInvalid;
   }
 
@@ -74,8 +84,9 @@ export class BookingFormComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {}
 
   ngAfterViewInit() {
-    this.bookingForm.setValidators(
-      validators.dateRangeIsAvailable(this.product)
-    );
+    this.bookingForm.setValidators([
+      validators.dateRangeIsAvailable(this.product),
+      validators.minStayLength(),
+    ]);
   }
 }

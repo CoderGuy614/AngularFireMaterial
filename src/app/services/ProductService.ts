@@ -13,7 +13,7 @@ export const productData: Product[] = [
       'https://cdn.airstream.com/wp-content/uploads/2019/07/2020-Airstream-Bambi-16RB-Exterior-Bug-Eye.jpg?auto=true&crop=edges&fit=clamp&ixlib=imgixjs-3.4.0&w=2258',
     imageAltText: 'Picture of an Airstream Bambi',
     bookings: [
-      { dates: ['2022-02-15'] },
+      { dates: ['2022-02-27'] },
       // { dates: ['2022-02-16', '2022-02-18'] },
     ],
   },

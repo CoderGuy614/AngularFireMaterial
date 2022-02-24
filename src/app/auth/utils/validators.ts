@@ -20,8 +20,8 @@ export function passwordsMatch(): ValidatorFn {
 
 export function dateRangeIsAvailable(product: Product): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
-    const checkIn = moment(control.get('checkIn').value).format('YYYY-MM-DD');
-    const checkOut = moment(control.get('checkOut').value).format('YYYY-MM-DD');
+    const checkIn = getDateControlValue(control, 'checkIn');
+    const checkOut = getDateControlValue(control, 'checkOut');
     const bookedDates = getAllDates(product);
     let invalid = false;
     bookedDates.forEach((date) => {
@@ -32,6 +32,22 @@ export function dateRangeIsAvailable(product: Product): ValidatorFn {
     return invalid ? { dateRangeNotAvailable: true } : null;
   };
 }
+
+export function minStayLength(): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const checkIn = getDateControlValue(control, 'checkIn');
+    const checkOut = getDateControlValue(control, 'checkOut');
+    if (checkIn == checkOut) {
+      return { minLength: true };
+    }
+  };
+}
+
+// export function minStayLength(form: FormGroup): ValidationErrors | null {
+//   return form.get('checkIn').value === form.get('checkOut').value
+//     ? { minLength: true }
+//     : null;
+// }
 
 export function validateAllFormFields(formGroup: FormGroup) {
   Object.keys(formGroup.controls).forEach((field) => {
@@ -46,4 +62,8 @@ export function validateAllFormFields(formGroup: FormGroup) {
 
 export function isFieldValid(field: string, form: FormGroup) {
   return !form.get(field).valid && form.get(field).touched;
+}
+
+function getDateControlValue(control: AbstractControl, name: string): string {
+  return moment(control.get(name).value).format('YYYY-MM-DD');
 }
