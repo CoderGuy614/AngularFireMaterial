@@ -15,7 +15,7 @@ export const productData: Product[] = [
     bookings: [
       {
         userId: '1234',
-        dates: ['2022-02-27'],
+        dates: ['2022-03-01'],
         guests: 2,
       },
     ],

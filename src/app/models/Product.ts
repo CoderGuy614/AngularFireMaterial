@@ -9,10 +9,23 @@ export interface Product {
   bookings: Booking[];
 }
 
-export interface Booking {
+// export interface Booking {
+//   userId: string;
+//   guests: number;
+//   dates: string[];
+// }
+
+export class Booking {
   userId: string;
-  guests: number;
   dates: string[];
+  guests: number;
+  bookingId?: string;
+
+  constructor(uid: string, dates: string[], guests: number) {
+    this.userId = uid;
+    this.dates = dates;
+    this.guests = guests;
+  }
 }
 
 export class CalendarEvent {
