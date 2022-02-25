@@ -1,1 +1,15 @@
-<p>Booking Confirmation Page Goes Here!</p>
+<h1 mat-dialog-title>Confirm Booking</h1>
+<div mat-dialog-content>
+  <ul>
+    <li>
+      <span *ngIf="data.checkIn">Check In: {{ data.checkIn }}</span>
+    </li>
+    <li>
+      <span *ngIf="data.checkOut">Check In: {{ data.checkOut }}</span>
+    </li>
+  </ul>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button (click)="onConfirm()" cdkFocusInitial>Confirm</button>
+</div>

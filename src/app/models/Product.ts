@@ -10,11 +10,9 @@ export interface Product {
 }
 
 export interface Booking {
-  // id: string,
-  // userId: string,
+  userId: string;
+  guests: number;
   dates: string[];
-  // endDate: Date;
-  // guests: number;
 }
 
 export class CalendarEvent {

@@ -37,7 +37,7 @@ export class BookingFormComponent implements OnInit, AfterViewInit {
   }
 
   convertToString(date: Date): string {
-    return date.toDateString()
+    return date.toDateString();
   }
 
   dateClass: MatCalendarCellClassFunction<Date> = (cellDate, view) => {
@@ -51,9 +51,14 @@ export class BookingFormComponent implements OnInit, AfterViewInit {
 
   onSubmit() {
     if (this.bookingForm.valid) {
-      this.dialog.open(BookingConfirmationModalComponent);
+      let { checkIn, checkOut } = this.bookingForm.value;
+      checkIn = this.formatDate(checkIn);
+      checkOut = this.formatDate(checkOut);
+      this.dialog.open(BookingConfirmationModalComponent, {
+        data: { checkIn, checkOut },
+      });
     }
-    console.log(this.bookingForm);
+    console.log(this.bookingForm.value);
   }
 
   isDateRangeInvalid(form: FormGroup) {

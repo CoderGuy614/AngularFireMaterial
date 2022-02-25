@@ -47,6 +47,7 @@ import { routes } from './shared/appRoutes';
 import { NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
 import { FlatpickrModule } from 'angularx-flatpickr';
+import { BookingConfirmationModalComponent } from './components/booking-confirmation-modal/booking-confirmation-modal.component';
 
 FullCalendarModule.registerPlugins([dayGridPlugin, interactionPlugin]);
 
@@ -63,6 +64,7 @@ FullCalendarModule.registerPlugins([dayGridPlugin, interactionPlugin]);
     EditDisplayNameModalComponent,
     EditPhotoURLModalComponent,
     BookingFormComponent,
+    BookingConfirmationModalComponent,
   ],
   imports: [
     BrowserModule,

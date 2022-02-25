@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Product } from '../models/Product';
+import { Booking, Product } from '../models/Product';
 
 export const productData: Product[] = [
   {
@@ -13,8 +13,11 @@ export const productData: Product[] = [
       'https://cdn.airstream.com/wp-content/uploads/2019/07/2020-Airstream-Bambi-16RB-Exterior-Bug-Eye.jpg?auto=true&crop=edges&fit=clamp&ixlib=imgixjs-3.4.0&w=2258',
     imageAltText: 'Picture of an Airstream Bambi',
     bookings: [
-      { dates: ['2022-02-27'] },
-      // { dates: ['2022-02-16', '2022-02-18'] },
+      {
+        userId: '1234',
+        dates: ['2022-02-27'],
+        guests: 2,
+      },
     ],
   },
 
@@ -27,7 +30,13 @@ export const productData: Product[] = [
     imageUrl:
       'https://cdn.airstream.com/wp-content/uploads/2020/06/2021-Airstream-Flying-Cloud-Exterior-Curb-Side.jpg?auto=format&fit=crop&crop=edges&w=1080',
     imageAltText: 'Picture of an Airstream Flying Cloud',
-    bookings: [{ dates: ['2022-01-05', '2022-01-06'] }],
+    bookings: [
+      {
+        userId: '1234',
+        dates: ['2022-02-28', '2022-03-01'],
+        guests: 3,
+      },
+    ],
   },
 
   {
@@ -67,5 +76,12 @@ export class ProductService {
 
   getProduct(id: string): Product {
     return productData.find((prod) => prod.id === id);
+  }
+
+  createBooking(id: string, booking: Booking) {
+    let product = productData.find((prod) => prod.id === id);
+    console.log(product, 'PRODUCT');
+    product.bookings.push(booking);
+    console.log(product.bookings, 'AFTER');
   }
 }
