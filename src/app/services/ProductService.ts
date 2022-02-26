@@ -1,6 +1,14 @@
+import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
+import {
+  AngularFirestore,
+  AngularFirestoreCollection,
+} from '@angular/fire/firestore';
+import { Store } from '@ngrx/store';
 
 import { Booking, Product } from '../models/Product';
+import { AppState } from '../reducers';
+import { map } from 'rxjs/operators';
 
 export const productData: Product[] = [
   {
@@ -68,7 +76,10 @@ export const productData: Product[] = [
   providedIn: 'root',
 })
 export class ProductService {
-  constructor() {}
+  private productsCollection: AngularFirestoreCollection<Product> =
+    this.afs.collection<Product>('products');
+  products: Observable<Product[]>;
+  constructor(private afs: AngularFirestore, private store: Store<AppState>) {}
 
   getProducts(): Product[] {
     return productData;
@@ -84,4 +95,15 @@ export class ProductService {
     product.bookings.push(booking);
     console.log(product.bookings, 'AFTER');
   }
+
+  //Read
+  products$ = this.productsCollection.snapshotChanges().pipe(
+    map((actions) => {
+      return actions.map((p) => {
+        const product = p.payload.doc;
+        const id = product.id;
+        return { id, ...product.data() } as Product;
+      });
+    })
+  );
 }

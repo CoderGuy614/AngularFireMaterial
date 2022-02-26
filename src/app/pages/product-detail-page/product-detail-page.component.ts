@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs';
 import { BookingConfirmationModalComponent } from './../../components/booking-confirmation-modal/booking-confirmation-modal.component';
 import {
   AfterViewInit,
@@ -37,6 +38,7 @@ export class ProductDetailPageComponent implements OnInit, AfterViewInit {
   };
 
   product: Product;
+  products$: Observable<Product[]>;
 
   constructor(
     private route: ActivatedRoute,
@@ -46,6 +48,7 @@ export class ProductDetailPageComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.route.queryParams.subscribe((params) => {
       this.product = this.productService.getProduct(params['productId']);
+      this.products$ = this.productService.products$;
     });
   }
 
@@ -53,6 +56,10 @@ export class ProductDetailPageComponent implements OnInit, AfterViewInit {
     this.calendarComponent
       .getApi()
       .addEventSource(this.createEvents(this.product));
+  }
+
+  fetchEvents() {
+    this.products$.subscribe((x) => console.log(x, 'products'));
   }
 
   // handleSelect(arg) {
