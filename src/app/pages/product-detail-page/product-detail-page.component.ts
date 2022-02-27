@@ -70,6 +70,10 @@ export class ProductDetailPageComponent implements OnInit, AfterViewInit {
   //   this.dates = [arg.startStr, arg.endStr];
   // }
 
+  addProduct(data) {
+    this.productService.addProduct(data);
+  }
+
   private createEvents(product: Product): CalendarEvent[] {
     let events: any[] = [];
     if (product) {

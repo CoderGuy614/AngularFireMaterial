@@ -1,11 +1,12 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { ProductsState } from './productsReducer';
 
-export const selectProductsState = createFeatureSelector<ProductsState>('products');
+export const selectProductsState =
+  createFeatureSelector<ProductsState>('products');
 
 export const getProducts = createSelector(
   selectProductsState,
-  (products) => !!products
+  (state) => state.products
 );
 
 // export const getUser = createSelector(
@@ -21,4 +22,3 @@ export const getProducts = createSelector(
 // export const isLoggedOut = createSelector(isLoggedIn, (loggedIn) => !loggedIn);
 
 // export const isLoading = createSelector(selectAuthState, (auth) => auth.loading);
-

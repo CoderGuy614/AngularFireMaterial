@@ -106,4 +106,10 @@ export class ProductService {
       });
     })
   );
+
+  // Create
+  addProduct(product: any): void {
+    console.log(product, 'product');
+    this.productsCollection.add(product);
+  }
 }
