@@ -13,6 +13,9 @@ import { ProductService } from 'src/app/services/ProductService';
 import { CalendarOptions, FullCalendarComponent } from '@fullcalendar/angular';
 import { getAllDates } from '../../shared/helpers';
 import tippy from 'tippy.js';
+import * as productActions from '../products-page/store/products.actions';
+import { Store } from '@ngrx/store';
+import { ProductsState } from '../products-page/store/productsReducer';
 
 @Component({
   selector: 'app-product-detail-page',
@@ -42,7 +45,8 @@ export class ProductDetailPageComponent implements OnInit, AfterViewInit {
 
   constructor(
     private route: ActivatedRoute,
-    private productService: ProductService
+    private productService: ProductService,
+    private store: Store<ProductsState>
   ) {}
 
   ngOnInit() {
@@ -58,8 +62,8 @@ export class ProductDetailPageComponent implements OnInit, AfterViewInit {
       .addEventSource(this.createEvents(this.product));
   }
 
-  fetchEvents() {
-    this.products$.subscribe((x) => console.log(x, 'products'));
+  fetchProducts() {
+    this.store.dispatch(productActions.getProductsRequested());
   }
 
   // handleSelect(arg) {

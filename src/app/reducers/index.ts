@@ -1,9 +1,8 @@
 import { authReducer } from '../auth/reducers/authReducer';
+import { productsReducer } from '../pages/products-page/store/productsReducer';
 import {
   ActionReducer,
   ActionReducerMap,
-  createFeatureSelector,
-  createSelector,
   MetaReducer,
 } from '@ngrx/store';
 import { environment } from '../../environments/environment';
@@ -14,6 +13,7 @@ export interface AppState {}
 export const reducers: ActionReducerMap<AppState> = {
   router: routerReducer,
   auth: authReducer,
+  products: productsReducer
 };
 
 export function logger(reducer: ActionReducer<any>): ActionReducer<any> {

@@ -35,6 +35,8 @@ import { ProductDetailPageComponent } from './pages/product-detail-page/product-
 import { EditDisplayNameModalComponent } from './components/edit-display-name-modal/edit-display-name-modal.component';
 import { EditPhotoURLModalComponent } from './components/edit-photo-url-modal/edit-photo-url-modal.component';
 
+import { ProductEffects } from './pages/products-page/store/products.effects';
+
 //Full Calendar
 import { FullCalendarModule } from '@fullcalendar/angular';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -81,7 +83,7 @@ FullCalendarModule.registerPlugins([dayGridPlugin, interactionPlugin]);
     MatNativeDateModule,
     BrowserAnimationsModule,
     AuthModule.forRoot(),
-    EffectsModule.forRoot(),
+    EffectsModule.forRoot([ProductEffects]),
     StoreModule.forRoot(reducers, {
       metaReducers,
     }),
