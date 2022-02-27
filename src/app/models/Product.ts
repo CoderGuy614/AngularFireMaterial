@@ -1,4 +1,5 @@
-import * as moment from 'moment';
+import { Booking } from './Booking';
+
 export interface Product {
   id: string;
   title: string;
@@ -7,25 +8,6 @@ export interface Product {
   imageUrl: string;
   imageAltText: string;
   bookings: Booking[];
-}
-
-// export interface Booking {
-//   userId: string;
-//   guests: number;
-//   dates: string[];
-// }
-
-export class Booking {
-  userId: string;
-  dates: string[];
-  guests: number;
-  bookingId?: string;
-
-  constructor(uid: string, dates: string[], guests: number) {
-    this.userId = uid;
-    this.dates = dates;
-    this.guests = guests;
-  }
 }
 
 export class CalendarEvent {
@@ -39,15 +21,4 @@ export class CalendarEvent {
     this.color = color;
     this.display = display;
   }
-
-  // Some Test Comment
-
-  // setEvent() {
-  //   return {
-  //     title: this.title,
-  //     date: this.date,
-  //     color: this.color,
-  //     display: 'background',
-  //   };
-  // }
 }

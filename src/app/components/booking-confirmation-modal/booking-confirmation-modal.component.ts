@@ -1,7 +1,7 @@
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Component, Inject } from '@angular/core';
-import { ProductService } from 'src/app/services/ProductService';
-import { Booking } from 'src/app/models/Product';
+import { BookingService } from '../../services/BookingService';
+import { Booking } from '../../models/Booking';
 import * as moment from 'moment';
 
 @Component({
@@ -12,13 +12,13 @@ import * as moment from 'moment';
 export class BookingConfirmationModalComponent {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private productService: ProductService
+    private BookingService: BookingService
   ) {}
 
   onConfirm() {
     console.log(this.data, 'CONFIRM');
-    let booking = new Booking('1', this.mapDates(this.data), 2);
-    this.productService.createBooking('1', booking);
+    let booking = new Booking('1', '2', this.mapDates(this.data));
+    this.BookingService.addBooking(booking);
   }
 
   mapDates(data: { checkIn: string; checkOut: string }): string[] {

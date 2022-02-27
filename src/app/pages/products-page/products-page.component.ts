@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Product } from '../../models/Product';
-import { ProductService } from 'src/app/services/ProductService';
 import { ProductsState } from './store/productsReducer';
 import { Store } from '@ngrx/store';
 import * as productActions from './store/products.actions';
@@ -15,10 +14,7 @@ import { Observable, of } from 'rxjs';
 export class ProductsPageComponent implements OnInit {
   products$: Observable<Product[]> = of([]);
 
-  constructor(
-    private productService: ProductService,
-    private store: Store<ProductsState>
-  ) {}
+  constructor(private store: Store<ProductsState>) {}
 
   ngOnInit() {
     this.store.dispatch(productActions.getProductsRequested());

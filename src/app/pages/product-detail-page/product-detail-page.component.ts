@@ -14,8 +14,11 @@ import { CalendarOptions, FullCalendarComponent } from '@fullcalendar/angular';
 import { getAllDates } from '../../shared/helpers';
 import tippy from 'tippy.js';
 import * as productActions from '../products-page/store/products.actions';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { ProductsState } from '../products-page/store/productsReducer';
+import * as selectors from '../../pages/products-page/store/products.selectors';
+import { filter, map } from 'rxjs/operators';
+import { id } from 'date-fns/locale';
 
 @Component({
   selector: 'app-product-detail-page',
@@ -40,8 +43,8 @@ export class ProductDetailPageComponent implements OnInit, AfterViewInit {
     // select: this.handleSelect.bind(this),
   };
 
-  product: Product;
-  products$: Observable<Product[]>;
+  product$: Observable<Product>;
+  // products$: Observable<Product[]>;
 
   constructor(
     private route: ActivatedRoute,
@@ -50,25 +53,15 @@ export class ProductDetailPageComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit() {
-    this.route.queryParams.subscribe((params) => {
-      this.product = this.productService.getProduct(params['productId']);
-      this.products$ = this.productService.products$;
-    });
+    this.product$ = this.store.select(selectors.getProduct);
+    // this.products$ = this.productService.products$;
   }
 
   ngAfterViewInit() {
-    this.calendarComponent
-      .getApi()
-      .addEventSource(this.createEvents(this.product));
+    // this.calendarComponent
+    //   .getApi()
+    //   .addEventSource(this.createEvents(this.product));
   }
-
-  fetchProducts() {
-    this.store.dispatch(productActions.getProductsRequested());
-  }
-
-  // handleSelect(arg) {
-  //   this.dates = [arg.startStr, arg.endStr];
-  // }
 
   addProduct(data) {
     this.productService.addProduct(data);

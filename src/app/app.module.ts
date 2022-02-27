@@ -34,8 +34,11 @@ import { ProductDetailPageComponent } from './pages/product-detail-page/product-
 //Modals
 import { EditDisplayNameModalComponent } from './components/edit-display-name-modal/edit-display-name-modal.component';
 import { EditPhotoURLModalComponent } from './components/edit-photo-url-modal/edit-photo-url-modal.component';
+import { BookingConfirmationModalComponent } from './components/booking-confirmation-modal/booking-confirmation-modal.component';
 
+//Effects
 import { ProductEffects } from './pages/products-page/store/products.effects';
+import { BookingEffects } from './pages/bookings/bookings.effects';
 
 //Full Calendar
 import { FullCalendarModule } from '@fullcalendar/angular';
@@ -49,7 +52,6 @@ import { routes } from './shared/appRoutes';
 import { NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
 import { FlatpickrModule } from 'angularx-flatpickr';
-import { BookingConfirmationModalComponent } from './components/booking-confirmation-modal/booking-confirmation-modal.component';
 
 FullCalendarModule.registerPlugins([dayGridPlugin, interactionPlugin]);
 
@@ -83,17 +85,14 @@ FullCalendarModule.registerPlugins([dayGridPlugin, interactionPlugin]);
     MatNativeDateModule,
     BrowserAnimationsModule,
     AuthModule.forRoot(),
-    EffectsModule.forRoot([ProductEffects]),
+    EffectsModule.forRoot([ProductEffects, BookingEffects]),
     StoreModule.forRoot(reducers, {
       metaReducers,
     }),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
     }),
-    StoreRouterConnectingModule.forRoot({
-      stateKey: 'router',
-      routerState: RouterState.Minimal,
-    }),
+    StoreRouterConnectingModule.forRoot(),
     FullCalendarModule,
     NgbModule,
   ],
