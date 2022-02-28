@@ -24,6 +24,7 @@ export const bookingsReducer = createReducer(
   }),
 
   on(actions.getBookingsSucceeded, (state, action) => {
+    console.log(action.payload, 'payload');
     return {
       ...state,
       loading: false,

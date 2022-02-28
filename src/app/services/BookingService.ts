@@ -16,8 +16,7 @@ import { map } from 'rxjs/operators';
 export class BookingService {
   private bookingsCollection: AngularFirestoreCollection<Booking> =
     this.afs.collection<Booking>('bookings');
-  products: Observable<Booking[]>;
-  constructor(private afs: AngularFirestore, private store: Store<AppState>) {}
+  constructor(private afs: AngularFirestore) {}
 
   //Read
   bookings$ = this.bookingsCollection.snapshotChanges().pipe(
@@ -31,8 +30,8 @@ export class BookingService {
   );
 
   // Create
-  addBooking(booking: Booking): void {
-    console.log(booking, 'booking');
-    this.bookingsCollection.add(booking);
-  }
+  // addBooking(booking: Booking): void {
+  //   console.log(booking, 'booking');
+  //   this.bookingsCollection.add(booking);
+  // }
 }

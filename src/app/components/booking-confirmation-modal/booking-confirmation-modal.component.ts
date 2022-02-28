@@ -18,7 +18,7 @@ export class BookingConfirmationModalComponent {
   onConfirm() {
     console.log(this.data, 'CONFIRM');
     let booking = new Booking('1', '2', this.mapDates(this.data));
-    this.BookingService.addBooking(booking);
+    // this.BookingService.addBooking(booking);
   }
 
   mapDates(data: { checkIn: string; checkOut: string }): string[] {

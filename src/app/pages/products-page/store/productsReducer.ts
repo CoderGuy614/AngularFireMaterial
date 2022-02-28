@@ -11,25 +11,23 @@ export interface ProductsState {
 export const initialState: ProductsState = {
   loading: false,
   products: [],
-  error: null
+  error: null,
 };
 
 export const productsReducer = createReducer(
-
   initialState,
   on(actions.getProductsRequested, (state, action) => {
     return {
-      ...state, 
-      loading: true
-    }
+      ...state,
+      loading: true,
+    };
   }),
 
   on(actions.getProductsSucceeded, (state, action) => {
     return {
       ...state,
       loading: false,
-      products: action.payload
+      products: action.payload,
     };
-  }),
-
+  })
 );

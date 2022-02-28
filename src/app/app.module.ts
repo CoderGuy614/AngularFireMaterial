@@ -52,6 +52,7 @@ import { routes } from './shared/appRoutes';
 import { NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
 import { FlatpickrModule } from 'angularx-flatpickr';
+import { BookingsComponent } from './pages/bookings/bookings.component';
 
 FullCalendarModule.registerPlugins([dayGridPlugin, interactionPlugin]);
 
@@ -63,6 +64,7 @@ FullCalendarModule.registerPlugins([dayGridPlugin, interactionPlugin]);
     NavbarComponent,
     ProfileDropdownComponent,
     ProductComponent,
+    BookingsComponent,
     ProductsPageComponent,
     ProductDetailPageComponent,
     EditDisplayNameModalComponent,

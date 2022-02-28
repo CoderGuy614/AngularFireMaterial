@@ -1,5 +1,5 @@
-import { Observable } from 'rxjs';
-import { BookingConfirmationModalComponent } from './../../components/booking-confirmation-modal/booking-confirmation-modal.component';
+import { AppState } from 'src/app/reducers';
+import { Observable, of } from 'rxjs';
 import {
   AfterViewInit,
   Component,
@@ -14,11 +14,14 @@ import { CalendarOptions, FullCalendarComponent } from '@fullcalendar/angular';
 import { getAllDates } from '../../shared/helpers';
 import tippy from 'tippy.js';
 import * as productActions from '../products-page/store/products.actions';
+import * as bookingActions from '../bookings/bookings.actions';
 import { Store, select } from '@ngrx/store';
 import { ProductsState } from '../products-page/store/productsReducer';
-import * as selectors from '../../pages/products-page/store/products.selectors';
+import { BookingsState } from '../bookings/bookingsReducer';
+import * as productSelectors from '../../pages/products-page/store/products.selectors';
+import * as bookingSelectors from '../bookings/bookings.selectors';
 import { filter, map } from 'rxjs/operators';
-import { id } from 'date-fns/locale';
+import { Booking } from 'src/app/models/Booking';
 
 @Component({
   selector: 'app-product-detail-page',
@@ -43,21 +46,22 @@ export class ProductDetailPageComponent implements OnInit, AfterViewInit {
     // select: this.handleSelect.bind(this),
   };
 
-  product$: Observable<Product>;
-  // products$: Observable<Product[]>;
+  product$: Observable<Product> = of(null);
+  bookings$: Observable<Booking[]> = of([]);
 
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
-    private store: Store<ProductsState>
+    private store: Store<AppState>
   ) {}
 
   ngOnInit() {
-    this.product$ = this.store.select(selectors.getProduct);
-    // this.products$ = this.productService.products$;
+    this.product$ = this.store.select(productSelectors.getProduct);
+    this.bookings$ = this.store.select(bookingSelectors.getBookings);
   }
 
   ngAfterViewInit() {
+    console.log('AFTER VIEW');
     // this.calendarComponent
     //   .getApi()
     //   .addEventSource(this.createEvents(this.product));
@@ -67,14 +71,14 @@ export class ProductDetailPageComponent implements OnInit, AfterViewInit {
     this.productService.addProduct(data);
   }
 
-  private createEvents(product: Product): CalendarEvent[] {
-    let events: any[] = [];
-    if (product) {
-      getAllDates(product).forEach((date) => {
-        let newEvent = new CalendarEvent('', date, 'red', 'background');
-        events.push(newEvent);
-      });
-    }
-    return events;
-  }
+  // private createEvents(product: Product): CalendarEvent[] {
+  //   let events: any[] = [];
+  //   if (product) {
+  //     getAllDates(product).forEach((date) => {
+  //       let newEvent = new CalendarEvent('', date, 'red', 'background');
+  //       events.push(newEvent);
+  //     });
+  //   }
+  //   return events;
+  // }
 }

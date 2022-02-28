@@ -1,10 +1,7 @@
+import { bookingsReducer } from './../pages/bookings/bookingsReducer';
 import { authReducer } from '../auth/reducers/authReducer';
 import { productsReducer } from '../pages/products-page/store/productsReducer';
-import {
-  ActionReducer,
-  ActionReducerMap,
-  MetaReducer,
-} from '@ngrx/store';
+import { ActionReducer, ActionReducerMap, MetaReducer } from '@ngrx/store';
 import { environment } from '../../environments/environment';
 import { routerReducer } from '@ngrx/router-store';
 
@@ -13,7 +10,8 @@ export interface AppState {}
 export const reducers: ActionReducerMap<AppState> = {
   router: routerReducer,
   auth: authReducer,
-  products: productsReducer
+  products: productsReducer,
+  bookings: bookingsReducer,
 };
 
 export function logger(reducer: ActionReducer<any>): ActionReducer<any> {
