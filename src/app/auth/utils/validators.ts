@@ -18,20 +18,19 @@ export function passwordsMatch(): ValidatorFn {
   };
 }
 
-// export function dateRangeIsAvailable(product: Product): ValidatorFn {
-//   return (control: AbstractControl): ValidationErrors | null => {
-//     const checkIn = getDateControlValue(control, 'checkIn');
-//     const checkOut = getDateControlValue(control, 'checkOut');
-//     const bookedDates = getAllDates(product);
-//     let invalid = false;
-//     bookedDates.forEach((date) => {
-//       if (moment(date).isBetween(checkIn, checkOut)) {
-//         invalid = true;
-//       }
-//     });
-//     return invalid ? { dateRangeNotAvailable: true } : null;
-//   };
-// }
+export function dateRangeIsAvailable(dates: string[]): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const checkIn = getDateControlValue(control, 'checkIn');
+    const checkOut = getDateControlValue(control, 'checkOut');
+    let invalid = false;
+    dates.forEach((date) => {
+      if (moment(date).isBetween(checkIn, checkOut)) {
+        invalid = true;
+      }
+    });
+    return invalid ? { dateRangeNotAvailable: true } : null;
+  };
+}
 
 export function minStayLength(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
