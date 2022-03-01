@@ -7,7 +7,6 @@ export interface Product {
   description: string;
   imageUrl: string;
   imageAltText: string;
-  bookings: Booking[];
 }
 
 export class CalendarEvent {

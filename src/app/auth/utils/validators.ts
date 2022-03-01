@@ -1,4 +1,4 @@
-import { getAllDates } from 'src/app/shared/helpers';
+// import { getAllDates } from 'src/app/shared/helpers';
 import {
   AbstractControl,
   FormControl,
@@ -18,20 +18,20 @@ export function passwordsMatch(): ValidatorFn {
   };
 }
 
-export function dateRangeIsAvailable(product: Product): ValidatorFn {
-  return (control: AbstractControl): ValidationErrors | null => {
-    const checkIn = getDateControlValue(control, 'checkIn');
-    const checkOut = getDateControlValue(control, 'checkOut');
-    const bookedDates = getAllDates(product);
-    let invalid = false;
-    bookedDates.forEach((date) => {
-      if (moment(date).isBetween(checkIn, checkOut)) {
-        invalid = true;
-      }
-    });
-    return invalid ? { dateRangeNotAvailable: true } : null;
-  };
-}
+// export function dateRangeIsAvailable(product: Product): ValidatorFn {
+//   return (control: AbstractControl): ValidationErrors | null => {
+//     const checkIn = getDateControlValue(control, 'checkIn');
+//     const checkOut = getDateControlValue(control, 'checkOut');
+//     const bookedDates = getAllDates(product);
+//     let invalid = false;
+//     bookedDates.forEach((date) => {
+//       if (moment(date).isBetween(checkIn, checkOut)) {
+//         invalid = true;
+//       }
+//     });
+//     return invalid ? { dateRangeNotAvailable: true } : null;
+//   };
+// }
 
 export function minStayLength(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {

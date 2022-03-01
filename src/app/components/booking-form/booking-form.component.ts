@@ -6,7 +6,7 @@ import {
 } from '@angular/material/datepicker';
 import { Product } from 'src/app/models/Product';
 import * as moment from 'moment';
-import { getAllDates } from 'src/app/shared/helpers';
+// import { getAllDates } from 'src/app/shared/helpers';
 import * as validators from '../../auth/utils/validators';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { BookingConfirmationModalComponent } from '../booking-confirmation-modal/booking-confirmation-modal.component';
@@ -40,14 +40,14 @@ export class BookingFormComponent implements OnInit, AfterViewInit {
     return date.toDateString();
   }
 
-  dateClass: MatCalendarCellClassFunction<Date> = (cellDate, view) => {
-    if (view === 'month') {
-      const date = this.formatDate(cellDate);
-      let bookedDates = getAllDates(this.product);
-      return bookedDates.includes(date) ? 'date-unavailable' : '';
-    }
-    return '';
-  };
+  // dateClass: MatCalendarCellClassFunction<Date> = (cellDate, view) => {
+  //   if (view === 'month') {
+  //     const date = this.formatDate(cellDate);
+  //     let bookedDates = getAllDates(this.product);
+  //     return bookedDates.includes(date) ? 'date-unavailable' : '';
+  //   }
+  //   return '';
+  // };
 
   onSubmit() {
     if (this.bookingForm.valid) {
@@ -75,10 +75,10 @@ export class BookingFormComponent implements OnInit, AfterViewInit {
     return isInvalid;
   }
 
-  rangeFilter: DateFilterFn<Date> = (date: Date) => {
-    let d = this.formatDate(date);
-    return !getAllDates(this.product).includes(d);
-  };
+  // rangeFilter: DateFilterFn<Date> = (date: Date) => {
+  //   let d = this.formatDate(date);
+  //   return !getAllDates(this.product).includes(d);
+  // };
 
   formatDate(date: Date): string {
     return moment(date).format('YYYY-MM-DD');
@@ -90,7 +90,7 @@ export class BookingFormComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.bookingForm.setValidators([
-      validators.dateRangeIsAvailable(this.product),
+      // validators.dateRangeIsAvailable(this.product),
       validators.minStayLength(),
     ]);
   }
