@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs';
 import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {
@@ -6,15 +7,14 @@ import {
 } from '@angular/material/datepicker';
 import { Product } from 'src/app/models/Product';
 import * as moment from 'moment';
-import * as productSelectors from '../../pages/products-page/store/products.selectors';
-import * as bookingSelectors from '../../pages/bookings/bookings.selectors';
 import * as validators from '../../auth/utils/validators';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { BookingConfirmationModalComponent } from '../booking-confirmation-modal/booking-confirmation-modal.component';
-import { Observable } from 'rxjs';
 import { Booking } from 'src/app/models/Booking';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/reducers';
+import * as productSelectors from '../../pages/products-page/store/products.selectors';
+import * as bookingSelectors from '../../pages/bookings/bookings.selectors';
 
 @Component({
   selector: 'app-booking-form',
@@ -22,14 +22,18 @@ import { AppState } from 'src/app/reducers';
   styleUrls: ['./booking-form.component.css'],
 })
 export class BookingFormComponent implements OnInit, AfterViewInit {
-
-  bookings$: Observable<Booking[]>;
   product$: Observable<Product>;
+  bookings$: Observable<Booking[]>;
+  dates$: Observable<string[]>;
 
   bookingForm: FormGroup;
   minDate: Date;
 
-  constructor(private fb: FormBuilder, private dialog: MatDialog, private store: Store<AppState>) {
+  constructor(
+    private fb: FormBuilder,
+    private dialog: MatDialog,
+    private store: Store<AppState>
+  ) {
     this.minDate = new Date();
     this.bookingForm = this.fb.group({
       checkIn: ['', Validators.required],
@@ -40,23 +44,22 @@ export class BookingFormComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.product$ = this.store.select(productSelectors.getProduct);
     this.bookings$ = this.store.select(bookingSelectors.getBookingsByProdId);
+    this.dates$ = this.store.select(bookingSelectors.getAllProdBookingDates);
   }
-
 
   convertToString(date: Date): string {
     return date.toDateString();
   }
 
   dateClass: MatCalendarCellClassFunction<Date> = (cellDate, view) => {
-    return this.store.select(bookingSelectors.getAllProdBookingDates)
-    .subscribe(dates => {
-      console.log(dates, 'dates')
-      if (view === 'month') {
-        const date = this.formatDate(cellDate);
-        return dates.includes(date) ? 'date-unavailable' : '';
-      }
-      return '';
-    })
+    if (view === 'month') {
+      let returnClass = '';
+      const date = this.formatDate(cellDate);
+      this.dates$.subscribe((dates) => {
+        returnClass = dates.includes(date) ? 'date-unavailable' : '';
+      });
+      return returnClass;
+    }
   };
 
   onSubmit() {
@@ -86,30 +89,24 @@ export class BookingFormComponent implements OnInit, AfterViewInit {
   }
 
   rangeFilter: DateFilterFn<Date> = (date: Date) => {
-    let result;
+    let returnValue = false;
     let d = this.formatDate(date);
-    this.store.select(bookingSelectors.getAllProdBookingDates).subscribe(dates => {
-      if(!dates.includes(d)){
-        result = true;
-      } else {
-        result = false;
-      }
-    })
-    return result;
+    this.dates$.subscribe((dates) => {
+      returnValue = !dates.includes(d);
+    });
+    return returnValue;
   };
 
   formatDate(date: Date): string {
-    return moment(date).format('YYYY-MM-DD');
+    return moment(date).format('MM-DD-YYYY');
   }
 
-
   ngAfterViewInit() {
-    this.store.select(bookingSelectors.getAllProdBookingDates).subscribe(dates => {
+    this.dates$.subscribe((dates) => {
       this.bookingForm.setValidators([
         validators.dateRangeIsAvailable(dates),
         validators.minStayLength(),
       ]);
-    })
+    });
   }
-
 }
