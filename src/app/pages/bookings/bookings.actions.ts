@@ -10,7 +10,16 @@ export const getBookingsSucceeded = createAction(
   props<{ payload: any }>()
 );
 
-// export const register = createAction(
-//   '[Register Page] User Register',
-//   props<{ payload: any }>()
-// );
+export const addBookingRequested = createAction(
+  '[Bookings API] Add Bookings Requested'
+);
+
+export const addBookingSucceeded = createAction(
+  '[Bookings API] Add Bookings Succeeded',
+  props<{ payload: any }>()
+);
+
+export const addBookingFailed = createAction(
+  '[Bookings API] Add Bookings Failed',
+  props<{ payload: any }>()
+);

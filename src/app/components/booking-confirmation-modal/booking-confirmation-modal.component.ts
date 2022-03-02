@@ -16,9 +16,13 @@ export class BookingConfirmationModalComponent {
   ) {}
 
   onConfirm() {
-    console.log(this.data, 'CONFIRM');
-    let booking = new Booking('1', '2', this.mapDates(this.data));
-    // this.BookingService.addBooking(booking);
+    // Get the Correct ProductID and UserId from store
+    let booking = new Booking(
+      '2RINayWEzjx9CvN6EfYd',
+      'W34DOFYC4AhAZYzOksdCUNghYta2',
+      this.mapDates(this.data)
+    );
+    this.BookingService.addBooking(booking);
   }
 
   mapDates(data: { checkIn: string; checkOut: string }): string[] {
@@ -28,7 +32,7 @@ export class BookingConfirmationModalComponent {
       .as('days');
     dates.push(data.checkIn);
     for (let i = 0; i < nights - 1; i++) {
-      let nextDate = moment(dates[i]).add(1, 'day').format('YYYY-MM-DD');
+      let nextDate = moment(dates[i]).add(1, 'day').format('MM-DD-YYYY');
       dates.push(nextDate);
     }
     return dates;

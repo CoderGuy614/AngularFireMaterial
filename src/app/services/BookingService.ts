@@ -4,11 +4,12 @@ import {
   AngularFirestore,
   AngularFirestoreCollection,
 } from '@angular/fire/firestore';
-import { Store } from '@ngrx/store';
+import { Action, Store } from '@ngrx/store';
 
 import { Booking } from '../models/Booking';
 import { AppState } from '../reducers';
 import { map } from 'rxjs/operators';
+import * as bookingActions from '../pages/bookings/bookings.actions';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +17,7 @@ import { map } from 'rxjs/operators';
 export class BookingService {
   private bookingsCollection: AngularFirestoreCollection<Booking> =
     this.afs.collection<Booking>('bookings');
-  constructor(private afs: AngularFirestore) {}
+  constructor(private afs: AngularFirestore, store: Store<AppState>) {}
 
   //Read
   bookings$ = this.bookingsCollection.snapshotChanges().pipe(
@@ -30,8 +31,18 @@ export class BookingService {
   );
 
   // Create
-  // addBooking(booking: Booking): void {
-  //   console.log(booking, 'booking');
-  //   this.bookingsCollection.add(booking);
-  // }
+  addBooking(booking: Booking): Action {
+    let result = null;
+    this.bookingsCollection
+      .add(Object.assign({}, booking))
+      .then((res) =>
+        res.get().then((d) => {
+          result = bookingActions.addBookingSucceeded({ payload: d.data() });
+        })
+      )
+      .catch((err) => {
+        result = bookingActions.addBookingFailed({ payload: err });
+      });
+    return result;
+  }
 }

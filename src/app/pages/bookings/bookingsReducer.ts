@@ -24,11 +24,33 @@ export const bookingsReducer = createReducer(
   }),
 
   on(actions.getBookingsSucceeded, (state, action) => {
-    console.log(action.payload, 'payload');
     return {
       ...state,
       loading: false,
       bookings: action.payload,
+    };
+  }),
+
+  on(actions.addBookingRequested, (state, action) => {
+    return {
+      ...state,
+      loading: true,
+    };
+  }),
+
+  on(actions.addBookingSucceeded, (state, action) => {
+    return {
+      ...state,
+      loading: false,
+      bookings: action.payload,
+    };
+  }),
+
+  on(actions.addBookingFailed, (state, action) => {
+    return {
+      ...state,
+      loading: false,
+      error: action.payload,
     };
   })
 );
