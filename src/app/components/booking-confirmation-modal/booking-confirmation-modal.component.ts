@@ -3,6 +3,10 @@ import { Component, Inject } from '@angular/core';
 import { BookingService } from '../../services/BookingService';
 import { Booking } from '../../models/Booking';
 import * as moment from 'moment';
+import { getUser } from '../../auth/auth.selectors';
+import { getProduct } from '../../pages/products-page/store/products.selectors';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/reducers';
 
 @Component({
   selector: 'app-booking-confirmation-modal',
@@ -10,19 +14,25 @@ import * as moment from 'moment';
   styleUrls: ['./booking-confirmation-modal.component.css'],
 })
 export class BookingConfirmationModalComponent {
+  currentUserId:string = null;
+  currentProductId:string = null;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private BookingService: BookingService
+    private bookingService: BookingService,
+    private store: Store<AppState>
   ) {}
 
   onConfirm() {
-    // Get the Correct ProductID and UserId from store
+    
+    this.store.select(getUser).subscribe(user => this.currentUserId = user.uid);
+    this.store.select(getProduct).subscribe(prod => this.currentProductId = prod.id); 
+
     let booking = new Booking(
-      '2RINayWEzjx9CvN6EfYd',
-      'W34DOFYC4AhAZYzOksdCUNghYta2',
+      this.currentProductId,
+      this.currentUserId,
       this.mapDates(this.data)
     );
-    this.BookingService.addBooking(booking);
+    this.bookingService.addBooking(booking);
   }
 
   mapDates(data: { checkIn: string; checkOut: string }): string[] {
