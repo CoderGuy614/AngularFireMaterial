@@ -1,39 +1,35 @@
 <p>
   <mat-toolbar>
-  <button mat-mini-fab color="secondary" aria-label="home button">
-    <a href="/">
-      <mat-icon>home</mat-icon>
-    </a>
-  </button>
-  <span class="example-spacer"></span>
-  <div *ngIf="isLoggedOut$ | async as loggedOut then loggedOut"></div>
-  <ul class="ml-auto">
-    <li *ngIf="user$ | async as user then currentUser; else guestUser"></li>
-  </ul>
-</mat-toolbar>
+    <button mat-mini-fab color="secondary" aria-label="home button">
+      <a [routerLink]="['/']">
+        <mat-icon>home</mat-icon>
+      </a>
+    </button>
+    <span class="example-spacer"></span>
+    <div *ngIf="isLoggedOut$ | async as loggedOut; then loggedOut"></div>
+    <ul class="ml-auto">
+      <li *ngIf="user$ | async as user; then currentUser; else guestUser"></li>
+    </ul>
+  </mat-toolbar>
 </p>
 
-<!-- <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
-  <mat-icon>menu</mat-icon>
-</button> -->
-
 <ng-template #loggedOut>
-    <a 
-    mat-button
-    href="/login"
-    class="mx-4"
-    >Login</a>
-</ng-template> 
+  <a mat-button [routerLink]="['/login']" class="mx-4">Login</a>
+</ng-template>
 
 <ng-template #currentUser>
-  <div *ngIf="user$ | async as user"> 
+  <div *ngIf="user$ | async as user">
     <app-profile-dropdown [user]="user"></app-profile-dropdown>
   </div>
 </ng-template>
 
 <ng-template #guestUser>
-  <div class='d-flex flex-row align-items-center justify-content-center'>
-    <img class='navbar-avatar rounded-circle mx-1' src="{{ userPhotoPlaceholder }}" alt="profile-pic">
+  <div class="d-flex flex-row align-items-center justify-content-center">
+    <img
+      class="navbar-avatar rounded-circle mx-1"
+      src="{{ userPhotoPlaceholder }}"
+      alt="profile-pic"
+    />
     <button mat-button>Welcome, Guest</button>
   </div>
 </ng-template>
