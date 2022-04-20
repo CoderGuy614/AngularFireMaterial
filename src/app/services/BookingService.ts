@@ -19,15 +19,17 @@ export class BookingService {
   constructor(private afs: AngularFirestore, private store: Store<AppState>) {}
 
   //Read
-  bookings$ = this.bookingsCollection.snapshotChanges().pipe(
-    map((actions) => {
-      return actions.map((b) => {
-        const booking = b.payload.doc;
-        const id = booking.id;
-        return { id, ...booking.data() } as Booking;
-      });
-    })
-  );
+  // bookings$ = this.bookingsCollection.snapshotChanges().pipe(
+  //   map((actions) => {
+  //     return actions.map((b) => {
+  //       const booking = b.payload.doc;
+  //       const id = booking.id;
+  //       return { id, ...booking.data() } as Booking;
+  //     });
+  //   })
+  // );
+
+  bookings$ = this.bookingsCollection.valueChanges({ idField: 'id' });
 
   // Create
   addBooking(booking: Booking): Observable<any> {

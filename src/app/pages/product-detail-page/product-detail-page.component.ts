@@ -7,18 +7,16 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { Product, CalendarEvent } from 'src/app/models/Product';
-import { ProductService } from 'src/app/services/ProductService';
 import { CalendarOptions, FullCalendarComponent } from '@fullcalendar/angular';
-// import { getAllDates } from '../../shared/helpers';
 import tippy from 'tippy.js';
-import { Store, select, compose } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import * as productSelectors from '../../pages/products-page/store/products.selectors';
 import * as bookingSelectors from '../bookings/bookings.selectors';
-import { filter, map } from 'rxjs/operators';
+import * as authSelectors from '../../auth/auth.selectors';
 import { Booking } from 'src/app/models/Booking';
 import * as moment from 'moment';
+import { User } from 'src/app/auth/model/user.model';
 
 @Component({
   selector: 'app-product-detail-page',
@@ -45,25 +43,21 @@ export class ProductDetailPageComponent implements OnInit, AfterViewInit {
 
   product$: Observable<Product> = of(null);
   bookings$: Observable<Booking[]>;
+  dates$: Observable<string[]>;
+  user$: Observable<User>;
 
-  constructor(
-    private route: ActivatedRoute,
-    private productService: ProductService,
-    private store: Store<AppState>
-  ) {}
+  constructor(private store: Store<AppState>) {}
 
   ngOnInit() {
     this.product$ = this.store.select(productSelectors.getProduct);
     this.bookings$ = this.store.select(bookingSelectors.getBookingsByProdId);
+    this.user$ = this.store.select(authSelectors.getUser);
+    this.dates$ = this.store.select(bookingSelectors.getAllProdBookingDates);
   }
 
   ngAfterViewInit() {
     let eventSource = this.createEvents();
     this.calendarComponent.getApi().addEventSource(eventSource);
-  }
-
-  addProduct(data) {
-    this.productService.addProduct(data);
   }
 
   private createEvents(): CalendarEvent[] {
@@ -72,7 +66,12 @@ export class ProductDetailPageComponent implements OnInit, AfterViewInit {
       .select(bookingSelectors.getAllProdBookingDates)
       .subscribe((dates) => {
         return dates.map((d) => {
-          let e = new CalendarEvent('', moment(d).format('YYYY-MM-DD'), 'red', 'background');
+          let e = new CalendarEvent(
+            '',
+            moment(d).format('YYYY-MM-DD'),
+            'red',
+            'background'
+          );
           events.push(e);
         });
       });

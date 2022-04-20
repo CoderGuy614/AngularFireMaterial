@@ -20,15 +20,17 @@ export class ProductService {
   constructor(private afs: AngularFirestore, private store: Store<AppState>) {}
 
   //Read
-  products$ = this.productsCollection.snapshotChanges().pipe(
-    map((actions) => {
-      return actions.map((p) => {
-        const product = p.payload.doc;
-        const id = product.id;
-        return { id, ...product.data() } as Product;
-      });
-    })
-  );
+  // products$ = this.productsCollection.snapshotChanges().pipe(
+  //   map((actions) => {
+  //     return actions.map((p) => {
+  //       const product = p.payload.doc;
+  //       const id = product.id;
+  //       return { id, ...product.data() } as Product;
+  //     });
+  //   })
+  // );
+
+  products$ = this.productsCollection.valueChanges({ idField: 'id' });
 
   // getProduct(id: string) {
   //   this.afs.collection('products').doc(id).ref.get().then();

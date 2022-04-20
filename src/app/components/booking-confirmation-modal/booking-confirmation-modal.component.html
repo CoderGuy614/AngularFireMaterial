@@ -1,16 +1,7 @@
 <h1 mat-dialog-title>Confirm Booking</h1>
 
 <div class="container mx-auto">
-  <div
-    class="mt-4 d-flex justify-content-center"
-    *ngIf="isLoading$ | async; else notLoading"
-  >
-    <mat-spinner></mat-spinner>
-  </div>
-</div>
-
-<ng-template #notLoading>
-  <div mat-dialog-content>
+  <div class="mt-4 d-flex justify-content-center">
     <ul>
       <li>
         <span *ngIf="data.checkIn">Check In: {{ data.checkIn }}</span>
@@ -24,4 +15,4 @@
     <button mat-button mat-dialog-close>Cancel</button>
     <button mat-button (click)="onConfirm()" cdkFocusInitial>Confirm</button>
   </div>
-</ng-template>
+</div>

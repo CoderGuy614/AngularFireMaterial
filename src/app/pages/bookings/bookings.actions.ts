@@ -24,3 +24,7 @@ export const addBookingFailed = createAction(
   '[Bookings API] Add Booking Failed',
   props<{ payload: any }>()
 );
+
+export const bookingConfirmationModalClosed = createAction(
+  '[Bookings API] Confirmation Modal Closed'
+);

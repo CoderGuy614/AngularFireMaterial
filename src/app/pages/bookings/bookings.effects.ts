@@ -20,6 +20,8 @@ import {
   AngularFirestore,
   AngularFirestoreCollection,
 } from '@angular/fire/firestore';
+import { MatDialog } from '@angular/material/dialog';
+import { BookingConfirmationModalComponent } from '../../components/booking-confirmation-modal/booking-confirmation-modal.component';
 
 @Injectable()
 export class BookingEffects {
@@ -30,7 +32,8 @@ export class BookingEffects {
     private actions$: Actions,
     private bookingService: BookingService,
     private store: Store<BookingsState>,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog
   ) {}
 
   getBookings$ = createEffect(() =>
@@ -57,5 +60,16 @@ export class BookingEffects {
         )
       )
     )
+  );
+
+  closeConfirmationModal$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(actions.addBookingSucceeded),
+        tap(() => {
+          this.dialog.closeAll();
+        })
+      ),
+    { dispatch: false }
   );
 }

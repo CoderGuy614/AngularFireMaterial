@@ -6,8 +6,6 @@ import { map, exhaustMap, mergeMap, catchError } from 'rxjs/operators';
 import * as actions from './products.actions';
 import { Action, Store } from '@ngrx/store';
 import { ProductsState } from '../store/productsReducer';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { Product } from '../../../models/Product';
 import { EMPTY } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -15,9 +13,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class ProductEffects {
   constructor(
     private actions$: Actions,
-    private productService: ProductService,
-    private store: Store<ProductsState>,
-    private snackBar: MatSnackBar
+    private productService: ProductService
   ) {}
 
   getProducts$ = createEffect(() =>

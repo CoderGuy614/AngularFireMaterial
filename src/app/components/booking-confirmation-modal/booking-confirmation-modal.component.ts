@@ -5,8 +5,6 @@ import { BookingService } from '../../services/BookingService';
 import { Booking } from '../../models/Booking';
 import * as moment from 'moment';
 import { Store } from '@ngrx/store';
-// import * as actions from '../booking-confirmation-modal/store/booking-confirmation-modal.actions';
-// import * as selectors from '../booking-confirmation-modal/store/booking-confirmation-modal-selectors';
 import * as actions from '../../pages/bookings/bookings.actions';
 import * as selectors from '../../pages/bookings/bookings.selectors';
 
