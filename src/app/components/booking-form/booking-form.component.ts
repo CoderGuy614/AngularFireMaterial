@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs';
+import { Observable, combineLatest } from 'rxjs';
 import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {
@@ -15,6 +15,8 @@ import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/reducers';
 import * as productSelectors from '../../pages/products-page/store/products.selectors';
 import * as bookingSelectors from '../../pages/bookings/bookings.selectors';
+import * as authSelectors from '../../auth/auth.selectors';
+import { User } from 'src/app/auth/model/user.model';
 
 @Component({
   selector: 'app-booking-form',
@@ -23,6 +25,7 @@ import * as bookingSelectors from '../../pages/bookings/bookings.selectors';
 })
 export class BookingFormComponent implements OnInit, AfterViewInit {
   product$: Observable<Product>;
+  user$: Observable<User>;
   bookings$: Observable<Booking[]>;
   dates$: Observable<string[]>;
 
@@ -43,6 +46,7 @@ export class BookingFormComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.product$ = this.store.select(productSelectors.getProduct);
+    this.user$ = this.store.select(authSelectors.getUser);
     this.bookings$ = this.store.select(bookingSelectors.getBookingsByProdId);
     this.dates$ = this.store.select(bookingSelectors.getAllProdBookingDates);
   }
@@ -67,11 +71,15 @@ export class BookingFormComponent implements OnInit, AfterViewInit {
       let { checkIn, checkOut } = this.bookingForm.value;
       checkIn = this.formatDate(checkIn);
       checkOut = this.formatDate(checkOut);
-      this.dialog.open(BookingConfirmationModalComponent, {
-        data: { checkIn, checkOut },
-      });
+
+      combineLatest([this.product$, this.user$]).subscribe(
+        ([product, user]) => {
+          this.dialog.open(BookingConfirmationModalComponent, {
+            data: { checkIn, checkOut, user, product },
+          });
+        }
+      );
     }
-    console.log(this.bookingForm.value);
   }
 
   isDateRangeInvalid(form: FormGroup) {

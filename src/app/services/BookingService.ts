@@ -1,15 +1,14 @@
-import { Observable } from 'rxjs';
+import { from, Observable, of } from 'rxjs';
 import { Injectable } from '@angular/core';
 import {
   AngularFirestore,
   AngularFirestoreCollection,
 } from '@angular/fire/firestore';
-import { Action, Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 
 import { Booking } from '../models/Booking';
 import { AppState } from '../reducers';
 import { map } from 'rxjs/operators';
-import * as bookingActions from '../pages/bookings/bookings.actions';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +16,7 @@ import * as bookingActions from '../pages/bookings/bookings.actions';
 export class BookingService {
   private bookingsCollection: AngularFirestoreCollection<Booking> =
     this.afs.collection<Booking>('bookings');
-  constructor(private afs: AngularFirestore, store: Store<AppState>) {}
+  constructor(private afs: AngularFirestore, private store: Store<AppState>) {}
 
   //Read
   bookings$ = this.bookingsCollection.snapshotChanges().pipe(
@@ -31,18 +30,16 @@ export class BookingService {
   );
 
   // Create
-  addBooking(booking: Booking): Action {
-    let result = null;
-    this.bookingsCollection
+  addBooking(booking: Booking): Observable<any> {
+    const result = this.bookingsCollection
       .add(Object.assign({}, booking))
       .then((res) =>
         res.get().then((d) => {
-          result = bookingActions.addBookingSucceeded({ payload: d.data() });
+          d.data();
         })
       )
-      .catch((err) => {
-        result = bookingActions.addBookingFailed({ payload: err });
-      });
-    return result;
+      .catch((err) => err);
+
+    return from(result);
   }
 }

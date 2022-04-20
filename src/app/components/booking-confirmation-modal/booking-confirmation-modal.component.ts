@@ -1,38 +1,42 @@
+import { Observable } from 'rxjs';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { BookingService } from '../../services/BookingService';
 import { Booking } from '../../models/Booking';
 import * as moment from 'moment';
-import { getUser } from '../../auth/auth.selectors';
-import { getProduct } from '../../pages/products-page/store/products.selectors';
 import { Store } from '@ngrx/store';
-import { AppState } from 'src/app/reducers';
+// import * as actions from '../booking-confirmation-modal/store/booking-confirmation-modal.actions';
+// import * as selectors from '../booking-confirmation-modal/store/booking-confirmation-modal-selectors';
+import * as actions from '../../pages/bookings/bookings.actions';
+import * as selectors from '../../pages/bookings/bookings.selectors';
 
 @Component({
   selector: 'app-booking-confirmation-modal',
   templateUrl: './booking-confirmation-modal.component.html',
   styleUrls: ['./booking-confirmation-modal.component.css'],
 })
-export class BookingConfirmationModalComponent {
-  currentUserId:string = null;
-  currentProductId:string = null;
+export class BookingConfirmationModalComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private bookingService: BookingService,
-    private store: Store<AppState>
+    private store: Store<any>,
+    private bookingService: BookingService
   ) {}
 
-  onConfirm() {
-    
-    this.store.select(getUser).subscribe(user => this.currentUserId = user.uid);
-    this.store.select(getProduct).subscribe(prod => this.currentProductId = prod.id); 
+  isLoading$: Observable<boolean>;
+  error$: Observable<any>;
 
+  ngOnInit() {
+    this.isLoading$ = this.store.select(selectors.getLoading);
+  }
+
+  onConfirm() {
     let booking = new Booking(
-      this.currentProductId,
-      this.currentUserId,
+      this.data.product.id,
+      this.data.user.uid,
       this.mapDates(this.data)
     );
-    this.bookingService.addBooking(booking);
+
+    this.store.dispatch(actions.addBookingRequested({ payload: booking }));
   }
 
   mapDates(data: { checkIn: string; checkOut: string }): string[] {

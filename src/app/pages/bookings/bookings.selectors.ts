@@ -18,6 +18,11 @@ export const getBookings = createSelector(
   (state) => state.bookings
 );
 
+export const getLoading = createSelector(
+  selectBookingsState,
+  (state) => state.loading
+);
+
 export const getBookingsByProdId = createSelector(
   getBookings,
   getCurrentRouteState,
@@ -39,5 +44,3 @@ export const getAllProdBookingDates = createSelector(
     return allDates;
   }
 );
-
-

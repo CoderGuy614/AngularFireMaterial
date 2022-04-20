@@ -11,15 +11,16 @@ export const getBookingsSucceeded = createAction(
 );
 
 export const addBookingRequested = createAction(
-  '[Bookings API] Add Bookings Requested'
+  '[Bookings API] Add Booking Requested',
+  props<{ payload: Booking }>()
 );
 
 export const addBookingSucceeded = createAction(
-  '[Bookings API] Add Bookings Succeeded',
+  '[Bookings API] Add Booking Succeeded',
   props<{ payload: any }>()
 );
 
 export const addBookingFailed = createAction(
-  '[Bookings API] Add Bookings Failed',
+  '[Bookings API] Add Booking Failed',
   props<{ payload: any }>()
 );

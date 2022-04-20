@@ -1,10 +1,13 @@
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { AppState } from './reducers';
 import * as authActions from './auth/auth.actions';
-import { isAuthLoading, isLoggedIn, getUser } from './auth/auth.selectors';
+import { isAuthLoading, isLoggedIn } from './auth/auth.selectors';
+import { getProducts } from './pages/products-page/store/products.selectors';
+import * as productActions from './pages/products-page/store/products.actions';
+import * as bookingActions from './pages/bookings/bookings.actions';
+import { getBookings } from './pages/bookings/bookings.selectors';
 
 @Component({
   selector: 'app-root',
@@ -14,9 +17,21 @@ import { isAuthLoading, isLoggedIn, getUser } from './auth/auth.selectors';
 export class AppComponent implements OnInit {
   isAuthLoading$: Observable<boolean>;
 
-  constructor(private router: Router, private store: Store<AppState>) {}
+  constructor(private store: Store<AppState>) {}
 
   ngOnInit() {
+    this.store.select(getProducts).subscribe((products) => {
+      if (products.length === 0) {
+        this.store.dispatch(productActions.getProductsRequested());
+      }
+    });
+
+    this.store.select(getBookings).subscribe((bookings) => {
+      if (bookings.length === 0) {
+        this.store.dispatch(bookingActions.getBookingsRequested());
+      }
+    });
+
     this.store.select(isLoggedIn).subscribe((isAuth) => {
       if (!isAuth) {
         this.isAuthLoading$ = this.store.select(isAuthLoading);

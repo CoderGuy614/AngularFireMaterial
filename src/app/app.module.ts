@@ -39,6 +39,7 @@ import { BookingConfirmationModalComponent } from './components/booking-confirma
 //Effects
 import { ProductEffects } from './pages/products-page/store/products.effects';
 import { BookingEffects } from './pages/bookings/bookings.effects';
+// import { BookingConfirmationModalEffects } from './components/booking-confirmation-modal/store/booking-confirmation-modal.effects';
 
 //Full Calendar
 import { FullCalendarModule } from '@fullcalendar/angular';
@@ -87,7 +88,11 @@ FullCalendarModule.registerPlugins([dayGridPlugin, interactionPlugin]);
     MatNativeDateModule,
     BrowserAnimationsModule,
     AuthModule.forRoot(),
-    EffectsModule.forRoot([ProductEffects, BookingEffects]),
+    EffectsModule.forRoot([
+      ProductEffects,
+      BookingEffects,
+      // BookingConfirmationModalEffects,
+    ]),
     StoreModule.forRoot(reducers, {
       metaReducers,
     }),

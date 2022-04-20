@@ -42,7 +42,6 @@ export const bookingsReducer = createReducer(
     return {
       ...state,
       loading: false,
-      bookings: action.payload,
     };
   }),
 
@@ -50,7 +49,6 @@ export const bookingsReducer = createReducer(
     return {
       ...state,
       loading: false,
-      error: action.payload,
     };
   })
 );
