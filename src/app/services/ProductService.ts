@@ -16,7 +16,7 @@ import { map } from 'rxjs/operators';
 export class ProductService {
   private productsCollection: AngularFirestoreCollection<Product> =
     this.afs.collection<Product>('products');
-  products: Observable<Product[]>;
+
   constructor(private afs: AngularFirestore, private store: Store<AppState>) {}
 
   //Read
@@ -30,7 +30,7 @@ export class ProductService {
   //   })
   // );
 
-  products$ = this.productsCollection.valueChanges({ idField: 'id' });
+  // products$ = this.productsCollection.valueChanges({ idField: 'id' });
 
   // getProduct(id: string) {
   //   this.afs.collection('products').doc(id).ref.get().then();

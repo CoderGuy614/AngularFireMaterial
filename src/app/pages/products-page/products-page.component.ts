@@ -1,21 +1,17 @@
-import { AppState } from 'src/app/reducers';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Product } from '../../models/Product';
-import { Store } from '@ngrx/store';
-import * as selectors from './store/products.selectors';
-import { Observable, of } from 'rxjs';
+import { Observable  } from 'rxjs';
+import { User } from 'src/app/auth/model/user.model';
 
 @Component({
   selector: 'app-products',
   templateUrl: './products-page.component.html',
   styleUrls: ['./products-page.component.css'],
 })
-export class ProductsPageComponent implements OnInit {
-  products$: Observable<Product[]> = of([]);
+export class ProductsPageComponent {
+  @Input() products: Observable<Product[]>; 
+  @Input() user: Observable<User>;
 
-  constructor(private store: Store<AppState>) {}
+  constructor() {}
 
-  ngOnInit() {
-    this.products$ = this.store.select(selectors.getProducts);
-  }
 }

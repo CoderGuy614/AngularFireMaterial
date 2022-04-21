@@ -29,7 +29,7 @@ export class BookingService {
   //   })
   // );
 
-  bookings$ = this.bookingsCollection.valueChanges({ idField: 'id' });
+  // bookings$ = this.bookingsCollection.valueChanges({ idField: 'id' });
 
   // Create
   addBooking(booking: Booking): Observable<any> {

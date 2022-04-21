@@ -2,7 +2,7 @@ import { Routes } from "@angular/router";
 import { EmailVerifiedComponent } from "../auth/email-verified/email-verified.component";
 import { ForgotPasswordComponent } from "../auth/forgot-password/forgot-password.component";
 import { LoginComponent } from "../auth/login/login.component";
-import { HomeComponent } from "../components/home/home.component";
+import { HomeComponent } from "../pages/home/home.component";
 import { ProductDetailPageComponent } from "../pages/product-detail-page/product-detail-page.component";
 import { ProfilePageComponent } from "../pages/profile-page/profile-page.component";
 

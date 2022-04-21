@@ -36,19 +36,19 @@ export class BookingEffects {
     private dialog: MatDialog
   ) {}
 
-  getBookings$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(actions.getBookingsRequested),
-      mergeMap(() =>
-        this.bookingService.bookings$.pipe(
-          map((bookings) =>
-            actions.getBookingsSucceeded({ payload: bookings })
-          ),
-          catchError(() => EMPTY)
-        )
-      )
-    )
-  );
+  // getBookings$ = createEffect(() =>
+  //   this.actions$.pipe(
+  //     ofType(actions.getBookingsRequested),
+  //     mergeMap(() =>
+  //       this.bookingService.bookings$.pipe(
+  //         map((bookings) =>
+  //           actions.getBookingsSucceeded({ payload: bookings })
+  //         ),
+  //         catchError(() => EMPTY)
+  //       )
+  //     )
+  //   )
+  // );
 
   createBooking$ = createEffect(() =>
     this.actions$.pipe(

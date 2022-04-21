@@ -2,8 +2,9 @@
   <div class="row d-flex flex-wrap justify-content-center">
     <app-product
       class="m-2"
-      *ngFor="let prod of products$ | async"
+      *ngFor="let prod of products | async"
       [product]="prod"
+      [user]="user"
     ></app-product>
   </div>
 </div>

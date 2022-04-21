@@ -1,4 +1,4 @@
-<div class="container" *ngIf="product$ | async as product">
+<div class="container" *ngIf="product">
   <div class="row">
     <div class="col-sm-6">
       <span class="d-flex flex-row justify-content-between">
@@ -36,7 +36,7 @@
     <div class="col-sm-4"></div>
     <div class="col-sm-8">
       <app-booking-form
-        [product]="product$"
+        [product]="product"
         [bookings]="bookings$"
         [user]="user$"
         [dates]="dates$"

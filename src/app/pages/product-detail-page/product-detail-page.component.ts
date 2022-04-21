@@ -3,6 +3,7 @@ import { Observable, of } from 'rxjs';
 import {
   AfterViewInit,
   Component,
+  Input,
   OnInit,
   ViewChild,
   ViewEncapsulation,
@@ -25,6 +26,8 @@ import { User } from 'src/app/auth/model/user.model';
   encapsulation: ViewEncapsulation.None,
 })
 export class ProductDetailPageComponent implements OnInit, AfterViewInit {
+  @Input() product: Product;
+  @Input() user: Observable<User>;
   @ViewChild('calendar') calendarComponent: FullCalendarComponent;
 
   calendarOptions: CalendarOptions = {
@@ -41,23 +44,19 @@ export class ProductDetailPageComponent implements OnInit, AfterViewInit {
     // select: this.handleSelect.bind(this),
   };
 
-  product$: Observable<Product> = of(null);
   bookings$: Observable<Booking[]>;
   dates$: Observable<string[]>;
-  user$: Observable<User>;
 
   constructor(private store: Store<AppState>) {}
 
   ngOnInit() {
-    this.product$ = this.store.select(productSelectors.getProduct);
     this.bookings$ = this.store.select(bookingSelectors.getBookingsByProdId);
-    this.user$ = this.store.select(authSelectors.getUser);
     this.dates$ = this.store.select(bookingSelectors.getAllProdBookingDates);
   }
 
   ngAfterViewInit() {
     let eventSource = this.createEvents();
-    this.calendarComponent.getApi().addEventSource(eventSource);
+    // this.calendarComponent.getApi().addEventSource(eventSource);
   }
 
   private createEvents(): CalendarEvent[] {

@@ -16,17 +16,17 @@ export class ProductEffects {
     private productService: ProductService
   ) {}
 
-  getProducts$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(actions.getProductsRequested),
-      mergeMap(() =>
-        this.productService.products$.pipe(
-          map((products) =>
-            actions.getProductsSucceeded({ payload: products })
-          ),
-          catchError(() => EMPTY)
-        )
-      )
-    )
-  );
+  // getProducts$ = createEffect(() =>
+  //   this.actions$.pipe(
+  //     ofType(actions.getProductsRequested),
+  //     exhaustMap(() =>
+  //       this.productService.products$.pipe(
+  //         map((products) =>
+  //           actions.getProductsSucceeded({ payload: products })
+  //         ),
+  //         catchError(() => EMPTY)
+  //       )
+  //     )
+  //   )
+  // );
 }

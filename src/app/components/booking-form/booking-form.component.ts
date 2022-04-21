@@ -21,7 +21,7 @@ import { User } from 'src/app/auth/model/user.model';
   styleUrls: ['./booking-form.component.css'],
 })
 export class BookingFormComponent implements AfterViewInit {
-  @Input() product: Observable<Product>;
+  @Input() product: Product;
   @Input() bookings: Observable<Booking[]>;
   @Input() user: Observable<User>;
   @Input() dates: Observable<string[]>;
@@ -58,11 +58,12 @@ export class BookingFormComponent implements AfterViewInit {
 
   onSubmit() {
     if (this.bookingForm.valid) {
+      let product = this.product;
       let { checkIn, checkOut } = this.bookingForm.value;
       checkIn = this.formatDate(checkIn);
       checkOut = this.formatDate(checkOut);
 
-      combineLatest([this.product, this.user]).subscribe(([product, user]) => {
+      this.user.subscribe((user) => {
         this.dialog.open(BookingConfirmationModalComponent, {
           data: { checkIn, checkOut, user, product },
         });

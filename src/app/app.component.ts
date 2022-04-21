@@ -4,10 +4,13 @@ import { Component, OnInit } from '@angular/core';
 import { AppState } from './reducers';
 import * as authActions from './auth/auth.actions';
 import { isAuthLoading, isLoggedIn } from './auth/auth.selectors';
-import { getProducts } from './pages/products-page/store/products.selectors';
 import * as productActions from './pages/products-page/store/products.actions';
 import * as bookingActions from './pages/bookings/bookings.actions';
-import { getBookings } from './pages/bookings/bookings.selectors';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { Product } from './models/Product';
+import { Booking } from './models/Booking';
+import { User } from './auth/model/user.model';
 
 @Component({
   selector: 'app-root',
@@ -17,26 +20,42 @@ import { getBookings } from './pages/bookings/bookings.selectors';
 export class AppComponent implements OnInit {
   isAuthLoading$: Observable<boolean>;
 
-  constructor(private store: Store<AppState>) {}
+  private productsCollection: AngularFirestoreCollection<Product> =
+  this.afs.collection<Product>('products');
+
+  private bookingsCollection: AngularFirestoreCollection<Booking> =
+  this.afs.collection<Booking>('bookings');
+
+  private fromFirebaseUser(firebaseUser): User {
+    const { uid, displayName, email, phoneNumber, emailVerified, photoURL } = firebaseUser;
+    const user = { uid, displayName, email, phoneNumber, emailVerified, photoURL } as User;
+    return user;
+  };
+
+  constructor(private store: Store<AppState>,
+    private afs: AngularFirestore,
+    private afAuth: AngularFireAuth,
+    ) {}
 
   ngOnInit() {
-    this.store.select(getProducts).subscribe((products) => {
-      if (products.length === 0) {
-        this.store.dispatch(productActions.getProductsRequested());
-      }
-    });
+    this.productsCollection.valueChanges({ idField: 'id' }).subscribe((products) => {
+      this.store.dispatch(productActions.getProductsSucceeded({ payload: products }))
+    })
 
-    this.store.select(getBookings).subscribe((bookings) => {
-      if (bookings.length === 0) {
-        this.store.dispatch(bookingActions.getBookingsRequested());
-      }
-    });
+    this.bookingsCollection.valueChanges({ idField: 'id' }).subscribe((bookings) => {
+      this.store.dispatch(bookingActions.getBookingsSucceeded({ payload: bookings }))
+    })
 
-    this.store.select(isLoggedIn).subscribe((isAuth) => {
-      if (!isAuth) {
+    this.afAuth.authState.subscribe((auth) => {
+      if(auth) {
+        this.store.dispatch(authActions.authenticated({ payload: this.fromFirebaseUser(auth) }))
+      } else {
         this.isAuthLoading$ = this.store.select(isAuthLoading);
-        this.store.dispatch(authActions.getUser());
+        this.store.dispatch(authActions.notAuthenticated())
       }
-    });
+    })
+
+
   }
+
 }

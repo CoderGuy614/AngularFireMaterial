@@ -20,8 +20,7 @@ export class AuthService {
   ) {}
 
   getUser() {
-    const authState = this.afAuth.authState;
-    return authState;
+    return this.afAuth.authState;
   }
 
   login(email: string, password: string): Observable<any> {

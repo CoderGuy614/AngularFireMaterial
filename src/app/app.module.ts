@@ -21,7 +21,7 @@ import { AppComponent } from './app.component';
 import { ProfileDropdownComponent } from './components/navbar/profile-dropdown/profile-dropdown.component';
 
 //App Components
-import { HomeComponent } from './components/home/home.component';
+import { HomeComponent } from './pages/home/home.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { ProductComponent } from './components/product/product.component';
 import { DatePickerComponent } from './components/date-picker/date-picker.component';
@@ -91,7 +91,6 @@ FullCalendarModule.registerPlugins([dayGridPlugin, interactionPlugin]);
     EffectsModule.forRoot([
       ProductEffects,
       BookingEffects,
-      // BookingConfirmationModalEffects,
     ]),
     StoreModule.forRoot(reducers, {
       metaReducers,

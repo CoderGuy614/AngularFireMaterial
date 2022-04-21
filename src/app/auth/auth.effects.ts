@@ -21,23 +21,23 @@ export class AuthEffects {
 
   ) {}
 
-  getUser$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(actions.getUser),
-      exhaustMap((action) =>
-        this.afAuth.authState.pipe(
-          map((firebaseUser) => {
-            if(firebaseUser) {
-              return actions.authenticated({ payload: this.fromFirebaseUser(firebaseUser) })
-            } else { 
-              return actions.notAuthenticated();
-            }
-          }
-          )
-        ) 
-      )
-    )
-  );
+  // getUser$ = createEffect(() =>
+  //   this.actions$.pipe(
+  //     ofType(actions.getUser),
+  //     exhaustMap((action) =>
+  //       this.afAuth.authState.pipe(
+  //         map((firebaseUser) => {
+  //           if(firebaseUser) {
+  //             return actions.authenticated({ payload: this.fromFirebaseUser(firebaseUser) })
+  //           } else { 
+  //             return actions.notAuthenticated();
+  //           }
+  //         }
+  //         )
+  //       ) 
+  //     )
+  //   )
+  // );
 
   login$ = createEffect(() =>
     this.actions$.pipe(
