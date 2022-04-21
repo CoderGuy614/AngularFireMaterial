@@ -15,16 +15,25 @@ import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/reducers';
 import { User } from 'src/app/auth/model/user.model';
 
+import * as authSelectors from '../../auth/auth.selectors';
+import * as productSelectors from '../../pages/products-page/store/products.selectors';
+import * as bookingSelectors from '../../pages/bookings/bookings.selectors';
+
 @Component({
   selector: 'app-booking-form',
   templateUrl: './booking-form.component.html',
   styleUrls: ['./booking-form.component.css'],
 })
-export class BookingFormComponent implements AfterViewInit {
-  @Input() product: Product;
-  @Input() bookings: Observable<Booking[]>;
-  @Input() user: Observable<User>;
-  @Input() dates: Observable<string[]>;
+export class BookingFormComponent implements OnInit, AfterViewInit {
+  // @Input() product: Product;
+  // @Input() bookings$: Observable<Booking[]>;
+  // @Input() user$: Observable<User>;
+  // @Input() dates$: Observable<string[]>;
+
+  product$: Observable<Product>;
+  bookings$: Observable<Booking[]>;
+  user$: Observable<User>;
+  dates$: Observable<string[]>;
 
   bookingForm: FormGroup;
   minDate: Date;
@@ -41,6 +50,21 @@ export class BookingFormComponent implements AfterViewInit {
     });
   }
 
+  ngOnInit(): void {
+    this.store
+      .select(authSelectors.getUser)
+      .pipe((user) => (this.user$ = user)),
+      this.store
+        .select(productSelectors.getProduct)
+        .pipe((product) => (this.product$ = product));
+    this.store
+      .select(bookingSelectors.getBookingsByProdId)
+      .pipe((bookings) => (this.bookings$ = bookings));
+    this.store
+      .select(bookingSelectors.getAllProdBookingDates)
+      .pipe((dates) => (this.dates$ = dates));
+  }
+
   convertToString(date: Date): string {
     return date.toDateString();
   }
@@ -49,7 +73,7 @@ export class BookingFormComponent implements AfterViewInit {
     if (view === 'month') {
       let returnClass = '';
       const date = this.formatDate(cellDate);
-      this.dates.subscribe((dates) => {
+      this.dates$.subscribe((dates) => {
         returnClass = dates.includes(date) ? 'date-unavailable' : '';
       });
       return returnClass;
@@ -58,16 +82,17 @@ export class BookingFormComponent implements AfterViewInit {
 
   onSubmit() {
     if (this.bookingForm.valid) {
-      let product = this.product;
       let { checkIn, checkOut } = this.bookingForm.value;
       checkIn = this.formatDate(checkIn);
       checkOut = this.formatDate(checkOut);
 
-      this.user.subscribe((user) => {
-        this.dialog.open(BookingConfirmationModalComponent, {
-          data: { checkIn, checkOut, user, product },
-        });
-      });
+      combineLatest([this.product$, this.user$]).subscribe(
+        ([product, user]) => {
+          this.dialog.open(BookingConfirmationModalComponent, {
+            data: { checkIn, checkOut, user, product },
+          });
+        }
+      );
     }
   }
 
@@ -88,7 +113,7 @@ export class BookingFormComponent implements AfterViewInit {
   rangeFilter: DateFilterFn<Date> = (date: Date) => {
     let returnValue = false;
     let d = this.formatDate(date);
-    this.dates.subscribe((dates) => {
+    this.dates$.subscribe((dates) => {
       returnValue = !dates.includes(d);
     });
     return returnValue;
@@ -99,7 +124,7 @@ export class BookingFormComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.dates.subscribe((dates) => {
+    this.dates$.subscribe((dates) => {
       this.bookingForm.setValidators([
         validators.dateRangeIsAvailable(dates),
         validators.minStayLength(),

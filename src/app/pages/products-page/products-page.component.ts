@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Product } from '../../models/Product';
-import { Observable  } from 'rxjs';
+import { Observable } from 'rxjs';
 import { User } from 'src/app/auth/model/user.model';
 
 @Component({
@@ -9,9 +9,6 @@ import { User } from 'src/app/auth/model/user.model';
   styleUrls: ['./products-page.component.css'],
 })
 export class ProductsPageComponent {
-  @Input() products: Observable<Product[]>; 
-  @Input() user: Observable<User>;
-
+  @Input() products: Observable<Product[]>;
   constructor() {}
-
 }

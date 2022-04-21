@@ -1,9 +1,10 @@
 import { AppState } from 'src/app/reducers';
 import { Observable, of } from 'rxjs';
 import {
+  AfterViewChecked,
   AfterViewInit,
   Component,
-  Input,
+  OnChanges,
   OnInit,
   ViewChild,
   ViewEncapsulation,
@@ -15,7 +16,6 @@ import { Store } from '@ngrx/store';
 import * as productSelectors from '../../pages/products-page/store/products.selectors';
 import * as bookingSelectors from '../bookings/bookings.selectors';
 import * as authSelectors from '../../auth/auth.selectors';
-import { Booking } from 'src/app/models/Booking';
 import * as moment from 'moment';
 import { User } from 'src/app/auth/model/user.model';
 
@@ -25,9 +25,9 @@ import { User } from 'src/app/auth/model/user.model';
   styleUrls: ['./product-detail-page.component.css'],
   encapsulation: ViewEncapsulation.None,
 })
-export class ProductDetailPageComponent implements OnInit, AfterViewInit {
-  @Input() product: Product;
-  @Input() user: Observable<User>;
+export class ProductDetailPageComponent
+  implements OnInit, OnChanges, AfterViewInit
+{
   @ViewChild('calendar') calendarComponent: FullCalendarComponent;
 
   calendarOptions: CalendarOptions = {
@@ -44,36 +44,49 @@ export class ProductDetailPageComponent implements OnInit, AfterViewInit {
     // select: this.handleSelect.bind(this),
   };
 
-  bookings$: Observable<Booking[]>;
+  product$: Observable<Product>;
   dates$: Observable<string[]>;
+  user$: Observable<User>;
 
   constructor(private store: Store<AppState>) {}
 
   ngOnInit() {
-    this.bookings$ = this.store.select(bookingSelectors.getBookingsByProdId);
-    this.dates$ = this.store.select(bookingSelectors.getAllProdBookingDates);
+    this.store
+      .select(productSelectors.getProduct)
+      .pipe((product) => (this.product$ = product));
+    this.store
+      .select(bookingSelectors.getAllProdBookingDates)
+      .pipe((dates) => (this.dates$ = dates));
+    this.store
+      .select(authSelectors.getUser)
+      .pipe((user) => (this.user$ = user));
   }
 
-  ngAfterViewInit() {
-    let eventSource = this.createEvents();
-    // this.calendarComponent.getApi().addEventSource(eventSource);
+  // ngAfterViewInit(): void {
+  //   eventSource = this.createEvents();
+  // }
+
+  ngAfterViewInit(): void {
+    this.calendarComponent.getApi().addEventSource(this.createEvents());
+  }
+
+  ngOnChanges(): void {
+    this.calendarComponent.getApi().addEventSource(this.createEvents());
   }
 
   private createEvents(): CalendarEvent[] {
     let events = [];
-    this.store
-      .select(bookingSelectors.getAllProdBookingDates)
-      .subscribe((dates) => {
-        return dates.map((d) => {
-          let e = new CalendarEvent(
-            '',
-            moment(d).format('YYYY-MM-DD'),
-            'red',
-            'background'
-          );
-          events.push(e);
-        });
+    this.dates$.subscribe((dates) => {
+      return dates.map((d) => {
+        let e = new CalendarEvent(
+          '',
+          moment(d).format('YYYY-MM-DD'),
+          'red',
+          'background'
+        );
+        events.push(e);
       });
+    });
     return events;
   }
 }
