@@ -4,13 +4,21 @@ import {
   AfterViewChecked,
   AfterViewInit,
   Component,
+  ElementRef,
   OnChanges,
   OnInit,
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { Product, CalendarEvent } from 'src/app/models/Product';
-import { CalendarOptions, FullCalendarComponent } from '@fullcalendar/angular';
+import { Product } from 'src/app/models/Product';
+import { CalendarEvent } from 'src/app/models/Event';
+
+import {
+  CalendarOptions,
+  EventApi,
+  EventInput,
+  FullCalendarComponent,
+} from '@fullcalendar/angular';
 import tippy from 'tippy.js';
 import { Store } from '@ngrx/store';
 import * as productSelectors from '../../pages/products-page/store/products.selectors';
@@ -25,29 +33,12 @@ import { User } from 'src/app/auth/model/user.model';
   styleUrls: ['./product-detail-page.component.css'],
   encapsulation: ViewEncapsulation.None,
 })
-export class ProductDetailPageComponent
-  implements OnInit, OnChanges, AfterViewInit
-{
-  @ViewChild('calendar') calendarComponent: FullCalendarComponent;
-
-  calendarOptions: CalendarOptions = {
-    initialView: 'dayGridMonth',
-    selectable: false,
-    defaultAllDay: true,
-    selectOverlap: false,
-    eventDidMount: function (info) {
-      var unavailableTooltip = tippy(info.el, {
-        content: 'Unavailable',
-        arrow: true,
-      });
-    },
-    // select: this.handleSelect.bind(this),
-  };
-
+export class ProductDetailPageComponent implements OnInit {
+  calendarOptions: CalendarOptions;
   product$: Observable<Product>;
-  dates$: Observable<string[]>;
+  dates: string[];
   user$: Observable<User>;
-
+  currentEvents: any[] = [];
   constructor(private store: Store<AppState>) {}
 
   ngOnInit() {
@@ -56,37 +47,69 @@ export class ProductDetailPageComponent
       .pipe((product) => (this.product$ = product));
     this.store
       .select(bookingSelectors.getAllProdBookingDates)
-      .pipe((dates) => (this.dates$ = dates));
+      .subscribe((dates) => (this.dates = dates));
     this.store
       .select(authSelectors.getUser)
       .pipe((user) => (this.user$ = user));
+
+    this.calendarOptions = {
+      initialView: 'dayGridMonth',
+      events: this.currentEvents,
+      selectable: false,
+      defaultAllDay: true,
+      selectOverlap: false,
+      eventDidMount: function (info) {
+        var unavailableTooltip = tippy(info.el, {
+          content: 'Unavailable',
+          arrow: true,
+        });
+      },
+      // select: this.handleSelect.bind(this),
+    };
+
+    this.dates.forEach((date) => {
+      let newEvent = new CalendarEvent(
+        moment(date).format('YYYY-MM-DD'),
+        'red'
+      );
+      this.currentEvents.push(newEvent);
+    });
+
+    // this.dates$.subscribe((dates) => {
+    //   dates.forEach((d) => {
+    //     let newEvent = new CalendarEvent(
+    //       moment(d).format('YYYY-MM-DD'),
+    //       'red'
+    //     ) as any;
+    //     this.currentEvents.push(newEvent);
+    //   });
+
+    // this.currentEvents = this.createEvents(dates);
+    // console.log(this.currentEvents, 'currentEvents');
+    // });
   }
 
   // ngAfterViewInit(): void {
-  //   eventSource = this.createEvents();
+  //   this.handleEvents(this.createEvents(this.dates));
   // }
 
-  ngAfterViewInit(): void {
-    this.calendarComponent.getApi().addEventSource(this.createEvents());
-  }
+  // private handleEvents() {
+  //   console.log('handleEvents');
+  //   this.dates$.subscribe((dates) => {
+  //     console.log(dates, 'HDATES');
+  //     this.currentEvents = this.createEvents(dates);
+  //   });
+  // }
 
-  ngOnChanges(): void {
-    this.calendarComponent.getApi().addEventSource(this.createEvents());
-  }
-
-  private createEvents(): CalendarEvent[] {
+  private createEvents(dates): any[] {
+    console.log('createEvents', dates);
     let events = [];
-    this.dates$.subscribe((dates) => {
-      return dates.map((d) => {
-        let e = new CalendarEvent(
-          '',
-          moment(d).format('YYYY-MM-DD'),
-          'red',
-          'background'
-        );
-        events.push(e);
-      });
+    dates.map((d) => {
+      let e = new CalendarEvent(moment(d).format('YYYY-MM-DD'), 'red') as any;
+      events.push(e);
     });
     return events;
   }
 }
+
+// { start: '2022-04-22', allDay: true, backgroundColor: 'red' },

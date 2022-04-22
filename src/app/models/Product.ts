@@ -1,5 +1,3 @@
-import { Booking } from './Booking';
-
 export interface Product {
   id: string;
   title: string;
@@ -7,17 +5,4 @@ export interface Product {
   description: string;
   imageUrl: string;
   imageAltText: string;
-}
-
-export class CalendarEvent {
-  title: string;
-  date: string;
-  color: string;
-  display?: string;
-  constructor(title: string, date: string, color: string, display?: string) {
-    this.title = title;
-    this.date = date;
-    this.color = color;
-    this.display = display;
-  }
 }
