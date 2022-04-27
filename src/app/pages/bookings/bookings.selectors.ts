@@ -23,6 +23,11 @@ export const getLoading = createSelector(
   (state) => state.loading
 );
 
+export const getBookingsUpdated = createSelector(
+  selectBookingsState,
+  (state) => state.bookingsUpdated
+);
+
 export const getBookingsByProdId = createSelector(
   getBookings,
   getCurrentRouteState,

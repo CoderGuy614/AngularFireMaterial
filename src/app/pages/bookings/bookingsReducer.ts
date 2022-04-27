@@ -6,12 +6,14 @@ export interface BookingsState {
   loading: boolean;
   bookings: Booking[];
   error: any;
+  bookingsUpdated: boolean;
 }
 
 export const initialState: BookingsState = {
   loading: false,
   bookings: [],
   error: null,
+  bookingsUpdated: false,
 };
 
 export const bookingsReducer = createReducer(
@@ -42,6 +44,7 @@ export const bookingsReducer = createReducer(
     return {
       ...state,
       loading: false,
+      bookingsUpdated: !state.bookingsUpdated,
     };
   }),
 

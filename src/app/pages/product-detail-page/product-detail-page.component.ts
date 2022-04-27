@@ -34,10 +34,12 @@ import { User } from 'src/app/auth/model/user.model';
   encapsulation: ViewEncapsulation.None,
 })
 export class ProductDetailPageComponent implements OnInit {
+  @ViewChild('calendar') calendarComponent: FullCalendarComponent;
   calendarOptions: CalendarOptions;
   product$: Observable<Product>;
   dates: string[];
   user$: Observable<User>;
+  bookingsUpdated: boolean;
   currentEvents: any[] = [];
   constructor(private store: Store<AppState>) {}
 
@@ -52,6 +54,15 @@ export class ProductDetailPageComponent implements OnInit {
       .select(authSelectors.getUser)
       .pipe((user) => (this.user$ = user));
 
+    this.store
+      .select(bookingSelectors.getBookingsUpdated)
+      .subscribe((updated) => {
+        this.setEvents();
+        if (this.calendarComponent) {
+          this.calendarComponent.getApi().addEventSource(this.currentEvents);
+        }
+      });
+
     this.calendarOptions = {
       initialView: 'dayGridMonth',
       events: this.currentEvents,
@@ -64,9 +75,13 @@ export class ProductDetailPageComponent implements OnInit {
           arrow: true,
         });
       },
-      // select: this.handleSelect.bind(this),
     };
 
+    this.setEvents();
+  }
+
+  setEvents() {
+    console.log('set events ran');
     this.dates.forEach((date) => {
       let newEvent = new CalendarEvent(
         moment(date).format('YYYY-MM-DD'),
@@ -74,42 +89,5 @@ export class ProductDetailPageComponent implements OnInit {
       );
       this.currentEvents.push(newEvent);
     });
-
-    // this.dates$.subscribe((dates) => {
-    //   dates.forEach((d) => {
-    //     let newEvent = new CalendarEvent(
-    //       moment(d).format('YYYY-MM-DD'),
-    //       'red'
-    //     ) as any;
-    //     this.currentEvents.push(newEvent);
-    //   });
-
-    // this.currentEvents = this.createEvents(dates);
-    // console.log(this.currentEvents, 'currentEvents');
-    // });
-  }
-
-  // ngAfterViewInit(): void {
-  //   this.handleEvents(this.createEvents(this.dates));
-  // }
-
-  // private handleEvents() {
-  //   console.log('handleEvents');
-  //   this.dates$.subscribe((dates) => {
-  //     console.log(dates, 'HDATES');
-  //     this.currentEvents = this.createEvents(dates);
-  //   });
-  // }
-
-  private createEvents(dates): any[] {
-    console.log('createEvents', dates);
-    let events = [];
-    dates.map((d) => {
-      let e = new CalendarEvent(moment(d).format('YYYY-MM-DD'), 'red') as any;
-      events.push(e);
-    });
-    return events;
   }
 }
-
-// { start: '2022-04-22', allDay: true, backgroundColor: 'red' },

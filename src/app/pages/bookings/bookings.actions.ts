@@ -28,3 +28,7 @@ export const addBookingFailed = createAction(
 export const bookingConfirmationModalClosed = createAction(
   '[Bookings API] Confirmation Modal Closed'
 );
+
+export const refreshCalendarEvents = createAction(
+  '[Bookings API] RefreshCalendarEvents'
+);

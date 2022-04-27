@@ -1,19 +1,9 @@
-import { BookingsState } from './bookingsReducer';
 import { BookingService } from '../../services/BookingService';
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import {
-  map,
-  mergeMap,
-  catchError,
-  switchMapTo,
-  switchMap,
-  exhaustMap,
-  tap,
-} from 'rxjs/operators';
+import { map, catchError, switchMap, tap } from 'rxjs/operators';
 import * as actions from './bookings.actions';
-import { Store } from '@ngrx/store';
-import { EMPTY, of } from 'rxjs';
+import { of } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Booking } from 'src/app/models/Booking';
 import {
@@ -21,7 +11,6 @@ import {
   AngularFirestoreCollection,
 } from '@angular/fire/firestore';
 import { MatDialog } from '@angular/material/dialog';
-import { BookingConfirmationModalComponent } from '../../components/booking-confirmation-modal/booking-confirmation-modal.component';
 
 @Injectable()
 export class BookingEffects {
@@ -31,24 +20,9 @@ export class BookingEffects {
     private afs: AngularFirestore,
     private actions$: Actions,
     private bookingService: BookingService,
-    private store: Store<BookingsState>,
     private snackBar: MatSnackBar,
     private dialog: MatDialog
   ) {}
-
-  // getBookings$ = createEffect(() =>
-  //   this.actions$.pipe(
-  //     ofType(actions.getBookingsRequested),
-  //     mergeMap(() =>
-  //       this.bookingService.bookings$.pipe(
-  //         map((bookings) =>
-  //           actions.getBookingsSucceeded({ payload: bookings })
-  //         ),
-  //         catchError(() => EMPTY)
-  //       )
-  //     )
-  //   )
-  // );
 
   createBooking$ = createEffect(() =>
     this.actions$.pipe(
@@ -67,6 +41,9 @@ export class BookingEffects {
       this.actions$.pipe(
         ofType(actions.addBookingSucceeded),
         tap(() => {
+          this.snackBar.open('Your booking was successfully created!', null, {
+            duration: 3000,
+          });
           this.dialog.closeAll();
         })
       ),
