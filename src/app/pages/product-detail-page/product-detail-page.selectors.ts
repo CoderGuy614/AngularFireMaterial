@@ -1,14 +1,6 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { BookingsState } from './bookingsReducer';
-import * as fromRouter from '@ngrx/router-store';
-import { StoreRootState } from 'src/app/router.reducer';
-
-export const getRouterState = (state: StoreRootState) => state.router;
-
-export const getCurrentRouteState = createSelector(
-  getRouterState,
-  (state: fromRouter.RouterReducerState) => state.state
-);
+import { BookingsState } from './productDetailReducer';
+import * as routerSelectors from '../../router.selectors';
 
 export const selectBookingsState =
   createFeatureSelector<BookingsState>('bookings');
@@ -30,11 +22,8 @@ export const getBookingsUpdated = createSelector(
 
 export const getBookingsByProdId = createSelector(
   getBookings,
-  getCurrentRouteState,
-  (bookings, routeState) =>
-    bookings.filter(
-      (b) => b.productId == routeState.root.queryParams['productId']
-    )
+  routerSelectors.selectQueryParam('productId'),
+  (bookings, prodId) => bookings.filter((b) => b.productId == prodId)
 );
 
 export const getAllProdBookingDates = createSelector(

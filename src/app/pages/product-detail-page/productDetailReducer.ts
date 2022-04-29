@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { Booking } from '../../models/Booking';
-import * as actions from '../bookings/bookings.actions';
+import * as actions from './product-detail-page.actions';
 
 export interface BookingsState {
   loading: boolean;

@@ -1,12 +1,11 @@
 import { Observable } from 'rxjs';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Component, Inject, OnInit } from '@angular/core';
-import { BookingService } from '../../services/BookingService';
 import { Booking } from '../../models/Booking';
 import * as moment from 'moment';
 import { Store } from '@ngrx/store';
-import * as actions from '../../pages/bookings/bookings.actions';
-import * as selectors from '../../pages/bookings/bookings.selectors';
+import * as actions from '../../pages/product-detail-page/product-detail-page.actions';
+import * as selectors from '../../pages/product-detail-page/product-detail-page.selectors';
 
 @Component({
   selector: 'app-booking-confirmation-modal',
@@ -16,8 +15,7 @@ import * as selectors from '../../pages/bookings/bookings.selectors';
 export class BookingConfirmationModalComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private store: Store<any>,
-    private bookingService: BookingService
+    private store: Store<any>
   ) {}
 
   isLoading$: Observable<boolean>;

@@ -1,5 +1,5 @@
 import { Observable, combineLatest } from 'rxjs';
-import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {
   MatCalendarCellClassFunction,
@@ -16,8 +16,8 @@ import { AppState } from 'src/app/reducers';
 import { User } from 'src/app/auth/model/user.model';
 
 import * as authSelectors from '../../auth/auth.selectors';
-import * as productSelectors from '../../pages/products-page/store/products.selectors';
-import * as bookingSelectors from '../../pages/bookings/bookings.selectors';
+import * as productSelectors from '../../pages/products-page/products.selectors';
+import * as bookingSelectors from '../../pages/product-detail-page/product-detail-page.selectors';
 
 @Component({
   selector: 'app-booking-form',
@@ -25,14 +25,9 @@ import * as bookingSelectors from '../../pages/bookings/bookings.selectors';
   styleUrls: ['./booking-form.component.css'],
 })
 export class BookingFormComponent implements OnInit, AfterViewInit {
-  // @Input() product: Product;
-  // @Input() bookings$: Observable<Booking[]>;
-  // @Input() user$: Observable<User>;
-  // @Input() dates$: Observable<string[]>;
-
-  product$: Observable<Product>;
+  product: Product;
   bookings$: Observable<Booking[]>;
-  user$: Observable<User>;
+  user: User;
   dates$: Observable<string[]>;
 
   bookingForm: FormGroup;
@@ -53,10 +48,10 @@ export class BookingFormComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.store
       .select(authSelectors.getUser)
-      .pipe((user) => (this.user$ = user)),
+      .subscribe((user) => (this.user = user)),
       this.store
         .select(productSelectors.getProduct)
-        .pipe((product) => (this.product$ = product));
+        .subscribe((product) => (this.product = product));
     this.store
       .select(bookingSelectors.getBookingsByProdId)
       .pipe((bookings) => (this.bookings$ = bookings));
@@ -85,14 +80,11 @@ export class BookingFormComponent implements OnInit, AfterViewInit {
       let { checkIn, checkOut } = this.bookingForm.value;
       checkIn = this.formatDate(checkIn);
       checkOut = this.formatDate(checkOut);
-
-      combineLatest([this.product$, this.user$]).subscribe(
-        ([product, user]) => {
-          this.dialog.open(BookingConfirmationModalComponent, {
-            data: { checkIn, checkOut, user, product },
-          });
-        }
-      );
+      let { user, product } = this;
+      console.log('DIALOG OPEN BOOKING FORM');
+      this.dialog.open(BookingConfirmationModalComponent, {
+        data: { checkIn, checkOut, user, product },
+      });
     }
   }
 

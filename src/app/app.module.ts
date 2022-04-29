@@ -37,9 +37,7 @@ import { EditPhotoURLModalComponent } from './components/edit-photo-url-modal/ed
 import { BookingConfirmationModalComponent } from './components/booking-confirmation-modal/booking-confirmation-modal.component';
 
 //Effects
-import { ProductEffects } from './pages/products-page/store/products.effects';
-import { BookingEffects } from './pages/bookings/bookings.effects';
-// import { BookingConfirmationModalEffects } from './components/booking-confirmation-modal/store/booking-confirmation-modal.effects';
+import { BookingEffects } from './pages/product-detail-page/product-detail-page.effects';
 
 //Full Calendar
 import { FullCalendarModule } from '@fullcalendar/angular';
@@ -75,6 +73,7 @@ FullCalendarModule.registerPlugins([dayGridPlugin, interactionPlugin]);
   ],
   imports: [
     BrowserModule,
+    FullCalendarModule,
     CommonModule,
     FormsModule,
     NgbModalModule,
@@ -88,10 +87,7 @@ FullCalendarModule.registerPlugins([dayGridPlugin, interactionPlugin]);
     MatNativeDateModule,
     BrowserAnimationsModule,
     AuthModule.forRoot(),
-    EffectsModule.forRoot([
-      ProductEffects,
-      BookingEffects,
-    ]),
+    EffectsModule.forRoot([BookingEffects]),
     StoreModule.forRoot(reducers, {
       metaReducers,
     }),
@@ -99,7 +95,6 @@ FullCalendarModule.registerPlugins([dayGridPlugin, interactionPlugin]);
       maxAge: 25,
     }),
     StoreRouterConnectingModule.forRoot(),
-    FullCalendarModule,
     NgbModule,
   ],
   providers: [{ provide: PERSISTENCE, useValue: 'local' }],

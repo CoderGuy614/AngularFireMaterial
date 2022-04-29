@@ -4,7 +4,7 @@ import { Product } from '../../models/Product';
 
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import * as productSelectors from '../../pages/products-page/store/products.selectors';
+import * as productSelectors from '../products-page/products.selectors';
 
 @Component({
   selector: 'app-home',

@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
-import { Product } from '../../../models/Product';
-import * as actions from '../store/products.actions';
+import { Product } from '../../models/Product';
+import * as actions from './products.actions';
 
 export interface ProductsState {
   loading: boolean;

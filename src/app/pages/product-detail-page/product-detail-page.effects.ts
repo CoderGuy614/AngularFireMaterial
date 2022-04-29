@@ -2,7 +2,7 @@ import { BookingService } from '../../services/BookingService';
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { map, catchError, switchMap, tap } from 'rxjs/operators';
-import * as actions from './bookings.actions';
+import * as actions from './product-detail-page.actions';
 import { of } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Booking } from 'src/app/models/Booking';
