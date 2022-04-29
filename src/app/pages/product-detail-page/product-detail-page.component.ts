@@ -38,6 +38,8 @@ export class ProductDetailPageComponent implements OnInit {
   bookingsUpdated$: Observable<boolean>;
   currentEvents: any[] = [];
   calendarApi: Calendar;
+  showCalendar: boolean = false;
+  didEventsLoad: boolean = false;
   constructor(private store: Store<AppState>) {}
 
   ngOnInit() {
@@ -69,11 +71,17 @@ export class ProductDetailPageComponent implements OnInit {
     };
   }
 
+  toggleShowAvailability() {
+    this.showCalendar = !this.showCalendar;
+    this.showDates();
+  }
+
   showDates() {
-    console.log('showDates');
-    this.setEvents(this.dates);
-    console.log(this.currentEvents);
-    this.calendarComponent.getApi().addEventSource(this.currentEvents);
+    if (!this.didEventsLoad) {
+      this.setEvents(this.dates);
+      this.calendarComponent.getApi().addEventSource(this.currentEvents);
+    }
+    this.didEventsLoad = true;
   }
 
   setEvents(dates: string[]) {

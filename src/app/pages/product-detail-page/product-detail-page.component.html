@@ -1,43 +1,45 @@
 <div class="container" *ngIf="product$ | async as product">
   <div class="row">
-    <div class="col-sm-6">
-      <span class="d-flex flex-row justify-content-between">
-        <button mat-icon-button color="secondary" aria-label="back button">
-          <mat-icon>arrow_circle_left</mat-icon>
-        </button>
-        <h3 class="text-center mb-2 d-inline-block">
-          {{ product.title }} Details
-        </h3>
-        <button mat-icon-button color="secondary" aria-label="back button">
-          <mat-icon>arrow_circle_right</mat-icon>
-        </button>
-      </span>
-      <mat-card class="details-card">
-        <mat-card-header>
-          <mat-card-title>{{ product.title }}</mat-card-title>
-          <mat-card-subtitle>{{ product.subtitle }}</mat-card-subtitle>
-        </mat-card-header>
-        <img
-          class="header-image"
-          src="{{ product.imageUrl }}"
-          alt="{{ product.imageAltText }}"
-        />
-        <mat-card-content>
-          {{ product.description }}
-        </mat-card-content>
-      </mat-card>
-    </div>
-    <div class="col-sm-6">
-      <h3 class="text-center mb-2">Current Availability</h3>
+    <h3 class="text-center mb-2 mx-auto d-inline-block">
+      {{ product.title }} Details
+    </h3>
 
-      <full-calendar #calendar [options]="calendarOptions"></full-calendar>
-    </div>
+    <mat-card class="details-card">
+      <mat-card-header>
+        <mat-card-title>{{ product.title }}</mat-card-title>
+        <mat-card-subtitle>{{ product.subtitle }}</mat-card-subtitle>
+      </mat-card-header>
+      <img
+        class="header-image"
+        src="{{ product.imageUrl }}"
+        alt="{{ product.imageAltText }}"
+      />
+      <mat-card-content>
+        {{ product.description }}
+      </mat-card-content>
+    </mat-card>
   </div>
+
+  <div class="row" *ngIf="showCalendar">
+    <full-calendar
+      class="w-100 my-2"
+      #calendar
+      [options]="calendarOptions"
+    ></full-calendar>
+  </div>
+
   <div class="row">
-    <div class="col-sm-4"></div>
-    <div class="col-sm-8">
-      <app-booking-form></app-booking-form>
-      <button (click)="showDates()">Load Availability</button>
-    </div>
+    <button
+      [ngClass]="showCalendar ? 'hide-button' : 'show-button'"
+      class="w-100 mx-auto my-3"
+      mat-raised-button
+      (click)="toggleShowAvailability()"
+    >
+      {{ showCalendar ? "Hide Availability" : "Show Availability" }}
+    </button>
+  </div>
+
+  <div class="row">
+    <app-booking-form class="w-100"></app-booking-form>
   </div>
 </div>
